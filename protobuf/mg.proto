@@ -1,0 +1,37 @@
+syntax = "proto2";
+
+enum MGMessages {
+    MG_JOIN = 1;
+    MG_JOIN_RESPONSE = 2;
+    MG_COMPUTE_REQUEST = 3;
+    MG_COMPUTE_RESULT = 4;
+    MG_END = 5;
+}
+
+message MGJoin {
+    optional string pretty_name = 1;
+}
+
+message MGJoinResponse {
+    required bool accepted = 1;
+    optional string reason = 2;
+}
+
+message MGComputeInfo {
+    required string game = 1;
+    required string fitness = 2;
+}
+
+message MGComputeRequest {
+    required .MGComputeInfo compute_info = 1;
+    required string genome = 2;
+}
+
+message MGComputeResult {
+    required float fitness = 1;
+    optional uint32 time = 2;
+}
+
+message MGEnd {
+    optional string message = 1;
+}
