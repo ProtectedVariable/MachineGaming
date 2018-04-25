@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    include head.pug
+    body
+        div.container
+            h1 MachineGaming
+            h2 Current Task
+            form(action="/task" method='POST')
+                div.form-group
+                    label(for="tgame") Game:
+                    select.form-control
+                        option Asteroid ( Time )
+            hr
+            h2 Workers
+            div.card-deck(style="width: 100%;")
+                each w in workers
+                    div.card.w-75
+                        div.card-body
+                            h5.card-title Isse
+                            p.card-text Some quick example text to build on the card title and make up the bulk of the card's content.
+                            a(class="btn btn-danger") Go somewhere
+            hr
+            h2 Graphs
+            canvas(style="width: 100%; height: 720px;")
+                
+                

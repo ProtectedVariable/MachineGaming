@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Thomas Ibanez",
   "license": "ISC",
@@ -13,7 +13,10 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "google-protobuf": "^3.5.0",
+    "mongoose": "^5.0.16",
     "net": "^1.0.2",
+    "nodemon": "^1.17.3",
+    "pug": "^2.0.3",
     "uuid": "^3.2.1",
     "winston": "^2.4.2"
   }

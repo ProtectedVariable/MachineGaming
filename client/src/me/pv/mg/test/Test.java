@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import me.pv.mg.protobuf.Mg;
 import me.pv.mg.protobuf.Mg.MGJoin;
+import me.pv.mg.protobuf.Mg.MGJoinResponse;
 import me.pv.mg.protobuf.Mg.MGMessages;
 
 public class Test {
@@ -20,7 +20,19 @@ public class Test {
 			out[2 + i] = msg.toByteArray()[i];
 		}
 		sock.getOutputStream().write(out);
-		sock.close();
+		
+		byte[] in_type = new byte[1];
+		sock.getInputStream().read(in_type);
+
+		byte[] in_size = new byte[1];
+		sock.getInputStream().read(in_size);
+
+		byte[] in_msg = new byte[in_size[0]];
+		sock.getInputStream().read(in_msg);
+		
+		System.out.println(MGMessages.forNumber(in_type[0])+" "+MGJoinResponse.parseFrom(in_msg));
+		
+		while(true) {}
 	}
 	
 }
