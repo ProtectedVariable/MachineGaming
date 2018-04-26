@@ -4,21 +4,38 @@ html(lang="en")
     body
         div.container
             h1 MachineGaming
-            h2 Current Task
+            if currentGame != "-"
+                h2 Current Task: #{currentGame} ( #{currentFitness} ) - #{remainingCycles} generation(s) remaining
+            else
+                h2 Current Task: None
             form(action="/task" method='POST')
                 div.form-group
                     label(for="tgame") Game:
-                    select.form-control
-                        option Asteroid ( Time )
+                    select.form-control.custom-select(name="game")
+                        each game in games
+                            option(value=`${game._id}`) #{game.name} ( #{game.fitness} )
+                div.form-group
+                    input.btn.btn-primary(type="submit" value="Do 1 Gen" name="onegen")
+                    input.btn.btn-primary(type="submit" value="Do 100 Gen" name="hungen")
+                    input.btn.btn-primary(type="submit" value="Do Infinite Gen" name="infgen")
             hr
             h2 Workers
-            div.card-deck(style="width: 100%;")
-                each w in workers
-                    div.card.w-75
-                        div.card-body
-                            h5.card-title Isse
-                            p.card-text Some quick example text to build on the card title and make up the bulk of the card's content.
-                            a(class="btn btn-danger") Go somewhere
+            - var index = 0;
+            each w in workers
+                if index % 3 == 0
+                    if index != 0
+                        | </div>
+                    | <div class="card-deck" style="width: 100%;">
+                div.card.w-75(style="max-width: 30%")
+                    div.card-body
+                        h5.card-title #{w.name}#{index}
+                        p.card-text #{w.state}
+                        a(class="btn btn-danger") Kick
+                - index++
+            if workers.length > 0
+                | </div>
+            else
+                p(style="color: red") No Workers
             hr
             h2 Graphs
             canvas(style="width: 100%; height: 720px;")

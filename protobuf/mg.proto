@@ -4,8 +4,9 @@ enum MGMessages {
     MG_JOIN = 1;
     MG_JOIN_RESPONSE = 2;
     MG_COMPUTE_REQUEST = 3;
-    MG_COMPUTE_RESULT = 4;
-    MG_END = 5;
+    MG_COMPUTE_RESPONSE = 4;
+    MG_COMPUTE_RESULT = 5;
+    MG_END = 6;
 }
 
 message MGJoin {
@@ -25,6 +26,10 @@ message MGComputeInfo {
 message MGComputeRequest {
     required .MGComputeInfo compute_info = 1;
     required string genome = 2;
+}
+
+message MGComputeResponse {
+    required bool can_do = 1;
 }
 
 message MGComputeResult {
