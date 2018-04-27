@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import me.pv.mg.protobuf.Mg.MGComputeRequest;
+import me.pv.mg.protobuf.Mg.MGEnd;
 import me.pv.mg.protobuf.Mg.MGJoin;
 import me.pv.mg.protobuf.Mg.MGJoinResponse;
 import me.pv.mg.protobuf.Mg.MGMessages;
@@ -21,18 +23,28 @@ public class Test {
 		}
 		sock.getOutputStream().write(out);
 		
-		byte[] in_type = new byte[1];
-		sock.getInputStream().read(in_type);
-
-		byte[] in_size = new byte[1];
-		sock.getInputStream().read(in_size);
-
-		byte[] in_msg = new byte[in_size[0]];
-		sock.getInputStream().read(in_msg);
-		
-		System.out.println(MGMessages.forNumber(in_type[0])+" "+MGJoinResponse.parseFrom(in_msg));
-		
-		while(true) {}
+		while(true) {
+        		byte[] in_type = new byte[1];
+        		sock.getInputStream().read(in_type);
+        
+        		byte[] in_size = new byte[1];
+        		sock.getInputStream().read(in_size);
+        
+        		byte[] in_msg = new byte[in_size[0]];
+        		sock.getInputStream().read(in_msg);
+        		
+        		switch(MGMessages.forNumber(in_type[0])) {
+					case MG_COMPUTE_REQUEST:
+						System.out.println(MGMessages.forNumber(in_type[0])+" "+MGComputeRequest.parseFrom(in_msg));
+						break;
+					case MG_END:
+						System.out.println(MGMessages.forNumber(in_type[0])+" "+MGEnd.parseFrom(in_msg));
+						return;
+					case MG_JOIN_RESPONSE:
+						System.out.println(MGMessages.forNumber(in_type[0])+" "+MGJoinResponse.parseFrom(in_msg));
+						break;
+        		}
+		}
 	}
 	
 }

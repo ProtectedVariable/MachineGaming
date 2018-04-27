@@ -15,9 +15,13 @@ html(lang="en")
                         each game in games
                             option(value=`${game._id}`) #{game.name} ( #{game.fitness} )
                 div.form-group
-                    input.btn.btn-primary(type="submit" value="Do 1 Gen" name="onegen")
-                    input.btn.btn-primary(type="submit" value="Do 100 Gen" name="hungen")
-                    input.btn.btn-primary(type="submit" value="Do Infinite Gen" name="infgen")
+                    - var disabled = remainingCycles > 0;
+                    input.btn.btn-primary(type="submit" value="Do 1 Gen" name="onegen" disabled=disabled)
+                    input.btn.btn-primary(type="submit" value="Do 100 Gen" name="hungen" disabled=disabled)
+                    input.btn.btn-primary(type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
+                    input.btn.btn-warning(type="submit" value="Pause" name="pause" disabled=!disabled)
+            hr
+            h2 Evolution summary
             hr
             h2 Workers
             - var index = 0;
@@ -28,11 +32,11 @@ html(lang="en")
                     | <div class="card-deck" style="width: 100%;">
                 div.card.w-75(style="max-width: 30%")
                     div.card-body
-                        h5.card-title #{w.name}#{index}
+                        h5.card-title #{w.name} (#{index})
                         p.card-text #{w.state}
                         a(class="btn btn-danger") Kick
                 - index++
-            if workers.length > 0
+            if index > 0
                 | </div>
             else
                 p(style="color: red") No Workers
