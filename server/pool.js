@@ -6,7 +6,7 @@ function Pool(population) {
     this.workers = {};
     this.genomes = [];
     for(let i = 0; i < population; i++) {
-        this.genomes.push({code: "", computing: false, fitness: 0}); //Empty genome
+        this.genomes.push({code: ""+i, computing: false, fitness: 0}); //Empty genome
     }
     this.cycles = 0;
     this.targetCycles = 0;
@@ -74,6 +74,7 @@ Pool.prototype.sendTasksToClients = function() {
                     let request = new proto.MGComputeRequest();
                     request.setComputeInfo(computeInfo);
                     request.setGenome(this.genomes[i].code);
+                    request.setNetType(proto.MGNetworkType.MG_MULTILAYERPERCEPTRON);
                     mgnetwork.sendTo(index, proto.MGMessages.MG_COMPUTE_REQUEST, request);
                     w.busy = true;
                     break;
@@ -82,9 +83,19 @@ Pool.prototype.sendTasksToClients = function() {
         }
     }
 
-    if(allDone) {
+    if(allDone && !this.idle) {
         this.cycles++;
         this.idle = (this.cycles == this.targetCycles);
+        //Regen genomes
+        for (let i = 0; i < this.genomes.length; i++) {
+            this.genomes[i].computing = false;
+        }
+        //Reset client state
+        for (let index in this.workers) {
+            this.workers[index].busy = false;
+        }
+
+        this.sendTasksToClients();
     }
 }
 

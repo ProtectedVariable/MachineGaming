@@ -34,31 +34,35 @@ function init(_pool) {
         sock.on('data', function(data) {
             log.verbose(`New message from ${id}`)
             let bytes = Array.prototype.slice.call(data, 0);
-            let type = bytes[0];
-            let size = bytes[1];
-            let message = null;
-            switch(type) {
-                case proto.MGMessages.MG_JOIN:
-                    if(!joined) {
-                        message = proto.MGJoin.deserializeBinary(bytes.slice(2, 2 + size));
-                        handleJoin(id, message);
-                        joined = true;
-                    }
-                    break;
-                case proto.MGMessages.MG_COMPUTE_RESPONSE:
-                    message = proto.MGComputeResponse.deserializeBinary(bytes.slice(2, 2 + size));
-                    pool.onResponse(id, message);
-                    break;
-                case proto.MGMessages.MG_COMPUTE_RESULT:
-                    message = proto.MGComputeResult.deserializeBinary(bytes.slice(2, 2 + size));
-                    pool.onResult(id, message);
-                    break;
-                case proto.MGMessages.MG_END:
-                    message = proto.MGEnd.deserializeBinary(bytes.slice(2, 2 + size));
-                    break;
+            let offset = 0;
+            do {
+                let type = bytes[offset];
+                let size = bytes[offset + 1];
+                let message = null;
+                switch(type) {
+                    case proto.MGMessages.MG_JOIN:
+                        if(!joined) {
+                            message = proto.MGJoin.deserializeBinary(bytes.slice(offset + 2, offset + 2 + size));
+                            handleJoin(id, message);
+                            joined = true;
+                        }
+                        break;
+                    case proto.MGMessages.MG_COMPUTE_RESPONSE:
+                        message = proto.MGComputeResponse.deserializeBinary(bytes.slice(offset + 2, offset + 2 + size));
+                        pool.onResponse(id, message);
+                        break;
+                    case proto.MGMessages.MG_COMPUTE_RESULT:
+                        message = proto.MGComputeResult.deserializeBinary(bytes.slice(offset + 2, offset + 2 + size));
+                        pool.onResult(id, message);
+                        break;
+                    case proto.MGMessages.MG_END:
+                        message = proto.MGEnd.deserializeBinary(bytes.slice(offset + 2, offset + 2 + size));
+                        break;
 
-             }
-             log.verbose(message);
+                 }
+                 offset += size + 2;
+                 log.verbose(message);
+             } while(offset < bytes.length);
         });
 
         sock.on('close', function(data) {

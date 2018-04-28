@@ -1,4 +1,5 @@
 syntax = "proto2";
+option java_package = "me.pv.mg.protobuf";
 
 enum MGMessages {
     MG_JOIN = 1;
@@ -7,6 +8,11 @@ enum MGMessages {
     MG_COMPUTE_RESPONSE = 4;
     MG_COMPUTE_RESULT = 5;
     MG_END = 6;
+}
+
+enum MGNetworkType {
+    MG_MultilayerPerceptron = 1;
+    MG_NEAT = 2;
 }
 
 message MGJoin {
@@ -26,6 +32,7 @@ message MGComputeInfo {
 message MGComputeRequest {
     required .MGComputeInfo compute_info = 1;
     required string genome = 2;
+    required .MGNetworkType net_type = 3;
 }
 
 message MGComputeResponse {

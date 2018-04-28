@@ -1,6 +1,6 @@
 function Client(wname) {
     this.name = wname;
-    this.state = "Waiting...";
+    this.status = "Waiting...";
     this.busy = false;
     this.genomeID = -1;
 }

@@ -11,15 +11,18 @@ html(lang="en")
             form(action="/task" method='POST')
                 div.form-group
                     label(for="tgame") Game:
-                    select.form-control.custom-select(name="game")
+                    select.form-control.custom-select(name="game" id="tgame")
                         each game in games
                             option(value=`${game._id}`) #{game.name} ( #{game.fitness} )
+                    label(for="tnet") Network type:
+                    select.form-control.custom-select(name="net" id="tnet")
+                        option(value='0') Multilayer Perceptron
                 div.form-group
                     - var disabled = remainingCycles > 0;
                     input.btn.btn-primary(type="submit" value="Do 1 Gen" name="onegen" disabled=disabled)
                     input.btn.btn-primary(type="submit" value="Do 100 Gen" name="hungen" disabled=disabled)
                     input.btn.btn-primary(type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
-                    input.btn.btn-warning(type="submit" value="Pause" name="pause" disabled=!disabled)
+                    input.btn.btn-warning(type="submit" value="Pause" name="pause" disabled=(remainingCycles <= 1))
             hr
             h2 Evolution summary
             hr
@@ -33,7 +36,7 @@ html(lang="en")
                 div.card.w-75(style="max-width: 30%")
                     div.card-body
                         h5.card-title #{w.name} (#{index})
-                        p.card-text #{w.state}
+                        p.card-text #{w.status}
                         a(class="btn btn-danger") Kick
                 - index++
             if index > 0
