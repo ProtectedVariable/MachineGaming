@@ -63,7 +63,7 @@ app.get('/status', (req, res) => {
         "games": games,
         "currentGame": pool.currentGame,
         "currentFitness": pool.currentFitness,
-        "remainingCycles": pool.targetCycles - pool.cycles,
+        "remainingCycles": isFinite(pool.targetCycles) ? pool.targetCycles - pool.cycles : "Infinity",
         "fitnesses": pool.fitnesses
     });
 });

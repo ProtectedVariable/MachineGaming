@@ -3,7 +3,7 @@ const fitChart = new Chart(document.getElementById("canvasFitness").getContext('
     data: {
         labels: [],
         datasets: [{
-            label: "Average",
+            label: "Average Fitness",
             fill: false,
             borderColor: "rgb(218, 13, 19)",
             data:
