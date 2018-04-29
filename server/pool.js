@@ -5,6 +5,7 @@ const proto = require('./protobuf/mg_pb.js');
 function Pool(population) {
     this.workers = {};
     this.genomes = [];
+    this.fitnesses = [];
     for(let i = 0; i < population; i++) {
         this.genomes.push({code: ""+i, computing: false, fitness: 0}); //Empty genome
     }
@@ -86,6 +87,9 @@ Pool.prototype.sendTasksToClients = function() {
     if(allDone && !this.idle) {
         this.cycles++;
         this.idle = (this.cycles == this.targetCycles);
+        //Compute generation's average fitness
+        this.fitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
+
         //Regen genomes
         for (let i = 0; i < this.genomes.length; i++) {
             this.genomes[i].computing = false;
@@ -101,6 +105,7 @@ Pool.prototype.sendTasksToClients = function() {
 
 Pool.prototype.pauseTask = function() {
     this.targetCycles = this.cycles + 1;
+    this.sendTasksToClients();
 };
 
 module.exports.Pool = Pool;

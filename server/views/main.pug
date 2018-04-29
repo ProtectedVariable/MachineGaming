@@ -5,7 +5,7 @@ html(lang="en")
         div.container
             h1 MachineGaming
             if currentGame != "-"
-                h2 Current Task: #{currentGame} ( #{currentFitness} ) - #{remainingCycles} generation(s) remaining
+                h2(id="ctask") Current Task: #{currentGame} ( #{currentFitness} ) - #{remainingCycles} generation(s) remaining
             else
                 h2 Current Task: None
             form(action="/task" method='POST')
@@ -19,32 +19,35 @@ html(lang="en")
                         option(value='0') Multilayer Perceptron
                 div.form-group
                     - var disabled = remainingCycles > 0;
-                    input.btn.btn-primary(type="submit" value="Do 1 Gen" name="onegen" disabled=disabled)
-                    input.btn.btn-primary(type="submit" value="Do 100 Gen" name="hungen" disabled=disabled)
-                    input.btn.btn-primary(type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
-                    input.btn.btn-warning(type="submit" value="Pause" name="pause" disabled=(remainingCycles <= 1))
+                    input.btn.btn-primary(class="gen" type="submit" value="Do 1 Gen" name="onegen" disabled=disabled)
+                    input.btn.btn-primary(class="gen" type="submit" value="Do 100 Gen" name="hungen" disabled=disabled)
+                    input.btn.btn-primary(class="gen" type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
+                    input.btn.btn-warning(class="pause" type="submit" value="Pause" name="pause" disabled=(remainingCycles <= 1))
             hr
             h2 Evolution summary
             hr
             h2 Workers
-            - var index = 0;
-            each w in workers
-                if index % 3 == 0
-                    if index != 0
-                        | </div>
-                    | <div class="card-deck" style="width: 100%;">
-                div.card.w-75(style="max-width: 30%")
-                    div.card-body
-                        h5.card-title #{w.name} (#{index})
-                        p.card-text #{w.status}
-                        a(class="btn btn-danger") Kick
-                - index++
-            if index > 0
-                | </div>
-            else
-                p(style="color: red") No Workers
+            div(id="wdiv")
+                - var index = 0;
+                each w in workers
+                    if index % 3 == 0
+                        if index != 0
+                            | </div>
+                        | <div class="card-deck" style="width: 100%;">
+                    div.card.w-75(style="max-width: 30%")
+                        div.card-body
+                            h5.card-title #{w.name} (#{index})
+                            p.card-text #{w.status}
+                            a(class="btn btn-danger") Kick
+                    - index++
+                if index > 0
+                    | </div>
+                else
+                    p(style="color: red") No Workers
             hr
             h2 Graphs
-            canvas(style="width: 100%; height: 720px;")
+            canvas(id="canvasFitness" style="width: 100%; height: 720px;")
+        script(type="text/javascript" src="/scripts/autorefresh.js")
+        script(type="text/javascript" src="/scripts/chart.js")
                 
                 

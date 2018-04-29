@@ -1,3 +1,3 @@
 all:
 	protoc --js_out=import_style=commonjs,binary:server/ protobuf/mg.proto
-	protoc --java_out=client/src/me/pv/mg/protobuf/ protobuf/mg.proto
+	protoc --java_out=client/src protobuf/mg.proto

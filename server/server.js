@@ -42,6 +42,7 @@ db.once('open', function() {
 
 app.set('view engine', 'pug');
 app.set('view options', {"pretty": true});
+app.use('/scripts', express.static(__dirname + '/scripts/'));
 app.locals.pretty = true;
 
 mgnetwork.init(pool);
@@ -53,6 +54,17 @@ app.get('/', (req, res) => {
         "currentGame": pool.currentGame,
         "currentFitness": pool.currentFitness,
         "remainingCycles": pool.targetCycles - pool.cycles
+    });
+});
+
+app.get('/status', (req, res) => {
+	res.json({
+        "workers": pool.workers,
+        "games": games,
+        "currentGame": pool.currentGame,
+        "currentFitness": pool.currentFitness,
+        "remainingCycles": pool.targetCycles - pool.cycles,
+        "fitnesses": pool.fitnesses
     });
 });
 
