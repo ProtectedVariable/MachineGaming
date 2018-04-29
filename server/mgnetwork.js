@@ -32,7 +32,6 @@ function init(_pool) {
         log.verbose(`New connection from ${id} (${sock.remoteAddress} : ${sock.remotePort})`);
 
         sock.on('data', function(data) {
-            log.verbose(`New message from ${id}`)
             let bytes = Array.prototype.slice.call(data, 0);
             let offset = 0;
             do {
@@ -61,7 +60,7 @@ function init(_pool) {
 
                  }
                  offset += size + 2;
-                 log.verbose(message);
+                 log.verbose(`New message from ${id}: ${message}`);
              } while(offset < bytes.length);
         });
 
@@ -75,10 +74,10 @@ function init(_pool) {
 }
 
 function sendTo(id, messageType, message) {
-    const buf = Buffer.alloc(2);
-    const mArray = message.serializeBinary();
+    const buf = Buffer.alloc(5, 0);
     buf[0] = messageType;
-    buf[1] = mArray.length;
+    const mArray = message.serializeBinary();
+    buf.writeUInt32BE(mArray.length, 1);
     connections[id].write(buf);
     connections[id].write(Buffer.from(mArray));
 }

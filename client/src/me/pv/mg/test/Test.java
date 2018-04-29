@@ -3,6 +3,7 @@ package me.pv.mg.test;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 
 import me.pv.mg.protobuf.Mg.MGComputeRequest;
 import me.pv.mg.protobuf.Mg.MGComputeResponse;
@@ -31,10 +32,12 @@ public class Test {
         		byte[] in_type = new byte[1];
         		sock.getInputStream().read(in_type);
         
-        		byte[] in_size = new byte[1];
+        		byte[] in_size = new byte[4];
         		sock.getInputStream().read(in_size);
-        
-        		byte[] in_msg = new byte[in_size[0]];
+        		ByteBuffer bb = ByteBuffer.wrap(in_size);
+        		int size = bb.getInt();
+
+        		byte[] in_msg = new byte[size];
         		sock.getInputStream().read(in_msg);
         		
         		switch(MGMessages.forNumber(in_type[0])) {

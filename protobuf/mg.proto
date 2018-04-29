@@ -11,7 +11,7 @@ enum MGMessages {
 }
 
 enum MGNetworkType {
-    MG_MultilayerPerceptron = 1;
+    MG_MULTILAYER_PERCEPTRON = 1;
     MG_NEAT = 2;
 }
 
@@ -33,6 +33,7 @@ message MGComputeRequest {
     required .MGComputeInfo compute_info = 1;
     required string genome = 2;
     required .MGNetworkType net_type = 3;
+    required string net_metadata = 4;
 }
 
 message MGComputeResponse {

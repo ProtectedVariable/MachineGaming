@@ -1,19 +1,19 @@
 const mgclient = require('./client.js');
 const mgnetwork = require('./mgnetwork.js');
 const proto = require('./protobuf/mg_pb.js');
+const genetic = require('./genetic.js');
 
 function Pool(population) {
     this.workers = {};
     this.genomes = [];
     this.fitnesses = [];
-    for(let i = 0; i < population; i++) {
-        this.genomes.push({code: ""+i, computing: false, fitness: 0}); //Empty genome
-    }
+    this.genomes = [];
     this.cycles = 0;
     this.targetCycles = 0;
     this.population = population;
     this.currentGame = "-";
     this.currentFitness = "-";
+    this.currentType = genetic.GenomeType.MULTILAYER_PERCEPTRON;
     this.idle = true;
     this.computingGenomes = 0;
 }
@@ -27,6 +27,10 @@ Pool.prototype.addWorker = function(id, name) {
 
 Pool.prototype.removeWorker = function(id) {
     delete this.workers[id];
+}
+
+Pool.prototype.createInitialPopulation = function(genomeType, netMetadata) {
+    this.genomes = genetic.createRandomGeneration(genomeType, this.population, netMetadata);
 }
 
 Pool.prototype.newTask = function(game, fitness, numGens) {
@@ -75,7 +79,8 @@ Pool.prototype.sendTasksToClients = function() {
                     let request = new proto.MGComputeRequest();
                     request.setComputeInfo(computeInfo);
                     request.setGenome(this.genomes[i].code);
-                    request.setNetType(proto.MGNetworkType.MG_MULTILAYERPERCEPTRON);
+                    request.setNetType(this.currentType == genetic.GenomeType.MULTILAYER_PERCEPTRON ? proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON : proto.MGNetworkType.MG_NEAT);
+                    request.setNetMetadata(genetic.metadataString(genetic.NetworkMetadata[0]))
                     mgnetwork.sendTo(index, proto.MGMessages.MG_COMPUTE_REQUEST, request);
                     w.busy = true;
                     break;
@@ -94,6 +99,7 @@ Pool.prototype.sendTasksToClients = function() {
         for (let i = 0; i < this.genomes.length; i++) {
             this.genomes[i].computing = false;
         }
+        genetic.createNextGeneration(this.genomes, this.currentType, 0.1)
         //Reset client state
         for (let index in this.workers) {
             this.workers[index].busy = false;

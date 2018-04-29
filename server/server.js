@@ -9,7 +9,8 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const pool = new mgpool.Pool(100);
-
+//TODO actually do something smart
+pool.createInitialPopulation(genetic.GenomeType.MULTILAYER_PERCEPTRON, genetic.NetworkMetadata[0]);
 
 log.level = 'debug';
 app.use(cors());
@@ -81,5 +82,5 @@ app.post('/task', (req, res) => {
 });
 
 app.listen(8080,  () => {
-    log.info(`Express running → ADDRESS http://localhost:8080`);
+    log.info("Express running → ADDRESS http://localhost:8080");
 });
