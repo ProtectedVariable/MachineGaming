@@ -42,10 +42,18 @@ public class Test {
         		
         		switch(MGMessages.forNumber(in_type[0])) {
 					case MG_COMPUTE_REQUEST:
-						System.out.println(MGMessages.forNumber(in_type[0])+" "+MGComputeRequest.parseFrom(in_msg));
+						MGComputeRequest cr = MGComputeRequest.parseFrom(in_msg);
+						System.out.println(MGMessages.forNumber(in_type[0])+" "+cr);
 						sendComputeResponse();
+						String[] genes = cr.getGenome().split(",");
+						float score = 0;
+						for (String g : genes) {
+							if(!g.isEmpty()) {
+								score += Float.parseFloat(g);
+							}
+						}
 						Thread.sleep(10);
-						sendComputeResult();
+						sendComputeResult(score);
 						break;
 					case MG_END:
 						System.out.println(MGMessages.forNumber(in_type[0])+" "+MGEnd.parseFrom(in_msg));
@@ -68,8 +76,8 @@ public class Test {
 		sock.getOutputStream().write(out);
 	}
 	
-    public static void sendComputeResult() throws IOException {
-    		MGComputeResult msg = MGComputeResult.newBuilder().setFitness((float)Math.random() * 1000).setTime(10).build();
+    public static void sendComputeResult(float fit) throws IOException {
+    		MGComputeResult msg = MGComputeResult.newBuilder().setFitness(fit).setTime(10).build();
 		byte[] out = new byte[msg.getSerializedSize() + 2];
 		out[0] = (byte) MGMessages.MG_COMPUTE_RESULT.getNumber();
 		out[1] = (byte) msg.getSerializedSize();

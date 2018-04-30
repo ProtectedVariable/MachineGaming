@@ -70,6 +70,9 @@ Pool.prototype.sendTasksToClients = function() {
         if(w.busy == false) {
             allDone = true;
             for (let i = 0; i < this.genomes.length; i++) {
+                if(this.genomes[i].fitness == -1) {
+                    allDone = false;
+                }
                 if(this.genomes[i].computing == false) {
                     allDone = false;
                     w.genomeID = i;
@@ -94,18 +97,15 @@ Pool.prototype.sendTasksToClients = function() {
         this.idle = (this.cycles == this.targetCycles);
         //Compute generation's average fitness
         this.fitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
-
         //Regen genomes
-        for (let i = 0; i < this.genomes.length; i++) {
-            this.genomes[i].computing = false;
-        }
-        genetic.createNextGeneration(this.genomes, this.currentType, 0.1)
+        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, 0.1, this.population);
         //Reset client state
         for (let index in this.workers) {
             this.workers[index].busy = false;
         }
-
-        this.sendTasksToClients();
+        if(!this.idle) {
+            this.sendTasksToClients();
+        }
     }
 }
 
