@@ -36,7 +36,7 @@ function createRandomGeneration(genomeType, population, netMetadata) {
 }
 
 function createNextGeneration(genomes, genomeType, mutationRate, population) {
-    const startProba = 100;
+    const startProba = 1.0;
     let nextgen = [];
     let childs = 0;
     genomes.sort(function(a, b) { //Sort greater fitness first
