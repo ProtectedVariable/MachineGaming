@@ -1,5 +1,7 @@
 package me.pv.mg.client.nn;
 
+import java.awt.Graphics;
+
 public abstract class NeuralNetwork {
 
 	protected int inputCount, outputCount;
@@ -12,5 +14,6 @@ public abstract class NeuralNetwork {
 	}
 	
 	public abstract float[] propagateForward(float[] input);
+	public abstract void display(Graphics g);
 	
 }

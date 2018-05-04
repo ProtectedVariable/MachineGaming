@@ -34,6 +34,7 @@ public class Client extends Thread {
 		this.nn = this.gc.toNeuralNetwork(genome, metadata, type);
 		if(game.equals("Asteroid")) {
 			this.sim = new AsteroidSimulator();
+			this.sim.simulate(this.nn, false);
 		}
 	}
 	

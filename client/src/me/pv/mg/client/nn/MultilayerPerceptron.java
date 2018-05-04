@@ -1,5 +1,7 @@
 package me.pv.mg.client.nn;
 
+import java.awt.Graphics;
+
 public class MultilayerPerceptron extends NeuralNetwork {
 	
 	private float[] inToHid;
@@ -75,6 +77,12 @@ public class MultilayerPerceptron extends NeuralNetwork {
 			output[i] = this.activationFunction.activate(sum);
 		}
 		return output;
+	}
+
+	@Override
+	public void display(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

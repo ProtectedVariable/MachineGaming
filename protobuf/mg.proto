@@ -17,6 +17,7 @@ enum MGNetworkType {
 
 message MGJoin {
     optional string pretty_name = 1;
+    optional bool spectator = 2;
 }
 
 message MGJoinResponse {
