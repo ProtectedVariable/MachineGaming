@@ -3,6 +3,7 @@ package me.pv.mg.client;
 import me.pv.mg.client.genetic.GenomeCodec;
 import me.pv.mg.client.network.Network;
 import me.pv.mg.client.nn.NeuralNetwork;
+import me.pv.mg.client.simulation.AsteroidSimulator;
 import me.pv.mg.client.simulation.Simulator;
 import me.pv.mg.protobuf.Mg.MGNetworkType;
 
@@ -31,7 +32,9 @@ public class Client extends Thread {
 	
 	public void startSimulation(String game, String fitness, String genome, String metadata, MGNetworkType type) {
 		this.nn = this.gc.toNeuralNetwork(genome, metadata, type);
-		
+		if(game.equals("Asteroid")) {
+			this.sim = new AsteroidSimulator();
+		}
 	}
 	
 	public static void main(String[] args) {

@@ -8,7 +8,6 @@ import com.google.protobuf.GeneratedMessageV3;
 
 import me.pv.mg.client.Client;
 import me.pv.mg.protobuf.Mg.MGComputeRequest;
-import me.pv.mg.protobuf.Mg.MGEnd;
 import me.pv.mg.protobuf.Mg.MGJoin;
 import me.pv.mg.protobuf.Mg.MGJoinResponse;
 import me.pv.mg.protobuf.Mg.MGMessages;
