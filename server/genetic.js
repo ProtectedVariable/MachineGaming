@@ -19,7 +19,7 @@ function metadataString(meta) {
 function createRandomGeneration(genomeType, population, netMetadata) {
     let genomes = [];
 
-    let linkCount = netMetadata.inputCount * netMetadata.hLayers[0];
+    let linkCount = (netMetadata.inputCount + 1) * netMetadata.hLayers[0];
     for (let k = 1; k < netMetadata.hLayerCount; k++) {
         linkCount += netMetadata.hLayers[k] * netMetadata.hLayers[k-1];
     }

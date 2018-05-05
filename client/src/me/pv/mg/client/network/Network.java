@@ -8,6 +8,8 @@ import com.google.protobuf.GeneratedMessageV3;
 
 import me.pv.mg.client.Client;
 import me.pv.mg.protobuf.Mg.MGComputeRequest;
+import me.pv.mg.protobuf.Mg.MGComputeResponse;
+import me.pv.mg.protobuf.Mg.MGComputeResult;
 import me.pv.mg.protobuf.Mg.MGJoin;
 import me.pv.mg.protobuf.Mg.MGJoinResponse;
 import me.pv.mg.protobuf.Mg.MGMessages;
@@ -30,6 +32,16 @@ public class Network {
 	public void joinPool(String name) {
 		MGJoin msg = MGJoin.newBuilder().setPrettyName(name).build();
 		sendMessage(MGMessages.MG_JOIN, msg);
+	}
+	
+	public void sendResult(float fitness, int time) {
+		MGComputeResult msg = MGComputeResult.newBuilder().setFitness(fitness).setTime(time).build();
+		sendMessage(MGMessages.MG_COMPUTE_RESULT, msg);
+	}
+	
+	public void sendResponse(boolean cando) {
+		MGComputeResponse msg = MGComputeResponse.newBuilder().setCanDo(cando).build();
+		sendMessage(MGMessages.MG_COMPUTE_RESPONSE, msg);
 	}
 
 	public void waitNextMessage() {
