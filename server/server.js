@@ -8,7 +8,7 @@ const log = require('winston');
 const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
-const pool = new mgpool.Pool(100);
+const pool = new mgpool.Pool(500);
 //TODO actually do something smart
 pool.createInitialPopulation(genetic.GenomeType.MULTILAYER_PERCEPTRON, genetic.NetworkMetadata[0]);
 

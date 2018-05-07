@@ -53,6 +53,7 @@ Pool.prototype.onResponse = function(id, message) {
         this.workers[id].busy = true;
         this.genomes[this.workers[id].genomeID].computing = true;
     }
+    this.genomes[this.workers[id].genomeID].waiting = false;
 }
 
 Pool.prototype.onResult = function(id, message) {
@@ -73,8 +74,9 @@ Pool.prototype.sendTasksToClients = function() {
                 if(this.genomes[i].fitness == -1) {
                     allDone = false;
                 }
-                if(this.genomes[i].computing == false) {
+                if(this.genomes[i].computing == false && !this.genomes[i].waiting) {
                     allDone = false;
+                    this.genomes[i].waiting = true;
                     w.genomeID = i;
                     let computeInfo = new proto.MGComputeInfo();
                     computeInfo.setGame(this.currentGame);
@@ -98,7 +100,7 @@ Pool.prototype.sendTasksToClients = function() {
         //Compute generation's average fitness
         this.fitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
         //Regen genomes
-        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, 0.1, this.population);
+        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, 0.01, this.population);
         //Reset client state
         for (let index in this.workers) {
             this.workers[index].busy = false;

@@ -36,7 +36,7 @@ function createRandomGeneration(genomeType, population, netMetadata) {
 }
 
 function createNextGeneration(genomes, genomeType, mutationRate, population) {
-    const startProba = 1.0;
+    const startProba = 0.75;
     let nextgen = [];
     let childs = 0;
     genomes.sort(function(a, b) { //Sort greater fitness first
@@ -93,7 +93,6 @@ function mutate(g, mr) {
         let i = Math.ceil(Math.random() * (gArray.length - 1));
         let mutationGene = gArray[i];
         if(mutationGene != undefined && mutationGene != "") {
-            console.log(i+" : "+mutationGene);
             let newValue = parseFloat(mutationGene) + (Math.random() * 4 - 2);
             gArray[i] = ""+newValue;
             g.code = "";

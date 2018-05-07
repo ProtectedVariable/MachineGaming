@@ -15,11 +15,13 @@ public class Client extends Thread {
 	private Simulator sim;
 	
 	private String name;
+	private boolean display;
 	
-	public Client(String serverIP, String name) {
+	public Client(String serverIP, String name, boolean display) {
 		this.network = new Network(serverIP, this);
 		this.gc = new GenomeCodec();
 		this.name = name;
+		this.display = display;
 	}
 	
 	@Override
@@ -36,7 +38,7 @@ public class Client extends Thread {
 			this.network.sendResponse(true);
 			this.sim = new AsteroidSimulator();
 			long startTime = System.currentTimeMillis();
-			float simFitness = this.sim.simulate(this.nn, fitness, true);
+			float simFitness = this.sim.simulate(this.nn, fitness, display);
 			this.network.sendResult(simFitness, (int) (System.currentTimeMillis() - startTime));
 		} else {
 			this.network.sendResponse(false);
@@ -51,7 +53,7 @@ public class Client extends Thread {
 		int threads = Integer.parseInt(args[1]);
 		Client[] clients = new Client[threads];
 		for (int i = 0; i < threads; i++) {
-			Client c = new Client(args[0], args[2]);
+			Client c = new Client(args[0], args[2], true);
 			clients[i] = c;
 			c.start();
 		}

@@ -2,6 +2,7 @@ package me.pv.mg.client.simulation;
 
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class AsteroidSimulator implements Simulator {
 
 	@Override
 	public void paint(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		for (Asteroid asteroid : asteroids) {
 			int s = asteroid.size * Asteroid.RENDER_MULT;
 			g.drawOval((int) (asteroid.x - s / 2f), (int) (asteroid.y - s / 2f), s, s);
@@ -36,8 +39,6 @@ public class AsteroidSimulator implements Simulator {
 		g.translate((int) ship.x, (int) ship.y);
 		g.rotate(ship.angle);
 		g.drawPolygon(ship.poly);
-		g.rotate(0);
-		g.translate(0, 0);
 	}
 
 	@Override
@@ -53,22 +54,37 @@ public class AsteroidSimulator implements Simulator {
 
 		while (ship.isAlive()) {
 
-			if (bulletTime > 0) {
-				bulletTime--;
-			}
-			if (asteroids.size() == 0) {
-				ascount++;
-				for (int i = 0; i < ascount; i++) {
-					asteroids.add(new Asteroid());
+			float[] input = new float[8];
+			for (int i = 0; i < 8; i++) {
+				double angle = 2 * Math.PI * i / 8;
+				float vx = (float) (Math.cos(angle + ship.angle));
+				float vy = (float) (Math.sin(angle + ship.angle));
+
+				float min = Float.MAX_VALUE;
+				for (Asteroid asteroid : asteroids) {
+					float ux = asteroid.x - ship.x;
+					float uy = asteroid.y - ship.y;
+
+					float dot = ux * vx + uy * vy;
+					if(dot < 0) {
+						continue;
+					}
+					float projx = dot * vx;
+					float projy = dot * vy;
+					float dist = (float) Math.sqrt(projx * projx + projy * projy);
+					if (dist < min) {
+						min = dist;
+					}
 				}
+				input[i] = 1.0f / min;
 			}
+			float[] out = nn.propagateForward(input);
 
 			for (int i = 0; i < bullets.length; i++) {
-				if (bullets[i] == null && bulletTime == 0) {
-					ship.angle += 0.1f;
+				if (bullets[i] == null && bulletTime == 0 && out[0] > 0.5) {
 					bulletTime = 30;
 					bullets[i] = new Bullet((int) ship.x, (int) ship.y, ship.angle);
-				} else if(bullets[i] != null) {
+				} else if (bullets[i] != null) {
 					bullets[i].x += bullets[i].vx;
 					bullets[i].y += bullets[i].vy;
 					if (bullets[i].x < 0) {
@@ -79,6 +95,35 @@ public class AsteroidSimulator implements Simulator {
 					}
 					bullets[i].x %= WIDTH;
 					bullets[i].y %= HEIGHT;
+				}
+			}
+
+			
+			if (out[1] > 0.5 && out[1] > out[2]) {
+				ship.angle += 0.05f;
+			} else if (out[2] > 0.5 && out[2] > out[1]) {
+				ship.angle -= 0.05f;
+			}
+
+			if (out[3] > 0.5) {
+				ship.forward();
+			}
+
+			if (bulletTime > 0) {
+				bulletTime--;
+			}
+			if (asteroids.size() == 0) {
+				ascount++;
+				for (int i = 0; i < ascount; i++) {
+					if(i == 0) {
+						Asteroid a = new Asteroid();
+						a.x = 0;
+						a.y = 0;
+						a.vx = a.vy = 1;
+						asteroids.add(a);
+					} else {
+						asteroids.add(new Asteroid());
+					}
 				}
 			}
 
@@ -124,7 +169,9 @@ public class AsteroidSimulator implements Simulator {
 			}
 			tick++;
 		}
-		frame.dispose();
+		if(frame != null) {
+			frame.dispose();
+		}
 		return tick;
 	}
 
@@ -139,8 +186,8 @@ public class AsteroidSimulator implements Simulator {
 			int y = (int) Math.round(Math.random());
 			this.x = x * WIDTH;
 			this.y = y * HEIGHT;
-			this.vx = (float) (Math.random() * 2);
-			this.vy = (float) (Math.random() * 2);
+			this.vx = (float) (Math.random() * 4) - 2;
+			this.vy = (float) (Math.random() * 4) - 2;
 		}
 
 		public Asteroid[] split() {
@@ -181,6 +228,19 @@ public class AsteroidSimulator implements Simulator {
 			this.x = WIDTH / 2;
 			this.y = HEIGHT / 2;
 			this.angle = (float) -(Math.PI / 2);
+		}
+
+		public void forward() {
+			this.x += Math.cos(angle) * 3;
+			this.y += Math.sin(angle) * 3;
+			if (this.x < 0) {
+				this.x = WIDTH - 1;
+			}
+			if (this.y < 0) {
+				this.y = HEIGHT - 1;
+			}
+			this.x %= WIDTH;
+			this.y %= HEIGHT;
 		}
 
 		public float getAngle() {
