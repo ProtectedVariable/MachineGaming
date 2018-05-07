@@ -36,7 +36,7 @@ public class Client extends Thread {
 			this.network.sendResponse(true);
 			this.sim = new AsteroidSimulator();
 			long startTime = System.currentTimeMillis();
-			float simFitness = this.sim.simulate(this.nn, fitness, false);
+			float simFitness = this.sim.simulate(this.nn, fitness, true);
 			this.network.sendResult(simFitness, (int) (System.currentTimeMillis() - startTime));
 		} else {
 			this.network.sendResponse(false);

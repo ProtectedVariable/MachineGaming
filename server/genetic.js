@@ -8,7 +8,7 @@ let NetworkMetadata = {
         inputCount: 8,
         hLayerCount: 2,
         hLayers: [6, 6],
-        outputCount: 5
+        outputCount: 4
     }
 };
 

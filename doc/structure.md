@@ -6,6 +6,13 @@
 
 ### Protocole
 
+### Serveur
+
+### Client
+
+- Spectateur
+- Participant
+
 ## Algorithme génétique
 
 - Population initiale
@@ -25,3 +32,12 @@
 ### NEAT
 
 - ?
+
+## Jeux
+
+### Asteroid
+
+- Principe
+- Inputs (Projection, distance)
+- Outputs
+- Résultats
