@@ -6,8 +6,8 @@ let GenomeType = {
 let NetworkMetadata = {
     0: { //ASTEROID_MULTILAYER_PERCEPTRON
         inputCount: 8,
-        hLayerCount: 2,
-        hLayers: [6, 6],
+        hLayerCount: 1,
+        hLayers: [12],
         outputCount: 4
     }
 };
@@ -36,9 +36,9 @@ function createRandomGeneration(genomeType, population, netMetadata) {
 }
 
 function createNextGeneration(genomes, genomeType, mutationRate, population) {
-    const startProba = 0.75;
+    const startProba = 0.90;
     let nextgen = [];
-    let childs = 0;
+    let childs = 1;
     genomes.sort(function(a, b) { //Sort greater fitness first
         if(a.fitness < b.fitness) {
             return 1;
@@ -47,6 +47,7 @@ function createNextGeneration(genomes, genomeType, mutationRate, population) {
         }
         return 0;
     });
+    nextgen.push({code: genomes[0].code, computing: false, fitness: -1});
     while(childs != population) {
         for (let i in genomes) {
             if(Math.random() < (startProba - (i / population))) {

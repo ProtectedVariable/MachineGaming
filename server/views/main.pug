@@ -27,7 +27,7 @@ html(lang="en")
             h2 Evolution summary
             hr
             h2 Workers
-            div(id="wdiv")
+            div(id="wdiv" style="max-height: 330px; overflow-y: scroll;")
                 - var index = 0;
                 each w in workers
                     if index % 3 == 0

@@ -6,7 +6,8 @@ const genetic = require('./genetic.js');
 function Pool(population) {
     this.workers = {};
     this.genomes = [];
-    this.fitnesses = [];
+    this.avgFitnesses = [];
+    this.bestFitnesses = [];
     this.genomes = [];
     this.cycles = 0;
     this.targetCycles = 0;
@@ -98,9 +99,11 @@ Pool.prototype.sendTasksToClients = function() {
         this.cycles++;
         this.idle = (this.cycles == this.targetCycles);
         //Compute generation's average fitness
-        this.fitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
+        this.avgFitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
+        //Get best fitness
+        this.bestFitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a, c) => (a > c) ? a : c);
         //Regen genomes
-        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, 0.01, this.population);
+        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, 0.1, this.population);
         //Reset client state
         for (let index in this.workers) {
             this.workers[index].busy = false;

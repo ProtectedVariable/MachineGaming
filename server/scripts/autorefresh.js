@@ -14,10 +14,11 @@ function refreshInfos() {
 
         //Update chart
         let chartCount = 0;
-        for (let i in result.fitnesses) {
+        for (let i in result.avgFitnesses) {
             chartCount++;
             fitChart.data.labels[i] = i;
-            fitChart.data.datasets[0].data[i] = result.fitnesses[i];
+            fitChart.data.datasets[0].data[i] = result.avgFitnesses[i];
+            //fitChart.data.datasets[1].data[i] = result.bestFitnesses[i];
         }
         if(chartCount != lastFitChartSize) {
             fitChart.update();
