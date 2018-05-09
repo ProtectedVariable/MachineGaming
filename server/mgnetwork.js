@@ -1,3 +1,4 @@
+"use strict";
 const net = require('net');
 const uuid = require("uuid/v1");
 const log = require('winston');

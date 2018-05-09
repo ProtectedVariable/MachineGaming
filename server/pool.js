@@ -1,3 +1,4 @@
+"use strict";
 const mgclient = require('./client.js');
 const mgnetwork = require('./mgnetwork.js');
 const proto = require('./protobuf/mg_pb.js');

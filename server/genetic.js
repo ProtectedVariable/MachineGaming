@@ -1,3 +1,4 @@
+"use strict";
 let GenomeType = {
     MULTILAYER_PERCEPTRON: 0,
     NEAT: 1

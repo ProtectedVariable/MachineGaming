@@ -1,3 +1,4 @@
+"use strict";
 function Client(wname) {
     this.name = wname;
     this.status = "Waiting...";
