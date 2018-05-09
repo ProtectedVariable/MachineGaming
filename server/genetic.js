@@ -8,7 +8,7 @@ let NetworkMetadata = {
     0: { //ASTEROID_MULTILAYER_PERCEPTRON
         inputCount: 8,
         hLayerCount: 1,
-        hLayers: [12],
+        hLayers: [6],
         outputCount: 4
     }
 };
@@ -37,9 +37,7 @@ function createRandomGeneration(genomeType, population, netMetadata) {
 }
 
 function createNextGeneration(genomes, genomeType, mutationRate, population) {
-    const startProba = 0.90;
     let nextgen = [];
-    let childs = 1;
     genomes.sort(function(a, b) { //Sort greater fitness first
         if(a.fitness < b.fitness) {
             return 1;
@@ -49,33 +47,37 @@ function createNextGeneration(genomes, genomeType, mutationRate, population) {
         return 0;
     });
     nextgen.push({code: genomes[0].code, computing: false, fitness: -1});
-    while(childs != population) {
-        for (let i in genomes) {
-            if(Math.random() < (startProba - (i / population))) {
-                //First parent
-                for (let j in genomes) {
-                    if(Math.random() < (startProba - (j / population))) {
-                        //Second parent
-                        let childGenome = {code: crossover(genomes[i], genomes[j]), computing: false, fitness: -1};
-                        mutate(childGenome, mutationRate);
-                        nextgen.push(childGenome);
-                        childs++;
-                        break;
-                    }
-                }
-            }
-            if(childs == population) {
-                break;
-            }
+    for(let i = 1; i < population; i++) {
+        let g = null;
+        if(i < (population * 10 / 100)) {
+            g = {code: genomes[i].code, computing: false, fitness: -1};
+        } else {
+            g = {code: crossover(select(genomes), select(genomes)), computing: false, fitness: -1};
         }
+        mutate(g, mutationRate);
+        nextgen.push(g);
     }
     return nextgen;
 }
 
+function select(population) {
+    let fitsum = population.map(x => x.fitness).reduce((a,c) => a + c);
+    let threshold = Math.random() * fitsum;
+    let sum = 0;
+    for (let i in population) {
+        sum += population[i].fitness;
+        if(sum >= threshold) {
+            console.log(i);
+            return population[i].code;
+        }
+    }
+    return population[0].code;
+}
+
 function crossover(g1, g2) {
-    let g1Array = g1.code.split(",");
-    let g2Array = g2.code.split(",");
-    let crosspoint = Math.ceil(Math.random() * (g1Array.length - 1));
+    let g1Array = g1.split(",");
+    let g2Array = g2.split(",");
+    let crosspoint = Math.round(Math.random() * (g1Array.length - 1));
     let newCode = "";
     for(let i = 0; i < g1Array.length; i++) {
         let g = "";
@@ -94,13 +96,11 @@ function mutate(g, mr) {
         let gArray = g.code.split(",");
         let i = Math.ceil(Math.random() * (gArray.length - 1));
         let mutationGene = gArray[i];
-        if(mutationGene != undefined && mutationGene != "") {
-            let newValue = parseFloat(mutationGene) + (Math.random() * 4 - 2);
-            gArray[i] = ""+newValue;
-            g.code = "";
-            for (let j = 0; j < gArray.length; j++) {
-                g.code += gArray[i] + (j == gArray.length - 1 ? "": ",");
-            }
+        let newValue = parseFloat(mutationGene) + (Math.random() * 2 - 1);
+        gArray[i] = ""+newValue;
+        g.code = "";
+        for (let j = 0; j < gArray.length; j++) {
+            g.code += gArray[j] + (j == gArray.length - 1 ? "": ",");
         }
     }
 }

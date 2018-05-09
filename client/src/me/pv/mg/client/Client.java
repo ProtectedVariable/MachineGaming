@@ -53,7 +53,7 @@ public class Client extends Thread {
 		int threads = Integer.parseInt(args[1]);
 		Client[] clients = new Client[threads];
 		for (int i = 0; i < threads; i++) {
-			Client c = new Client(args[0], args[2], true);
+			Client c = new Client(args[0], args[2], false);
 			clients[i] = c;
 			c.start();
 		}

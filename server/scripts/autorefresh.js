@@ -20,8 +20,15 @@ function refreshInfos() {
             fitChart.data.datasets[0].data[i] = result.avgFitnesses[i];
             //fitChart.data.datasets[1].data[i] = result.bestFitnesses[i];
         }
+        //Update chart
+        for (let i in result.bestFitnesses) {
+            bestfitChart.data.labels[i] = i;
+            bestfitChart.data.datasets[0].data[i] = result.bestFitnesses[i];
+            //fitChart.data.datasets[1].data[i] = result.bestFitnesses[i];
+        }
         if(chartCount != lastFitChartSize) {
             fitChart.update();
+            bestfitChart.update();
             lastFitChartSize = chartCount;
         }
 

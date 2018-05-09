@@ -16,6 +16,7 @@
 ## Algorithme génétique
 
 - Population initiale
+- Elitisme
 - Crossover
 - Mutation
 - Génome (Codec)
@@ -41,3 +42,4 @@
 - Inputs (Projection, distance)
 - Outputs
 - Résultats
+
