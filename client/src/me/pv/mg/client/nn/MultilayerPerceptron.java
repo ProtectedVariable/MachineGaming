@@ -72,7 +72,7 @@ public class MultilayerPerceptron extends NeuralNetwork {
 			float sum = 0;
 			for (int j = 0; j < hidValue[hidValue.length - 1].length; j++) {
 				//take the furtest layer and forward to output
-				sum += hidValue[hidValue.length - 1][j] * hidToOut[j + i * (hidValue.length - 1)];
+				sum += hidValue[hidValue.length - 1][j] * hidToOut[j + i * hidValue[hidValue.length - 1].length];
 			}
 			output[i] = this.activationFunction.activate(sum);
 		}
@@ -81,7 +81,6 @@ public class MultilayerPerceptron extends NeuralNetwork {
 
 	@Override
 	public void display(Graphics g) {
-		// TODO Auto-generated method stub
 		
 	}
 	
