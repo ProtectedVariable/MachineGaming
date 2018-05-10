@@ -26,7 +26,7 @@ public class Client extends Thread {
 	
 	@Override
 	public void run() {
-		this.network.joinPool(name);
+		this.network.joinPool(name, display);
 		while(true) {
 			this.network.waitNextMessage();
 		}

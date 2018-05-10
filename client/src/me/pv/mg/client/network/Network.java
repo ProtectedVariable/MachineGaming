@@ -1,5 +1,6 @@
 package me.pv.mg.client.network;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -19,18 +20,20 @@ public class Network {
 	private Socket sock;
 	private static final int PORT = 4567;
 	private Client parent;
+	private DataInputStream input;
 
 	public Network(String ip, Client parent) {
 		try {
 			this.sock = new Socket(ip, PORT);
 			this.parent = parent;
+			this.input = new DataInputStream(this.sock.getInputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void joinPool(String name) {
-		MGJoin msg = MGJoin.newBuilder().setPrettyName(name).build();
+	public void joinPool(String name, boolean spec) {
+		MGJoin msg = MGJoin.newBuilder().setPrettyName(name).setSpectator(spec).build();
 		sendMessage(MGMessages.MG_JOIN, msg);
 	}
 	
@@ -47,15 +50,15 @@ public class Network {
 	public void waitNextMessage() {
 		try {
 			byte[] in_type = new byte[1];
-			sock.getInputStream().read(in_type);
+			input.readFully(in_type);
 
 			byte[] in_size = new byte[4];
-			sock.getInputStream().read(in_size);
+			input.readFully(in_size);
 			ByteBuffer bb = ByteBuffer.wrap(in_size);
 			int size = bb.getInt();
 
 			byte[] in_msg = new byte[size];
-			sock.getInputStream().read(in_msg);
+			input.readFully(in_msg);
 
 			switch (MGMessages.forNumber(in_type[0])) {
 				case MG_COMPUTE_REQUEST:

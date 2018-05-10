@@ -114,10 +114,19 @@ public class AsteroidSimulator implements Simulator {
 				int s = ma != null ? ma.size : 0;
 				input[i] = 1.0f / (min - (ship.SIZE / 2) - (s * Asteroid.RENDER_MULT / 2));
 			}
+			
+			
 			//System.out.println(input[0]+" "+input[1]+" "+input[2]+" "+input[3]+" "+input[4]+" "+input[5]+" "+input[6]+" "+input[7]);
 			float[] out = nn.propagateForward(input);
-			System.out.println(out[0]+" "+out[1]+" "+out[2]+" "+out[3]);
-
+			//System.out.println(out[0]+" "+out[1]+" "+out[2]+" "+out[3]);
+			
+			/*
+			out[0] = frame.down ? 1 : 0;
+			out[1] = frame.right ? 1 : 0;
+			out[2] = frame.left ? 1 : 0;
+			out[3] = frame.up ? 1 : 0;
+			*/
+			
 			for (int i = 0; i < bullets.length; i++) {
 				if (bullets[i] == null && bulletTime == 0 && out[0] > 0.8) {
 					bulletTime = 60;
@@ -197,7 +206,7 @@ public class AsteroidSimulator implements Simulator {
 
 			if (display) {
 				try {
-					Thread.sleep(4);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -215,7 +224,7 @@ public class AsteroidSimulator implements Simulator {
 		private float x, y;
 		private float vx, vy;
 		private int size = 3;
-		private static final int RENDER_MULT = 50;
+		private static final int RENDER_MULT = 40;
 
 		public Asteroid() {
 			int x = (int) Math.round(Math.random());
@@ -270,8 +279,8 @@ public class AsteroidSimulator implements Simulator {
 		}
 
 		public void forward() {
-			this.vx += Math.cos(angle) * 1;
-			this.vy += Math.sin(angle) * 1;
+			this.vx += Math.cos(angle) * 0.8;
+			this.vy += Math.sin(angle) * 0.8;
 			if (this.vx * this.vx + this.vy * this.vy > MAX_SPEED * MAX_SPEED) {
 				float div = (float) Math.sqrt(this.vx * this.vx + this.vy * this.vy);
 				this.vx = this.vx / div * MAX_SPEED;
@@ -282,14 +291,8 @@ public class AsteroidSimulator implements Simulator {
 		public void update() {
 			this.x += vx;
 			this.y += vy;
-			this.vx -= 0.1f;
-			this.vy -= 0.1f;
-			if (vx < 0) {
-				vx = 0;
-			}
-			if (vy < 0) {
-				vy = 0;
-			}
+			this.vx /= 1.08f;
+			this.vy /= 1.08f;
 			if (this.x < 0) {
 				this.x = WIDTH - 1;
 			}

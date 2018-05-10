@@ -14,7 +14,11 @@ function handleJoin(id, message) {
     //Always accepted
     response.setAccepted(true);
     sendTo(id, proto.MGMessages.MG_JOIN_RESPONSE, response);
-    pool.addWorker(id, message.getPrettyName());
+    if(message.getSpectator() == true) {
+
+    } else {
+        pool.addWorker(id, message.getPrettyName());
+    }
 }
 
 function dispose(id) {
