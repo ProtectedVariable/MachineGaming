@@ -6,6 +6,7 @@ const genetic = require('./genetic.js');
 
 function Pool(population) {
     this.workers = {};
+    this.spectators = {};
     this.genomes = [];
     this.avgFitnesses = [];
     this.bestFitnesses = [];
@@ -29,6 +30,11 @@ Pool.prototype.addWorker = function(id, name) {
 
 Pool.prototype.removeWorker = function(id) {
     delete this.workers[id];
+    delete this.spectators[id];
+}
+
+Pool.prototype.addSpectator = function(id, name) {
+    this.spectators[id] = new mgclient.Client(name);
 }
 
 Pool.prototype.createInitialPopulation = function(genomeType, netMetadata) {
@@ -103,6 +109,20 @@ Pool.prototype.sendTasksToClients = function() {
         this.avgFitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
         //Get best fitness
         this.bestFitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a, c) => (a > c) ? a : c);
+
+        let best = this.genomes.reduce((a, c) => (a.fitness > c.fitness) ? a : c);
+        let computeInfo = new proto.MGComputeInfo();
+        computeInfo.setGame(this.currentGame);
+        computeInfo.setFitness(this.currentFitness);
+        let request = new proto.MGComputeRequest();
+        request.setComputeInfo(computeInfo);
+        request.setGenome(best.code);
+        request.setNetType(this.currentType == genetic.GenomeType.MULTILAYER_PERCEPTRON ? proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON : proto.MGNetworkType.MG_NEAT);
+        request.setNetMetadata(genetic.metadataString(genetic.NetworkMetadata[0]))
+        for (var a in this.spectators) {
+            mgnetwork.sendTo(a, proto.MGMessages.MG_COMPUTE_REQUEST, request);
+        }
+
         //Regen genomes
         this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, 0.1, this.population);
         //Reset client state

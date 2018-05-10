@@ -8,7 +8,6 @@ import me.pv.mg.protobuf.Mg.MGNetworkType;
 public class GenomeCodec {
 
 	public NeuralNetwork toNeuralNetwork(String genome, String metadata, MGNetworkType type) {
-		System.out.println(genome);
 		if (type == MGNetworkType.MG_MULTILAYER_PERCEPTRON) {
 			String[] meta = metadata.split(",");
 			int inputCount = Integer.parseInt(meta[0]);

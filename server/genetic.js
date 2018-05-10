@@ -8,7 +8,7 @@ let NetworkMetadata = {
     0: { //ASTEROID_MULTILAYER_PERCEPTRON
         inputCount: 8,
         hLayerCount: 1,
-        hLayers: [6],
+        hLayers: [12],
         outputCount: 4
     }
 };
@@ -49,8 +49,8 @@ function createNextGeneration(genomes, genomeType, mutationRate, population) {
     nextgen.push({code: genomes[0].code, computing: false, fitness: -1});
     for(let i = 1; i < population; i++) {
         let g = null;
-        if(i < (population * 10 / 100)) {
-            g = {code: genomes[i].code, computing: false, fitness: -1};
+        if(i < population / 2) {
+            g = {code: select(genomes), computing: false, fitness: -1};
         } else {
             g = {code: crossover(select(genomes), select(genomes)), computing: false, fitness: -1};
         }
@@ -67,7 +67,6 @@ function select(population) {
     for (let i in population) {
         sum += population[i].fitness;
         if(sum >= threshold) {
-            console.log(i);
             return population[i].code;
         }
     }

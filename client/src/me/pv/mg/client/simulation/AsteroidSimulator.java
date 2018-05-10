@@ -14,7 +14,7 @@ public class AsteroidSimulator implements Simulator {
 	private Bullet[] bullets;
 	private Ship ship;
 	public static final int WIDTH = 720;
-	public static final int HEIGHT = 500;
+	public static final int HEIGHT = 720;
 
 	public AsteroidSimulator() {
 		this.asteroids = new ArrayList<>();
@@ -224,7 +224,7 @@ public class AsteroidSimulator implements Simulator {
 		private float x, y;
 		private float vx, vy;
 		private int size = 3;
-		private static final int RENDER_MULT = 40;
+		private static final int RENDER_MULT = 45;
 
 		public Asteroid() {
 			int x = (int) Math.round(Math.random());

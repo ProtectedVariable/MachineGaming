@@ -35,11 +35,15 @@ public class Client extends Thread {
 	public void startSimulation(String game, String fitness, String genome, String metadata, MGNetworkType type) {
 		this.nn = this.gc.toNeuralNetwork(genome, metadata, type);
 		if(game.equals("Asteroid")) {
-			this.network.sendResponse(true);
+			if(!display) {
+				this.network.sendResponse(true);
+			}
 			this.sim = new AsteroidSimulator();
 			long startTime = System.currentTimeMillis();
 			float simFitness = this.sim.simulate(this.nn, fitness, display);
-			this.network.sendResult(simFitness, (int) (System.currentTimeMillis() - startTime));
+			if(!display) {
+				this.network.sendResult(simFitness, (int) (System.currentTimeMillis() - startTime));
+			}
 		} else {
 			this.network.sendResponse(false);
 		}
@@ -47,13 +51,19 @@ public class Client extends Thread {
 	
 	public static void main(String[] args) {
 		if(args.length < 3) {
-			System.out.println("Usage: client.jar <server_ip> <#threads> <name>");
+			System.out.println("Usage: client.jar <server_ip> <#threads> <name> [-s]");
 			System.exit(1);
 		}
-		int threads = Integer.parseInt(args[1]);
+		boolean spec = false;
+		if(args.length > 3) {
+			if(args[3].equals("-s")) {
+				spec = true;
+			}
+		}
+		int threads = spec ? 1 : Integer.parseInt(args[1]);
 		Client[] clients = new Client[threads];
 		for (int i = 0; i < threads; i++) {
-			Client c = new Client(args[0], args[2], false);
+			Client c = new Client(args[0], args[2], spec);
 			clients[i] = c;
 			c.start();
 		}
