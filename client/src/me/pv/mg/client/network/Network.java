@@ -1,6 +1,7 @@
 package me.pv.mg.client.network;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -78,6 +79,8 @@ public class Network {
 				default:
 					break;
 			}
+		} catch(EOFException e) {
+			//No Do
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

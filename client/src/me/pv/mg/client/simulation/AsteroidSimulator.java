@@ -64,6 +64,7 @@ public class AsteroidSimulator implements Simulator {
 	public float simulate(NeuralNetwork nn, String fitness, boolean display) {
 		float tick = 0;
 		float distance = 0;
+		float score = 1;
 		int ascount = 4;
 		int bulletTime = 60;
 		Display frame = null;
@@ -151,9 +152,9 @@ public class AsteroidSimulator implements Simulator {
 			}
 
 			if (out[1] > 0.8 && out[1] > out[2]) {
-				ship.angle += 0.05f;
+				ship.angle += 0.1f;
 			} else if (out[2] > 0.8 && out[2] > out[1]) {
-				ship.angle -= 0.05f;
+				ship.angle -= 0.1f;
 			}
 
 			if (out[3] > 0.8) {
@@ -167,7 +168,14 @@ public class AsteroidSimulator implements Simulator {
 			}
 			if (asteroids.size() == 0) {
 				for (int i = 0; i < ascount; i++) {
-					asteroids.add(new Asteroid());
+					if(i == 0) {
+						Asteroid a = new Asteroid();
+						a.x = 0;
+						a.y = 0;
+						a.vx = a.vy = 1.5f;
+						asteroids.add(a);
+					} else
+						asteroids.add(new Asteroid());
 				}
 				ascount++;
 			}
@@ -182,6 +190,7 @@ public class AsteroidSimulator implements Simulator {
 					if (bullets[i] != null) {
 						dist = (float) Math.sqrt((asteroid.x - bullets[i].x) * (asteroid.x - bullets[i].x) + (asteroid.y - bullets[i].y) * (asteroid.y - bullets[i].y));
 						if (dist < asteroid.size * Asteroid.RENDER_MULT / 2) {
+							score += 1;
 							bullets[i] = null;
 							if (asteroid.size > 1) {
 								for (Asteroid a : asteroid.split()) {
@@ -217,7 +226,7 @@ public class AsteroidSimulator implements Simulator {
 		if (frame != null) {
 			frame.dispose();
 		}
-		return tick;
+		return tick * score;
 	}
 
 	class Asteroid {

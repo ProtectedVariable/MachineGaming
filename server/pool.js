@@ -29,6 +29,10 @@ Pool.prototype.addWorker = function(id, name) {
 }
 
 Pool.prototype.removeWorker = function(id) {
+    if(this.workers[id] != undefined && this.workers[id].busy) {
+        this.genomes[this.workers[id].genomeID].computing = false;
+        this.genomes[this.workers[id].genomeID].waiting = false;
+    }
     delete this.workers[id];
     delete this.spectators[id];
 }

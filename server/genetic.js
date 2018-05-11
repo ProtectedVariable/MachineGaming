@@ -7,8 +7,8 @@ let GenomeType = {
 let NetworkMetadata = {
     0: { //ASTEROID_MULTILAYER_PERCEPTRON
         inputCount: 8,
-        hLayerCount: 1,
-        hLayers: [12],
+        hLayerCount: 2,
+        hLayers: [12, 8],
         outputCount: 4
     }
 };
