@@ -36,11 +36,12 @@ function init(_pool) {
         connections[id] = sock;
         log.verbose(`New connection from ${id} (${sock.remoteAddress} : ${sock.remotePort})`);
 
-        sock.on("error", (err) =>
-            console.log("Caught flash policy server socket error: ")
-            console.log(err.stack)
-        );
-        
+        sock.on("error", function(err) {
+            dispose(id);
+            console.log("Caught flash policy server socket error: ");
+            console.log(err.stack);
+        });
+
         sock.on('data', function(data) {
             let bytes = Array.prototype.slice.call(data, 0);
             let offset = 0;

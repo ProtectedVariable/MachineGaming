@@ -152,9 +152,9 @@ public class AsteroidSimulator implements Simulator {
 			}
 
 			if (out[1] > 0.8 && out[1] > out[2]) {
-				ship.angle += 0.1f;
+				ship.angle += 0.08f;
 			} else if (out[2] > 0.8 && out[2] > out[1]) {
-				ship.angle -= 0.1f;
+				ship.angle -= 0.08f;
 			}
 
 			if (out[3] > 0.8) {
@@ -288,8 +288,8 @@ public class AsteroidSimulator implements Simulator {
 		}
 
 		public void forward() {
-			this.vx += Math.cos(angle) * 0.8;
-			this.vy += Math.sin(angle) * 0.8;
+			this.vx += Math.cos(angle) * 0.6;
+			this.vy += Math.sin(angle) * 0.6;
 			if (this.vx * this.vx + this.vy * this.vy > MAX_SPEED * MAX_SPEED) {
 				float div = (float) Math.sqrt(this.vx * this.vx + this.vy * this.vy);
 				this.vx = this.vx / div * MAX_SPEED;
@@ -300,8 +300,8 @@ public class AsteroidSimulator implements Simulator {
 		public void update() {
 			this.x += vx;
 			this.y += vy;
-			this.vx /= 1.08f;
-			this.vy /= 1.08f;
+			this.vx /= 1.05f;
+			this.vy /= 1.05f;
 			if (this.x < 0) {
 				this.x = WIDTH - 1;
 			}
