@@ -32,7 +32,8 @@
 
 ### NEAT
 
-- ?
+- sGA encoding vs Crossover yield usefull combinaison ?
+- 
 
 ## Jeux
 

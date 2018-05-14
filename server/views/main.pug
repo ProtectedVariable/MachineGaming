@@ -24,8 +24,6 @@ html(lang="en")
                     input.btn.btn-primary(class="gen" type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
                     input.btn.btn-warning(class="pause" type="submit" value="Pause" name="pause" disabled=(remainingCycles <= 1))
             hr
-            h2 Evolution summary
-            hr
             h2 Workers
             div(id="wdiv" style="max-height: 330px; overflow-y: scroll;")
                 - var index = 0;
@@ -44,6 +42,8 @@ html(lang="en")
                     | </div>
                 else
                     p(style="color: red") No Workers
+            hr
+            h2 Evolution summary
             hr
             h2 Graphs
             canvas(id="canvasFitness" style="width: 100%; height: 720px;")
