@@ -41,15 +41,20 @@ public class AsteroidSimulator implements Simulator {
 			float vx = (float) (Math.cos(angle + ship.angle));
 			float vy = (float) (Math.sin(angle + ship.angle));
 			float min = Float.MAX_VALUE;
-			Asteroid ma = null;
 			for (Asteroid asteroid : new ArrayList<>(asteroids)) {
-				for (int j = 0; j < 2; j++) {
+				for (int j = 0; j < 4; j++) {
 					float ax = 0, ay = 0;
 					if (j == 0) {
 						ax = asteroid.x;
 						ay = asteroid.y;
-					} else {
+					} else if(j == 1) {
 						ax = asteroid.x > WIDTH / 2 ? asteroid.x - WIDTH : asteroid.x + WIDTH;
+						ay = asteroid.y > HEIGHT / 2 ? asteroid.y - HEIGHT : asteroid.y + HEIGHT;
+					} else if(j == 2) {
+						ax = asteroid.x > WIDTH / 2 ? asteroid.x - WIDTH : asteroid.x + WIDTH;
+						ay = asteroid.y;
+					} else {
+						ax = asteroid.x;
 						ay = asteroid.y > HEIGHT / 2 ? asteroid.y - HEIGHT : asteroid.y + HEIGHT;
 					}
 					float ux = ax - ship.x;
@@ -59,16 +64,15 @@ public class AsteroidSimulator implements Simulator {
 						continue;
 					}
 					float normu = (float) Math.sqrt(ux * ux + uy * uy);
-					float projx = dot * vx;
-					float projy = dot * vy;
 					float anglevu = (float) Math.acos(dot / normu);
 					if (anglevu > Math.PI / 8) {
 						continue;
 					}
+					float projx = dot * vx;
+					float projy = dot * vy;
 					float distProj = (float) Math.sqrt(projx * projx + projy * projy);
 					if (distProj < min) {
 						min = distProj - asteroid.size * Asteroid.RENDER_MULT / 2;
-						ma = asteroid;
 					}
 				}
 			}
@@ -103,13 +107,19 @@ public class AsteroidSimulator implements Simulator {
 				float vy = (float) (Math.sin(angle + ship.angle));
 				float min = Float.MAX_VALUE;
 				for (Asteroid asteroid : new ArrayList<>(asteroids)) {
-					for (int j = 0; j < 2; j++) {
+					for (int j = 0; j < 4; j++) {
 						float ax = 0, ay = 0;
 						if (j == 0) {
 							ax = asteroid.x;
 							ay = asteroid.y;
-						} else {
+						} else if(j == 1) {
 							ax = asteroid.x > WIDTH / 2 ? asteroid.x - WIDTH : asteroid.x + WIDTH;
+							ay = asteroid.y > HEIGHT / 2 ? asteroid.y - HEIGHT : asteroid.y + HEIGHT;
+						} else if(j == 2) {
+							ax = asteroid.x > WIDTH / 2 ? asteroid.x - WIDTH : asteroid.x + WIDTH;
+							ay = asteroid.y;
+						} else {
+							ax = asteroid.x;
 							ay = asteroid.y > HEIGHT / 2 ? asteroid.y - HEIGHT : asteroid.y + HEIGHT;
 						}
 						float ux = ax - ship.x;
@@ -139,8 +149,8 @@ public class AsteroidSimulator implements Simulator {
 			float[] out = nn.propagateForward(input);
 			//System.out.println(out[0]+" "+out[1]+" "+out[2]+" "+out[3]);
 			
-			
-			/*float[] out = new float[4];
+			/*
+			float[] out = new float[4];
 			out[0] = frame.down ? 1 : 0;
 			out[1] = frame.right ? 1 : 0;
 			out[2] = frame.left ? 1 : 0;
