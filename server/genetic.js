@@ -1,37 +1,27 @@
 "use strict";
-let GenomeType = {
-    MULTILAYER_PERCEPTRON: 0,
-    NEAT: 1
-};
+const proto = require('./protobuf/mg_pb.js');
 
-let NetworkMetadata = {
-    0: { //ASTEROID_MULTILAYER_PERCEPTRON
-        inputCount: 8,
-        hLayerCount: 2,
-        hLayers: [12, 8],
-        outputCount: 4
-    }
-};
-
-function metadataString(meta) {
-    return meta.inputCount+","+meta.hLayerCount+","+meta.hLayers+","+meta.outputCount;
+function metadataFromTopology(topo) {
+    return topo.inputCount+","+topo.hLayerCount+","+topo.hLayers+","+topo.outputCount;
 }
 
 function createRandomGeneration(genomeType, population, netMetadata) {
     let genomes = [];
 
-    let linkCount = (netMetadata.inputCount + 1) * netMetadata.hLayers[0];
-    for (let k = 1; k < netMetadata.hLayerCount; k++) {
-        linkCount += netMetadata.hLayers[k] * netMetadata.hLayers[k-1];
-    }
-    linkCount += netMetadata.hLayers[netMetadata.hLayerCount - 1] * netMetadata.outputCount;
-
-    for(let i = 0; i < population; i++) {
-        let genomeCode = "";
-        for(let j = 0; j < linkCount; j++) {
-            genomeCode += (Math.random() * 4 - 2) + (j == linkCount - 1 ? "": ",");
+    if(genomeType == proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON) {
+        let linkCount = (netMetadata.inputCount + 1) * netMetadata.hLayers[0];
+        for (let k = 1; k < netMetadata.hLayerCount; k++) {
+            linkCount += netMetadata.hLayers[k] * netMetadata.hLayers[k-1];
         }
-        genomes.push({code: genomeCode, computing: false, fitness: -1});
+        linkCount += netMetadata.hLayers[netMetadata.hLayerCount - 1] * netMetadata.outputCount;
+
+        for(let i = 0; i < population; i++) {
+            let genomeCode = "";
+            for(let j = 0; j < linkCount; j++) {
+                genomeCode += (Math.random() * 4 - 2) + (j == linkCount - 1 ? "": ",");
+            }
+            genomes.push({code: genomeCode, computing: false, fitness: -1});
+        }
     }
     return genomes;
 }
@@ -104,8 +94,6 @@ function mutate(g, mr) {
     }
 }
 
-module.exports.GenomeType = GenomeType;
-module.exports.NetworkMetadata = NetworkMetadata;
 module.exports.createRandomGeneration = createRandomGeneration;
+module.exports.metadataFromTopology = metadataFromTopology;
 module.exports.createNextGeneration = createNextGeneration;
-module.exports.metadataString = metadataString;

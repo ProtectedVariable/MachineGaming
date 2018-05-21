@@ -85,7 +85,7 @@ public class AsteroidSimulator implements Simulator {
 	}
 
 	@Override
-	public float simulate(NeuralNetwork nn, String fitness, boolean display) {
+	public float simulate(NeuralNetwork nn, boolean display) {
 		float tick = 0;
 		float distance = 0;
 		float score = 1;

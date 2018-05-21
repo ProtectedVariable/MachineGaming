@@ -4,7 +4,7 @@ function refreshInfos() {
     $.ajax({url: "/status", success: function(result) {
         //Update Header
         if(result.currentGame != "-") {
-            $("#ctask").text(`Current Task: ${result.currentGame} ( ${result.currentFitness} ) - ${result.remainingCycles} generation(s) remaining`);
+            $("#ctask").text(`Current Task: ${result.currentGame} ( ${result.remainingCycles} generation(s) remaining )`);
         }
 
         //Change buttons enable state

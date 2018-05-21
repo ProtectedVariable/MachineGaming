@@ -5,6 +5,6 @@ import java.awt.Graphics2D;
 import me.pv.mg.client.nn.NeuralNetwork;
 
 public interface Simulator {
-	float simulate(NeuralNetwork nn, String fitness, boolean display);
+	float simulate(NeuralNetwork nn, boolean display);
 	void paint(Graphics2D g);
 }

@@ -89,7 +89,7 @@ function sendTo(id, messageType, message) {
     buf[0] = messageType;
     const mArray = message.serializeBinary();
     buf.writeUInt32BE(mArray.length, 1);
-    if(connection[id] !== undefined) {
+    if(connections[id] !== undefined) {
         connections[id].write(buf);
         connections[id].write(Buffer.from(mArray));
     }

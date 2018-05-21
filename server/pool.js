@@ -3,20 +3,21 @@ const mgclient = require('./client.js');
 const mgnetwork = require('./mgnetwork.js');
 const proto = require('./protobuf/mg_pb.js');
 const genetic = require('./genetic.js');
+const mgspecie = require('./specie.js');
 
 function Pool(population) {
     this.workers = {};
     this.spectators = {};
+    this.species = [];
     this.genomes = [];
     this.avgFitnesses = [];
     this.bestFitnesses = [];
-    this.genomes = [];
     this.cycles = 0;
     this.targetCycles = 0;
     this.population = population;
     this.currentGame = "-";
-    this.currentFitness = "-";
-    this.currentType = genetic.GenomeType.MULTILAYER_PERCEPTRON;
+    this.currentType = proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON;
+    this.currentTopo = "";
     this.idle = true;
     this.computingGenomes = 0;
 }
@@ -41,19 +42,30 @@ Pool.prototype.addSpectator = function(id, name) {
     this.spectators[id] = new mgclient.Client(name);
 }
 
-Pool.prototype.createInitialPopulation = function(genomeType, netMetadata) {
-    this.genomes = genetic.createRandomGeneration(genomeType, this.population, netMetadata);
+Pool.prototype.createInitialPopulation = function() {
+    this.genomes = genetic.createRandomGeneration(this.currentType, this.population, this.currentTopo);
 }
 
-Pool.prototype.newTask = function(game, fitness, numGens) {
-    if(!this.idle)
+Pool.prototype.newTask = function(numGens) {
+    if(!this.idle || this.currentGame == "-")
         return;
-    this.currentGame = game;
-    this.currentFitness = fitness;
     this.targetCycles = this.cycles + numGens;
     this.idle = false;
     this.computingGenomes = 0;
     this.sendTasksToClients();
+};
+
+Pool.prototype.lockInfo = function(game, type, topo) {
+    if(!this.idle)
+        return;
+    if(this.currentGame != "-") {
+        this.currentGame = "-";
+    } else {
+        this.currentGame = game;
+        this.currentType = type;
+        this.currentTopo = topo;
+        this.createInitialPopulation();
+    }
 };
 
 Pool.prototype.onResponse = function(id, message) {
@@ -92,12 +104,11 @@ Pool.prototype.sendTasksToClients = function() {
                     w.genomeID = i;
                     let computeInfo = new proto.MGComputeInfo();
                     computeInfo.setGame(this.currentGame);
-                    computeInfo.setFitness(this.currentFitness);
+                    computeInfo.setNetType(this.currentType);
+                    computeInfo.setNetMetadata(genetic.metadataFromTopology(this.currentTopo));
                     let request = new proto.MGComputeRequest();
                     request.setComputeInfo(computeInfo);
                     request.setGenome(this.genomes[i].code);
-                    request.setNetType(this.currentType == genetic.GenomeType.MULTILAYER_PERCEPTRON ? proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON : proto.MGNetworkType.MG_NEAT);
-                    request.setNetMetadata(genetic.metadataString(genetic.NetworkMetadata[0]))
                     mgnetwork.sendTo(index, proto.MGMessages.MG_COMPUTE_REQUEST, request);
                     w.busy = true;
                     break;
@@ -117,12 +128,11 @@ Pool.prototype.sendTasksToClients = function() {
         let best = this.genomes.reduce((a, c) => (a.fitness > c.fitness) ? a : c);
         let computeInfo = new proto.MGComputeInfo();
         computeInfo.setGame(this.currentGame);
-        computeInfo.setFitness(this.currentFitness);
+        computeInfo.setNetType(this.currentType);
+        computeInfo.setNetMetadata(genetic.metadataFromTopology(this.currentTopo));
         let request = new proto.MGComputeRequest();
         request.setComputeInfo(computeInfo);
         request.setGenome(best.code);
-        request.setNetType(this.currentType == genetic.GenomeType.MULTILAYER_PERCEPTRON ? proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON : proto.MGNetworkType.MG_NEAT);
-        request.setNetMetadata(genetic.metadataString(genetic.NetworkMetadata[0]))
         for (var a in this.spectators) {
             mgnetwork.sendTo(a, proto.MGMessages.MG_COMPUTE_REQUEST, request);
         }

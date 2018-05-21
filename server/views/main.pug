@@ -5,23 +5,41 @@ html(lang="en")
         div.container
             h1 MachineGaming
             if currentGame != "-"
-                h2(id="ctask") Current Task: #{currentGame} ( #{currentFitness} ) - #{remainingCycles} generation(s) remaining
+                h2(id="ctask") Current Task: #{currentGame} ( #{remainingCycles} generation(s) remaining )
             else
                 h2 Current Task: None
-            form(action="/task" method='POST')
+            form(action="/work" method='POST')
                 div.form-group
                     label(for="tgame") Game:
-                    select.form-control.custom-select(name="game" id="tgame")
+                    select.form-control.custom-select(name="tgame" id="tgame" onchange="refreshForm()")
                         each game in games
-                            option(value=`${game._id}`) #{game.name} ( #{game.fitness} )
+                            option(value=`${game.id}`) #{game.name}
                     label(for="tnet") Network type:
-                    select.form-control.custom-select(name="net" id="tnet")
-                        option(value='0') Multilayer Perceptron
+                    select.form-control.custom-select(name="tnet" id="tnet" onchange="refreshForm()")
+                        option(value='1' selected) Multilayer Perceptron
+                        option(value='2') NEAT
+                    label(for="ttopo") Network Topology:
+                    select.form-control.custom-select(name="ttopo" id="ttopo")
+                        each topo, index in topologies
+                            - let hiddens = "";
+                            - let val = topo.gameId * 10000 + topo.netType * 1000 + index;
+                            - for (var i in topo.netMetadata.hLayers) {
+                            -    hiddens += topo.netMetadata.hLayers[i]+" "
+                            - }
+                            option(value=`${val}`) #{topo.netMetadata.inputCount} Inputs, #{topo.netMetadata.outputCount} Outputs, #{topo.netMetadata.hLayerCount} Hidden Layers ( #{hiddens}) 
+                div.form-group
+                    - let text = currentGame == "-" ? "Lock" : "Unlock";
+                    input.btn.btn-outline-primary(type="submit" name="lock" value=`${text}`)
+                    input.btn.btn-outline-secondary(type="submit" name="load" value="Load Population" disabled=currentGame != "-")
+                    input.btn.btn-outline-success(type="submit" name="save" value="Save Population" disabled=currentGame == "-")
+                    input.btn.btn-danger(type="submit" name="regen" value="Regen Inital Population" disabled=currentGame == "-")
+            hr
+            form(action="/task" method='POST')
                 div.form-group
                     - var disabled = remainingCycles > 0;
-                    input.btn.btn-primary(class="gen" type="submit" value="Do 1 Gen" name="onegen" disabled=disabled)
-                    input.btn.btn-primary(class="gen" type="submit" value="Do 100 Gen" name="hungen" disabled=disabled)
-                    input.btn.btn-primary(class="gen" type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
+                    input.btn.btn-light(class="gen" type="submit" value="Do 1 Gen" name="onegen" disabled=disabled)
+                    input.btn.btn-light(class="gen" type="submit" value="Do 100 Gen" name="hungen" disabled=disabled)
+                    input.btn.btn-light(class="gen" type="submit" value="Do Infinite Gen" name="infgen" disabled=disabled)
                     input.btn.btn-warning(class="pause" type="submit" value="Pause" name="pause" disabled=(remainingCycles <= 1))
             hr
             h2 Workers
@@ -50,5 +68,6 @@ html(lang="en")
             canvas(id="canvasFitness2" style="width: 100%; height: 720px;")
         script(type="text/javascript" src="/scripts/autorefresh.js")
         script(type="text/javascript" src="/scripts/chart.js")
+        script(type="text/javascript" src="/scripts/taskform.js")
                 
                 

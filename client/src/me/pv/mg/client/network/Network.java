@@ -64,7 +64,7 @@ public class Network {
 			switch (MGMessages.forNumber(in_type[0])) {
 				case MG_COMPUTE_REQUEST:
 					MGComputeRequest cr = MGComputeRequest.parseFrom(in_msg);
-					this.parent.startSimulation(cr.getComputeInfo().getGame(), cr.getComputeInfo().getFitness(), cr.getGenome(), cr.getNetMetadata(), cr.getNetType());
+					this.parent.startSimulation(cr.getComputeInfo().getGame(), cr.getGenome(), cr.getComputeInfo().getNetMetadata(), cr.getComputeInfo().getNetType());
 					break;
 				case MG_END:
 					System.exit(0);
@@ -83,6 +83,7 @@ public class Network {
 			//No Do
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 

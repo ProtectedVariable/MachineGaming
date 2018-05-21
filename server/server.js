@@ -1,5 +1,5 @@
 "use strict";
-const mgproto = require('./protobuf/mg_pb.js');
+const proto = require('./protobuf/mg_pb.js');
 const mgnetwork = require('./mgnetwork.js')
 const mgpool = require('./pool.js');
 const genetic = require('./genetic.js');
@@ -10,8 +10,6 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const pool = new mgpool.Pool(500);
-//TODO actually do something smart
-pool.createInitialPopulation(genetic.GenomeType.MULTILAYER_PERCEPTRON, genetic.NetworkMetadata[0]);
 
 log.level = 'debug';
 app.use(cors());
@@ -19,27 +17,66 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 mongoose.connect('mongodb://localhost/mg');
 let db = mongoose.connection;
-let games = [];
-db.on('error', console.error.bind(console, 'connection error:'));
-let gameSchema = mongoose.Schema({
-    _id: Number,
-    name: String,
-    fitness: String
-});
-let Game = mongoose.model('Game', gameSchema);
-db.once('open', function() {
-    Game.find({_id: 0}, function(err, result) {
-        if(result.length == 0) {
-            let asteroidTime = new Game({_id: 0, name: "Asteroid", fitness: "Time"});
-            asteroidTime.save(function (err, asteroidTime) {
-                if (err) return console.error(err);
-            });
+let games = [
+    {
+        id: 0,
+        name: "Asteroid"
+    }
+];
+let topos = [
+    {
+        gameId: 0,
+        netType: proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON,
+        netMetadata: {
+            inputCount: 8,
+            hLayerCount: 2,
+            hLayers: [12, 8],
+            outputCount: 4
         }
-    });
+    },
+    {
+        gameId: 0,
+        netType: proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON,
+        netMetadata: {
+            inputCount: 8,
+            hLayerCount: 1,
+            hLayers: [12],
+            outputCount: 4
+        }
+    },
+    {
+        gameId: 0,
+        netType: proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON,
+        netMetadata: {
+            inputCount: 8,
+            hLayerCount: 4,
+            hLayers: [12, 10, 8, 6],
+            outputCount: 4
+            }
+    },
+    {
+        gameId: 0,
+        netType: proto.MGNetworkType.MG_NEAT,
+        netMetadata: {
+            inputCount: 8,
+            hLayerCount: 0,
+            outputCount: 4
+        }
+    }
+];
+db.on('error', console.error.bind(console, 'connection error:'));
 
-    Game.find({}, function(err, result) {
-        games = result;
-    });
+let genSchema = mongoose.Schema({
+    batchId: Number,
+    genNumber: Number,
+    game: String,
+    avgFitness: Number,
+    bestFitness: Number,
+    species: [[]]
+});
+let Gen = mongoose.model('Generation', genSchema);
+db.once('open', function() {
+
 });
 
 app.set('view engine', 'pug');
@@ -54,8 +91,8 @@ app.get('/', (req, res) => {
         "workers": pool.workers,
         "games": games,
         "currentGame": pool.currentGame,
-        "currentFitness": pool.currentFitness,
-        "remainingCycles": pool.targetCycles - pool.cycles
+        "remainingCycles": pool.targetCycles - pool.cycles,
+        "topologies": topos
     });
 });
 
@@ -75,10 +112,16 @@ app.post('/task', (req, res) => {
     if(req.body.pause != null) {
         pool.pauseTask();
     } else {
-        Game.find({_id: req.body.game}, function(err, result) {
-            let n = (req.body.infgen != null ? Infinity : (req.body.onegen != null ? 1 : 100));
-            pool.newTask(result[0].name, result[0].fitness, n);
-        });
+        let n = (req.body.infgen != null ? Infinity : (req.body.onegen != null ? 1 : 100));
+        pool.newTask(n);
+    }
+    res.redirect("/");
+});
+
+app.post('/work', (req, res) => {
+    if(req.body.lock) {
+        pool.lockInfo(games[req.body.tgame].name, req.body.tnet, topos[req.body.ttopo % 1000].netMetadata);
+        console.log(topos[req.body.ttopo % 1000].netMetadata);
     }
     res.redirect("/");
 });

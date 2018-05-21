@@ -32,7 +32,7 @@ public class Client extends Thread {
 		}
 	}
 	
-	public void startSimulation(String game, String fitness, String genome, String metadata, MGNetworkType type) {
+	public void startSimulation(String game, String genome, String metadata, MGNetworkType type) {
 		this.nn = this.gc.toNeuralNetwork(genome, metadata, type);
 		if(game.equals("Asteroid")) {
 			if(!display) {
@@ -40,7 +40,7 @@ public class Client extends Thread {
 			}
 			this.sim = new AsteroidSimulator();
 			long startTime = System.currentTimeMillis();
-			float simFitness = this.sim.simulate(this.nn, fitness, display);
+			float simFitness = this.sim.simulate(this.nn, display);
 			if(!display) {
 				this.network.sendResult(simFitness, (int) (System.currentTimeMillis() - startTime));
 			}

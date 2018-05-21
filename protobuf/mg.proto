@@ -27,14 +27,13 @@ message MGJoinResponse {
 
 message MGComputeInfo {
     required string game = 1;
-    required string fitness = 2;
+    required .MGNetworkType net_type = 3;
+    required string net_metadata = 4;
 }
 
 message MGComputeRequest {
     required .MGComputeInfo compute_info = 1;
     required string genome = 2;
-    required .MGNetworkType net_type = 3;
-    required string net_metadata = 4;
 }
 
 message MGComputeResponse {
