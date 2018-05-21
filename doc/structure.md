@@ -33,7 +33,10 @@
 ### NEAT
 
 - sGA encoding vs Crossover yield usefull combinaison ?
-- 
+- Avoiding competing conventions
+- Complexification
+- Reduce search space
+- Species
 
 ## Jeux
 
