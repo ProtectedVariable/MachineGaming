@@ -22,6 +22,50 @@ function createRandomGeneration(genomeType, population, netMetadata) {
             }
             genomes.push({code: genomeCode, computing: false, fitness: -1});
         }
+    } else {
+        for(let i = 0; i < population; i++) {
+            let g = {
+                genes: [],
+                nodes: [],
+                inputs: netMetadata.inputCount,
+                outputs: netMetadata.outputCount,
+                layers: 2,
+                nextNode: 0,
+                biasNode: 0,
+                computing: false,
+                fitness: -1
+            }
+            //Inputs
+            for (let i = 0; i < g.inputs; i++) {
+                g.nextNode++;
+                g.nodes.push({no: i, layer: 0});
+            }
+            //Outputs
+            for (let i = 0; i < g.outputs; i++) {
+                g.nextNode++;
+                g.nodes.push({no: i + g.inputs, layer: 1});
+            }
+            //Bias
+            g.nodes.push({no: g.nextNode, layer: 0});
+            g.biasNode = g.nextNode;
+            g.nextNode++;
+
+            //Connect inputs to outputs
+            let next = 0;
+            for (let i = 0; i < g.inputs; i++) {
+                for (let j = 0; j < g.outputs; j++) {
+                    g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 2 - 1, innovationNo: next});
+                    next++;
+                }
+            }
+
+            //Connect bias to outputs
+            for (let i = 0; i < g.outputs; i++) {
+                 g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next});
+                 next++;
+            }
+            genomes.push(g);
+        }
     }
     return genomes;
 }
