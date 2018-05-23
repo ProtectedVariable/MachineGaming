@@ -1,5 +1,8 @@
 "use strict";
 const proto = require('./protobuf/mg_pb.js');
+const excessCoeff = 1.5;
+const weightDiffCoeff = 0.8;
+const compatibilityThreshold = 1;
 
 function metadataFromTopology(topo) {
     return topo.inputCount+","+topo.hLayerCount+","+topo.hLayers+","+topo.outputCount;
@@ -61,8 +64,8 @@ function createRandomGeneration(genomeType, population, netMetadata) {
 
             //Connect bias to outputs
             for (let i = 0; i < g.outputs; i++) {
-                 g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next});
-                 next++;
+                g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next});
+                next++;
             }
             genomes.push(g);
         }
@@ -98,7 +101,7 @@ function select(population) {
     let fitsum = population.map(x => x.fitness).reduce((a,c) => a + c);
     let threshold = Math.random() * fitsum;
     let sum = 0;
-    for (let i in population) {
+    for(let i in population) {
         sum += population[i].fitness;
         if(sum >= threshold) {
             return population[i].code;
@@ -132,8 +135,27 @@ function mutate(g, mr) {
         let newValue = parseFloat(mutationGene) + (Math.random() * 2 - 1);
         gArray[i] = ""+newValue;
         g.code = "";
-        for (let j = 0; j < gArray.length; j++) {
+        for(let j = 0; j < gArray.length; j++) {
             g.code += gArray[j] + (j == gArray.length - 1 ? "": ",");
+        }
+    }
+}
+
+function speciate(genomes) {
+    let species = [];
+    for(let i in genomes) {
+        let speciesFound = false;
+        for(let s in species) {
+            if(s.sameSpecies(pop.get(i).brain)) {
+                s.addToSpecies(pop.get(i));//add it to the species
+                speciesFound = true;
+                break;
+            }
+        }
+        if(!speciesFound) {
+            let gs = [];
+            gs.push(genomes[i]);
+            species.push({genomes: gs, bestFitness: genomes[i].fitness, best: genomes[i]});
         }
     }
 }

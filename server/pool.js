@@ -64,6 +64,10 @@ Pool.prototype.lockInfo = function(game, type, topo) {
         this.currentGame = game;
         this.currentType = type;
         this.currentTopo = topo;
+        this.avgFitnesses = [];
+        this.bestFitnesses = [];
+        this.cycles = 0;
+        this.targetCycles = 0;
         this.createInitialPopulation();
     }
 };

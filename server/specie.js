@@ -1,7 +1,11 @@
 "use strict";
 
-function Specie(genomes) {
+function Specie(genome) {
     this.genomes = genomes;
+}
+
+function Specie.prototype.sameSpecies(genome) {
+
 }
 
 module.exports.Specie = Specie;
