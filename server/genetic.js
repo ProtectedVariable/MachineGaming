@@ -1,8 +1,8 @@
 "use strict";
 const proto = require('./protobuf/mg_pb.js');
-const excessCoeff = 1.5;
-const weightDiffCoeff = 0.8;
-const compatibilityThreshold = 1;
+const specie = require('./specie.js');
+
+let species = [];
 
 function metadataFromTopology(topo) {
     return topo.inputCount+","+topo.hLayerCount+","+topo.hLayers+","+topo.outputCount;
@@ -83,16 +83,39 @@ function createNextGeneration(genomes, genomeType, mutationRate, population) {
         }
         return 0;
     });
-    nextgen.push({code: genomes[0].code, computing: false, fitness: -1});
-    for(let i = 1; i < population; i++) {
-        let g = null;
-        if(i < population / 2) {
-            g = {code: select(genomes), computing: false, fitness: -1};
-        } else {
-            g = {code: crossover(select(genomes), select(genomes)), computing: false, fitness: -1};
+    if(genomeType == proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON) {
+        nextgen.push({code: genomes[0].code, computing: false, fitness: -1});
+        for(let i = 1; i < population; i++) {
+            let g = null;
+            if(i < population / 2) {
+                g = {code: select(genomes).code, computing: false, fitness: -1};
+            } else {
+                g = {code: crossover(select(genomes).code, select(genomes).code), computing: false, fitness: -1};
+            }
+            mutate(g, mutationRate);
+            nextgen.push(g);
         }
-        mutate(g, mutationRate);
-        nextgen.push(g);
+    } else {
+        speciate();
+        cullSpecies();
+        killStaleSpecies();
+        killBadSpecies(population);
+
+        let averageSum = getAvgFitnessSum();
+        for (let i in species) {
+            species[i].genomes[0].fitness = -1;
+            species[i].genomes[0].computing = false;
+            nextgen.push(species[i].genomes[0]);
+            let childAlloc = Math.floor(species[i].averageFitness / averageSum * population) - 1;
+            for (let i = 0; i < childAlloc; i++) {
+                nextgen.push(s.giveMeBaby(innovationHistory));
+            }
+        }
+        //TODO FAIRE UN MODULE NEAT DANS LEQUEL JE MET TOUTE CA!!¨
+        //TODO DEW IT
+        for(let i = nextgen.length; i < population; i++) {
+            nextgen.add(species[0].giveMeBaby(innovationHistory));
+        }
     }
     return nextgen;
 }
@@ -104,10 +127,10 @@ function select(population) {
     for(let i in population) {
         sum += population[i].fitness;
         if(sum >= threshold) {
-            return population[i].code;
+            return population[i];
         }
     }
-    return population[0].code;
+    return population[0];
 }
 
 function crossover(g1, g2) {
@@ -142,22 +165,54 @@ function mutate(g, mr) {
 }
 
 function speciate(genomes) {
-    let species = [];
+    for(let i in species) {
+        species[i].clear();
+    }
     for(let i in genomes) {
         let speciesFound = false;
         for(let s in species) {
-            if(s.sameSpecies(pop.get(i).brain)) {
-                s.addToSpecies(pop.get(i));//add it to the species
+            if(s.sameSpecies(genomes[i])) {
+                s.addToSpecies(genomes[i]);
                 speciesFound = true;
                 break;
             }
         }
         if(!speciesFound) {
-            let gs = [];
-            gs.push(genomes[i]);
-            species.push({genomes: gs, bestFitness: genomes[i].fitness, best: genomes[i]});
+            species.push(new specie.Specie(genomes[i]));
         }
     }
+}
+
+function cullSpecies() {
+    for (let i in species) {
+        species[i].cull();
+        species[i].fitnessSharing();
+        species[i].setAverage();
+    }
+}
+
+function killStaleSpecies() {
+    for (let i in species) {
+        if (species[i].staleness >= 15) {
+            species.splice(i, 1);
+            i--;
+        }
+    }
+}
+
+function killBadSpecies(population) {
+    let averageSum = getAvgFitnessSum();
+
+    for(let i in species) {
+        if(species[i].averageFitness / averageSum * population < 1) {
+            species.splice(i, 1);
+            i--;
+        }
+    }
+}
+
+function getAvgFitnessSum() {
+    return species.map(x => x.averageFitness).reduce((a, c) => a + c);
 }
 
 module.exports.createRandomGeneration = createRandomGeneration;
