@@ -99,7 +99,6 @@ Pool.prototype.sendTasksToClients = function() {
         if(w.busy == false) {
             allDone = true;
             for (let i = 0; i < this.genomes.length; i++) {
-                console.log(genetic.genomeString(this.genomes[i], this.currentType))
                 if(this.genomes[i].fitness == -1) {
                     allDone = false;
                 }

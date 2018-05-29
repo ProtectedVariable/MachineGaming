@@ -71,7 +71,6 @@ function init(_pool) {
 
                  }
                  offset += size + 2;
-                 log.verbose(`New message from ${id}: ${message}`);
              } while(offset < bytes.length);
         });
 

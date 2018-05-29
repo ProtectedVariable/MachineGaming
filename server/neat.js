@@ -7,22 +7,29 @@ let innovationHistory = [];
 
 function createNextGeneration(genomes) {
     let nextgen = [];
-    speciate();
+    speciate(genomes);
+    species.sort(function(a, b) { //Sort greater fitness first
+        if(a.bestFitness < b.bestFitness) {
+            return 1;
+        } else if(a.bestFitness > b.bestFitness) {
+            return -1;
+        }
+        return 0;
+    });
     cullSpecies();
     killStaleSpecies();
     killBadSpecies(genomes.length);
-
     let averageSum = getAvgFitnessSum();
     for (let i in species) {
         species[i].genomes[0].fitness = -1;
         species[i].genomes[0].computing = false;
         nextgen.push(species[i].genomes[0]);
         let childAlloc = Math.floor(species[i].averageFitness / averageSum * genomes.length) - 1;
-        for (let i = 0; i < childAlloc; i++) {
-            nextgen.push(s.yieldChild());
+        for (let j = 0; j < childAlloc; j++) {
+            nextgen.push(species[i].yieldChild());
         }
     }
-    for(let i = nextgen.length; i < population; i++) {
+    for(let i = nextgen.length; i < genomes.length; i++) {
         nextgen.push(species[0].yieldChild());
     }
     return nextgen;
@@ -34,9 +41,9 @@ function speciate(genomes) {
     }
     for(let i in genomes) {
         let speciesFound = false;
-        for(let s in species) {
-            if(s.sameSpecies(genomes[i])) {
-                s.addToSpecies(genomes[i]);
+        for(let j in species) {
+            if(species[j].sameSpecies(genomes[i])) {
+                species[j].addToSpecies(genomes[i]);
                 speciesFound = true;
                 break;
             }
@@ -44,6 +51,16 @@ function speciate(genomes) {
         if(!speciesFound) {
             species.push(new Specie(genomes[i]));
         }
+    }
+    for(let i in species) {
+        species[i].genomes.sort(function(a, b) { //Sort greater fitness first
+            if(a.fitness < b.fitness) {
+                return 1;
+            } else if(a.fitness > b.fitness) {
+                return -1;
+            }
+            return 0;
+        });
     }
 }
 
@@ -56,7 +73,7 @@ function cullSpecies() {
 }
 
 function killStaleSpecies() {
-    for (let i in species) {
+    for (let i = 0; i < species.length; i++) {
         if (species[i].staleness >= 15) {
             species.splice(i, 1);
             i--;
@@ -69,7 +86,7 @@ function killStaleSpecies() {
 function killBadSpecies(population) {
     let averageSum = getAvgFitnessSum();
 
-    for(let i in species) {
+    for(let i = 0; i < species.length; i++) {
         if(species[i].averageFitness / averageSum * population < 1) {
             species.splice(i, 1);
             i--;
@@ -85,8 +102,8 @@ function crossover(g1, g2) {
     let child = {
         genes: [],
         nodes: [],
-        inputs: g1.inputCount,
-        outputs: g1.outputCount,
+        inputs: g1.inputs,
+        outputs: g1.outputs,
         layers: g1.layers,
         nextNode: g1.nextNode,
         biasNode: g1.biasNode,
@@ -176,11 +193,11 @@ function addNode(g) {
     g.genes.push({from: newNodeNo, to: g.genes[randomConnection].to, weight: g.genes[randomConnection].weight, innovationNo: connectionInnovationNumber});
     g.nodes.push({no: newNodeNo, layer: getNode(g, g.genes[randomConnection].from).layer + 1});
 
-    connectionInnovationNumber = getInnovationNumber(g, biasNode, newNodeNo);
+    connectionInnovationNumber = getInnovationNumber(g, g.biasNode, newNodeNo);
 
-    g.genes.push({from: biasNode, to: newNodeNo, weight: 0, innovationNo: connectionInnovationNumber});
+    g.genes.push({from: g.biasNode, to: newNodeNo, weight: 0, innovationNo: connectionInnovationNumber});
 
-    if(getNode(g, newNodeNo).layer == getNode(g.genes[randomConnection].to).layer) {
+    if(getNode(g, newNodeNo).layer == getNode(g, g.genes[randomConnection].to).layer) {
         for (let i in g.nodes) {
             if (i != newNodeNo && g.nodes[i].layer >= getNode(g, newNodeNo).layer) {
                 g.nodes[i].layer++;
@@ -199,8 +216,7 @@ function getNode(g, id) {
 }
 
 function addConnection(g) {
-
-    if (fullyConnected()) {
+    if (fullyConnected(g)) {
         //Cannot add a connection to a full network
         return;
     }
@@ -211,7 +227,7 @@ function addConnection(g) {
         randomNode1 = Math.floor(Math.random() * g.nodes.length);
         randomNode2 = Math.floor(Math.random() * g.nodes.length);
     }
-    if (g.nodes[randomNode1].layer > g.nodes[randomNode2].layer) {//if the first random node is after the second then switch
+    if (g.nodes[randomNode1].layer > g.nodes[randomNode2].layer) {
         let temp = randomNode2;
         randomNode2 = randomNode1;
         randomNode1 = temp;
@@ -280,11 +296,11 @@ function getInnovationNumber(g, from, to) {
     return connectionInnovationNumber;
 }
 
-function innovationMatches(g, from, to) {
-    if (g.genes.length == innovationHistory.innovationNumbers.length) {
-        if (from == innovationHistory.from && to == innovationHistory.to) {
+function innovationMatches(g, innovation, from, to) {
+    if (g.genes.length == innovation.innovationNumbers.length) {
+        if (from == innovation.from && to == innovation.to) {
             for (let i in g.genes) {
-                if (!innovationHistory.innovationNumbers.includes(g.genes[i].innovationNo)) {
+                if (!innovation.innovationNumbers.includes(g.genes[i].innovationNo)) {
                     return false;
                 }
             }
@@ -324,7 +340,7 @@ Specie.prototype.getExcessDisjoint = function(g1, g2) {
             }
         }
     }
-    return (g1.genes.length + g2.genes.length - 2 * (matching));
+    return (g1.genes.length + g2.genes.length - 2 * matching);
 }
 
 Specie.prototype.averageWeightDiff = function(g1, g2) {
@@ -334,12 +350,12 @@ Specie.prototype.averageWeightDiff = function(g1, g2) {
         for(let j in g2.genes) {
             if(g1.genes[i].innovationNo == g2.genes[j].innovationNo) {
                 matching++;
-                totalDiff += abs(g1.genes[i].weight - g2.genes[j].weight);
+                totalDiff += Math.abs(g1.genes[i].weight - g2.genes[j].weight);
                 break;
             }
         }
     }
-    return matching == 0 ? 100 : totalDiff / matching;
+    return (matching == 0 ? 100 : (totalDiff / matching));
 }
 
 Specie.prototype.addToSpecies = function(genome) {
@@ -357,10 +373,7 @@ Specie.prototype.setAverage = function() {
 
 Specie.prototype.cull = function() {
     if(this.genomes.length > 2) {
-        for(let i = this.genomes.length / 2; i < this.genomes.length; i++) {
-            this.genomes.splice(i, 1);
-            i--;
-        }
+        this.genomes.splice(Math.floor(this.genomes.length / 2 + 1), Math.floor(this.genomes.length / 2));
     }
 }
 
@@ -372,20 +385,18 @@ Specie.prototype.fitnessSharing = function() {
 
 Specie.prototype.clear = function() {
     this.genomes = [];
-    this.bestFitness = 0;
 }
 
 Specie.prototype.yieldChild = function() {
+    let child = {};
     if (Math.random() < 0.25) {
-        let g = this.select();
-        g.computing = false;
-        g.fitness = -1;
-        return g;
+        child = this.select();
+        child.computing = false;
+        child.fitness = -1;
     } else {
-        let p1 = select();
-        let p2 = select();
+        let p1 = this.select();
+        let p2 = this.select();
 
-        let child = {};
         if (p1.fitness < p2.fitness) {
             child = crossover(p2, p1);
         } else {
