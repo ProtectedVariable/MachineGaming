@@ -25,6 +25,8 @@ public class GenomeCodec {
 			MultilayerPerceptron mlp = new MultilayerPerceptron(inputCount, hLayerCount, hLayers, outputCount, ActivationFunctions::Sigmoid);
 			mlp.setAllWeight(weights);
 			return mlp;
+		} else if(type == MGNetworkType.MG_NEAT) {
+			
 		}
 		return null;
 	}

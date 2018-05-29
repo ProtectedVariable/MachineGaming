@@ -7,6 +7,21 @@ function metadataFromTopology(topo) {
     return topo.inputCount+","+topo.hLayerCount+","+topo.hLayers+","+topo.outputCount;
 }
 
+function genomeString(genome, type) {
+    if(type == proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON) {
+        return genome.code;
+    } else {
+        let code = genome.genes.length + "," + genome.nodes.length + "," + genome.biasNode + "," + genome.layers + ",";
+        for(let i in genome.genes) {
+            code += genome.genes[i].from + "," + genome.genes[i].to + "," + genome.genes[i].weight + ",";
+        }
+        for(let i in genome.nodes) {
+            code += genome.nodes[i].no + "," + genome.nodes[i].layer + (i == genome.nodes.length - 1 ? "" : ",");
+        }
+        return code;
+    }
+}
+
 function createRandomGeneration(genomeType, population, netMetadata) {
     let genomes = [];
 
@@ -106,4 +121,5 @@ function select(population) {
 module.exports.createRandomGeneration = createRandomGeneration;
 module.exports.metadataFromTopology = metadataFromTopology;
 module.exports.createNextGeneration = createNextGeneration;
+module.exports.genomeString = genomeString;
 module.exports.select = select;

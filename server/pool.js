@@ -99,6 +99,7 @@ Pool.prototype.sendTasksToClients = function() {
         if(w.busy == false) {
             allDone = true;
             for (let i = 0; i < this.genomes.length; i++) {
+                console.log(genetic.genomeString(this.genomes[i], this.currentType))
                 if(this.genomes[i].fitness == -1) {
                     allDone = false;
                 }
@@ -112,7 +113,7 @@ Pool.prototype.sendTasksToClients = function() {
                     computeInfo.setNetMetadata(genetic.metadataFromTopology(this.currentTopo));
                     let request = new proto.MGComputeRequest();
                     request.setComputeInfo(computeInfo);
-                    request.setGenome(this.genomes[i].code);
+                    request.setGenome(genetic.genomeString(this.genomes[i], this.currentType));
                     mgnetwork.sendTo(index, proto.MGMessages.MG_COMPUTE_REQUEST, request);
                     w.busy = true;
                     break;
@@ -136,7 +137,7 @@ Pool.prototype.sendTasksToClients = function() {
         computeInfo.setNetMetadata(genetic.metadataFromTopology(this.currentTopo));
         let request = new proto.MGComputeRequest();
         request.setComputeInfo(computeInfo);
-        request.setGenome(best.code);
+        request.setGenome(genetic.genomeString(best, this.currentType));
         for (var a in this.spectators) {
             mgnetwork.sendTo(a, proto.MGMessages.MG_COMPUTE_REQUEST, request);
         }

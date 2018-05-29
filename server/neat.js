@@ -1,7 +1,9 @@
 "use strict";
 const genetic = require("./genetic.js")
 
+let nextConnectionNo = 1000;
 let species = [];
+let innovationHistory = [];
 
 function createNextGeneration(genomes) {
     let nextgen = [];
@@ -17,11 +19,11 @@ function createNextGeneration(genomes) {
         nextgen.push(species[i].genomes[0]);
         let childAlloc = Math.floor(species[i].averageFitness / averageSum * genomes.length) - 1;
         for (let i = 0; i < childAlloc; i++) {
-            nextgen.push(s.giveMeBaby(innovationHistory));
+            nextgen.push(s.yieldChild());
         }
     }
     for(let i = nextgen.length; i < population; i++) {
-        nextgen.push(species[0].giveMeBaby(innovationHistory));
+        nextgen.push(species[0].yieldChild());
     }
     return nextgen;
 }
@@ -137,7 +139,7 @@ function matchingGene(g, inno) {
     return -1;
 }
 
-function mutate(g, innovationHistory) {
+function mutate(g) {
     if (Math.random() < 0.8) {
         for(let i in g.genes) {
             g.genes[i].weight = mutateWeight(g.genes[i].weight);
@@ -145,20 +147,151 @@ function mutate(g, innovationHistory) {
     }
 
     if (Math.random() < 0.05) {
-        addConnection(innovationHistory);
+        addConnection(g);
     }
 
     if (Math.random() < 0.03) {
-        addNode(innovationHistory);
+        addNode(g);
     }
 }
 
+function addNode(g) {
+    let randomConnection = 0; //The loop will assign the real value
+
+    do {
+        randomConnection = Math.floor(Math.random() * g.genes.length);
+    } while(g.genes[randomConnection].from == g.biasNode); //Do not disconnect bias !
+
+    g.genes[randomConnection].enabled = false;
+
+    let newNodeNo = g.nextNode;
+    g.nextNode++;
+
+    let connectionInnovationNumber = getInnovationNumber(g, g.genes[randomConnection].from, newNodeNo);
+    g.genes.push({from: g.genes[randomConnection].from, to: newNodeNo, weight: 1, innovationNo: connectionInnovationNumber});
+
+
+    connectionInnovationNumber = getInnovationNumber(g, newNodeNo, g.genes[randomConnection].to);
+
+    g.genes.push({from: newNodeNo, to: g.genes[randomConnection].to, weight: g.genes[randomConnection].weight, innovationNo: connectionInnovationNumber});
+    g.nodes.push({no: newNodeNo, layer: getNode(g, g.genes[randomConnection].from).layer + 1});
+
+    connectionInnovationNumber = getInnovationNumber(g, biasNode, newNodeNo);
+
+    g.genes.push({from: biasNode, to: newNodeNo, weight: 0, innovationNo: connectionInnovationNumber});
+
+    if(getNode(g, newNodeNo).layer == getNode(g.genes[randomConnection].to).layer) {
+        for (let i in g.nodes) {
+            if (i != newNodeNo && g.nodes[i].layer >= getNode(g, newNodeNo).layer) {
+                g.nodes[i].layer++;
+            }
+        }
+        g.layers++;
+    }
+}
+
+function getNode(g, id) {
+    for(let i in g.nodes) {
+        if(g.nodes[i].no == id) {
+            return g.nodes[i];
+        }
+    }
+}
+
+function addConnection(g) {
+
+    if (fullyConnected()) {
+        //Cannot add a connection to a full network
+        return;
+    }
+
+    let randomNode1 = Math.floor(Math.random() * g.nodes.length);
+    let randomNode2 = Math.floor(Math.random() * g.nodes.length);
+    while (g.nodes[randomNode1].layer == g.nodes[randomNode2].layer || nodesConnected(g, randomNode1, randomNode2)) {
+        randomNode1 = Math.floor(Math.random() * g.nodes.length);
+        randomNode2 = Math.floor(Math.random() * g.nodes.length);
+    }
+    if (g.nodes[randomNode1].layer > g.nodes[randomNode2].layer) {//if the first random node is after the second then switch
+        let temp = randomNode2;
+        randomNode2 = randomNode1;
+        randomNode1 = temp;
+    }
+    let connectionInnovationNumber = getInnovationNumber(g, randomNode1, randomNode2);
+    g.genes.push({from: randomNode1, to: randomNode2, weight: Math.random * 2 - 1, innovationNo: connectionInnovationNumber});
+}
+
+function nodesConnected(g, a, b) {
+    for(let i in g.genes) {
+        if(g.genes[i].from == a && g.genes[i].to == b) {
+            return true;
+        } else if(g.genes[i].from == b && g.genes[i].to == a) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function fullyConnected(g) {
+    let maxConnections = 0;
+    let nodesInLayers = Array.apply(null, Array(g.layers)).map(Number.prototype.valueOf, 0);
+
+    for (let i in g.nodes) {
+        nodesInLayers[g.nodes[i].layer] += 1;
+    }
+
+    for (let i = 0; i < g.layers - 1; i++) {
+        let nodesInFront = 0;
+        for (let j = i + 1; j < g.layers; j++) {
+            nodesInFront += nodesInLayers[j];
+        }
+
+        maxConnections += nodesInLayers[i] * nodesInFront;
+    }
+
+    return maxConnections == g.genes.length;
+}
+
 function mutateWeight(w) {
-    if (Math.random() < 0.1) {
+    if(Math.random() < 0.1) {
         return Math.random() * 2 - 1;
     } else {
         return w + ((Math.random() - 0.5) / 30);
     }
+}
+
+function getInnovationNumber(g, from, to) {
+    let isNew = true;
+    let connectionInnovationNumber = nextConnectionNo;
+    for(let i in innovationHistory) {
+        if(innovationMatches(g, innovationHistory[i], from, to)) {
+            isNew = false;
+            connectionInnovationNumber = innovationHistory[i].innovationNumber;
+        }
+    }
+
+    if(isNew) {
+        let innoNumbers = [];
+        for(let i in g.genes) {
+            innoNumbers.push(g.genes[i].innovationNo);
+        }
+        innovationHistory.push({from: from, to: to, innovationNumber: connectionInnovationNumber, innovationNumbers: innoNumbers});
+        nextConnectionNo++;
+    }
+    return connectionInnovationNumber;
+}
+
+function innovationMatches(g, from, to) {
+    if (g.genes.length == innovationHistory.innovationNumbers.length) {
+        if (from == innovationHistory.from && to == innovationHistory.to) {
+            for (let i in g.genes) {
+                if (!innovationHistory.innovationNumbers.includes(g.genes[i].innovationNo)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+    return false;
 }
 
 const excessCoeff = 1.5;
@@ -242,7 +375,7 @@ Specie.prototype.clear = function() {
     this.bestFitness = 0;
 }
 
-Specie.prototype.yieldChild = function(innovationHistory) {
+Specie.prototype.yieldChild = function() {
     if (Math.random() < 0.25) {
         let g = this.select();
         g.computing = false;
@@ -259,12 +392,12 @@ Specie.prototype.yieldChild = function(innovationHistory) {
             child = crossover(p1, p2);
         }
     }
-    mutate(child, innovationHistory);
+    mutate(child);
     return child;
 }
 
 Specie.prototype.select = function() {
-    let fitsum = this.genomes.map(x => x.fitness).reduce((a,c) => a + c);
+    let fitsum = this.genomes.map(x => x.fitness).reduce((a, c) => a + c);
     let threshold = Math.random() * fitsum;
     let sum = 0;
     for(let i in this.genomes) {
