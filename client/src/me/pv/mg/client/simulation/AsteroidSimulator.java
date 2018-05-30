@@ -87,7 +87,7 @@ public class AsteroidSimulator implements Simulator {
 	@Override
 	public float simulate(NeuralNetwork nn, boolean display) {
 		float tick = 0;
-		float distance = 0;
+		//float distance = 0;
 		float score = 1;
 		int shots = 1;
 		int ascount = 4;
@@ -189,7 +189,6 @@ public class AsteroidSimulator implements Simulator {
 
 			if (out[3] > 0.8) {
 				ship.forward();
-				distance++;
 			}
 			ship.update();
 

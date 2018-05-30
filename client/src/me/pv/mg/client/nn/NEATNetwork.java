@@ -35,6 +35,9 @@ public class NEATNetwork extends NeuralNetwork {
 		for(int i = 0; i < layers; i++) {
 			for (Entry<Integer, Node> e : nodes.entrySet()) {
 				if(e.getValue().getLayer() == i) {
+					if(i != 0) {
+						e.getValue().setValue(activationFunction.activate(e.getValue().getValue()));
+					}
         				for(Connection c : e.getValue().getOutputs()) {
         					nodes.get(c.getTo()).value += e.getValue().getValue() * c.getWeight();
         				}
