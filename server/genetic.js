@@ -11,9 +11,12 @@ function genomeString(genome, type) {
     if(type == proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON) {
         return genome.code;
     } else {
-        let code = genome.genes.length + "," + genome.nodes.length + "," + genome.biasNode + "," + genome.layers + ",";
+        let geneCount = genome.genes.filter(g => g.enabled).length;
+        let code = geneCount + "," + genome.nodes.length + "," + genome.biasNode + "," + genome.layers + ",";
         for(let i in genome.genes) {
-            code += genome.genes[i].from + "," + genome.genes[i].to + "," + genome.genes[i].weight + ",";
+            if(genome.genes[i].enabled) {
+                code += genome.genes[i].from + "," + genome.genes[i].to + "," + genome.genes[i].weight + ",";
+            }
         }
         for(let i in genome.nodes) {
             code += genome.nodes[i].no + "," + genome.nodes[i].layer + (i == genome.nodes.length - 1 ? "" : ",");
@@ -71,14 +74,14 @@ function createRandomGeneration(genomeType, population, netMetadata) {
             let next = 0;
             for (let i = 0; i < g.inputs; i++) {
                 for (let j = 0; j < g.outputs; j++) {
-                    g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 2 - 1, innovationNo: next});
+                    g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 2 - 1, innovationNo: next, enabled: true});
                     next++;
                 }
             }
 
             //Connect bias to outputs
             for (let i = 0; i < g.outputs; i++) {
-                g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next});
+                g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next, enabled: true});
                 next++;
             }
             genomes.push(g);

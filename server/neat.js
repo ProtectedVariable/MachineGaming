@@ -368,7 +368,7 @@ Specie.prototype.addToSpecies = function(genome) {
 }
 
 Specie.prototype.setAverage = function() {
-    this.averageFitness = this.genomes.map(x => x.fitness).reduce((a, c) => a + c) / this.genomes.length;
+    this.averageFitness = this.genomes.length != 0 ? this.genomes.map(x => x.fitness).reduce((a, c) => a + c) / this.genomes.length : 0;
 }
 
 Specie.prototype.cull = function() {
