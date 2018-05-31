@@ -32,6 +32,7 @@ function createNextGeneration(genomes) {
     for(let i = nextgen.length; i < genomes.length; i++) {
         nextgen.push(species[0].yieldChild());
     }
+    console.log("Species: "+species.length);
     return nextgen;
 }
 
@@ -176,7 +177,7 @@ function addNode(g) {
     let randomConnection = 0; //The loop will assign the real value
 
     do {
-        randomConnection = Math.floor(Math.random() * g.genes.length);
+        randomConnection = Math.floor(Math.random() * (g.genes.length));
     } while(g.genes[randomConnection].from == g.biasNode); //Do not disconnect bias !
 
     g.genes[randomConnection].enabled = false;
@@ -199,7 +200,7 @@ function addNode(g) {
 
     if(getNode(g, newNodeNo).layer == getNode(g, g.genes[randomConnection].to).layer) {
         for (let i in g.nodes) {
-            if (i != newNodeNo && g.nodes[i].layer >= getNode(g, newNodeNo).layer) {
+            if (g.nodes[i].no != newNodeNo && g.nodes[i].layer >= getNode(g, newNodeNo).layer) {
                 g.nodes[i].layer++;
             }
         }
@@ -220,27 +221,26 @@ function addConnection(g) {
         //Cannot add a connection to a full network
         return;
     }
-
-    let randomNode1 = Math.floor(Math.random() * g.nodes.length);
-    let randomNode2 = Math.floor(Math.random() * g.nodes.length);
-    while (g.nodes[randomNode1].layer == g.nodes[randomNode2].layer || nodesConnected(g, randomNode1, randomNode2)) {
-        randomNode1 = Math.floor(Math.random() * g.nodes.length);
-        randomNode2 = Math.floor(Math.random() * g.nodes.length);
+    let randomNode1 = Math.floor(Math.random() * (g.nodes.length));
+    let randomNode2 = Math.floor(Math.random() * (g.nodes.length));
+    while (g.nodes[randomNode1].layer == g.nodes[randomNode2].layer || nodesConnected(g, g.nodes[randomNode1], g.nodes[randomNode2])) {
+        randomNode1 = Math.floor(Math.random() * (g.nodes.length));
+        randomNode2 = Math.floor(Math.random() * (g.nodes.length));
     }
     if (g.nodes[randomNode1].layer > g.nodes[randomNode2].layer) {
         let temp = randomNode2;
         randomNode2 = randomNode1;
         randomNode1 = temp;
     }
-    let connectionInnovationNumber = getInnovationNumber(g, randomNode1, randomNode2);
-    g.genes.push({from: randomNode1, to: randomNode2, weight: Math.random * 2 - 1, innovationNo: connectionInnovationNumber});
+    let connectionInnovationNumber = getInnovationNumber(g, g.nodes[randomNode1].no, g.nodes[randomNode2].no);
+    g.genes.push({from: g.nodes[randomNode1].no, to: g.nodes[randomNode2].no, weight: Math.random() * 2 - 1, innovationNo: connectionInnovationNumber});
 }
 
 function nodesConnected(g, a, b) {
     for(let i in g.genes) {
-        if(g.genes[i].from == a && g.genes[i].to == b) {
+        if(g.genes[i].from == a.no && g.genes[i].to == b.no) {
             return true;
-        } else if(g.genes[i].from == b && g.genes[i].to == a) {
+        } else if(g.genes[i].from == b.no && g.genes[i].to == a.no) {
             return true;
         }
     }
@@ -263,7 +263,6 @@ function fullyConnected(g) {
 
         maxConnections += nodesInLayers[i] * nodesInFront;
     }
-
     return maxConnections == g.genes.length;
 }
 
@@ -396,7 +395,6 @@ Specie.prototype.yieldChild = function() {
     } else {
         let p1 = this.select();
         let p2 = this.select();
-
         if (p1.fitness < p2.fitness) {
             child = crossover(p2, p1);
         } else {
