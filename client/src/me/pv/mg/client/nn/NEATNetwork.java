@@ -1,5 +1,6 @@
 package me.pv.mg.client.nn;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ public class NEATNetwork extends NeuralNetwork {
 	private List<Connection> genes;
 	private Map<Integer, Node> nodes;
 	private int bias, layers;
-	
+
 	public NEATNetwork(int inputCount, int outputCount, int bias, int layers, ActivationFunction activationFunction) {
 		super(inputCount, outputCount, activationFunction);
 		this.genes = new ArrayList<>();
@@ -26,25 +27,25 @@ public class NEATNetwork extends NeuralNetwork {
 		for (Entry<Integer, Node> e : nodes.entrySet()) {
 			e.getValue().setValue(0);
 		}
-		
-		for(int i = 0; i < input.length; i++) {
+
+		for (int i = 0; i < input.length; i++) {
 			nodes.get(i).setValue(input[i]);
 		}
 		nodes.get(bias).setValue(1);
-		
-		for(int i = 0; i < layers; i++) {
+
+		for (int i = 0; i < layers; i++) {
 			for (Entry<Integer, Node> e : nodes.entrySet()) {
-				if(e.getValue().getLayer() == i) {
-					if(i != 0) {
+				if (e.getValue().getLayer() == i) {
+					if (i != 0) {
 						e.getValue().setValue(activationFunction.activate(e.getValue().getValue()));
 					}
-        				for(Connection c : e.getValue().getOutputs()) {
-        					nodes.get(c.getTo()).value += e.getValue().getValue() * c.getWeight();
-        				}
+					for (Connection c : e.getValue().getOutputs()) {
+						nodes.get(c.getTo()).value += e.getValue().getValue() * c.getWeight();
+					}
 				}
 			}
 		}
-		
+
 		float[] outputs = new float[this.outputCount];
 		for (int i = 0; i < outputs.length; i++) {
 			outputs[i] = nodes.get(i + inputCount).value;
@@ -53,28 +54,63 @@ public class NEATNetwork extends NeuralNetwork {
 	}
 
 	@Override
-	public void display(Graphics g) {
+	public void display(Graphics g, int x, int y) {
+		g.setColor(Color.black);
+		int[] positions = new int[nodes.entrySet().size() * 2];
+		int[] counts = new int[layers];
+		int maxCount = 0;
+		for (int i = 0; i < layers; i++) {
+			int c = 0;
+			for (Entry<Integer, Node> e : nodes.entrySet()) {
+				if (e.getValue().getLayer() == i) {
+					c++;
+				}
+			}
+			if (c > maxCount)
+				maxCount = c;
+			counts[i] = c;
+		}
+
+		for (int i = 0; i < layers; i++) {
+			int j = 0;
+			int c = 0;
+			for (Entry<Integer, Node> e : nodes.entrySet()) {
+				if (e.getValue().getLayer() == i) {
+					int dx = x + 50 * i;
+					int dy = y + 60 * j + ((maxCount - counts[i]) * 30);
+					g.fillOval(dx, dy, 10, 10);
+					positions[e.getValue().no * 2] = dx + 5;
+					positions[e.getValue().no * 2 + 1] = dy + 5;
+					j++;
+				}
+				c++;
+			}
+		}
+
+		for (Connection connection : genes) {
+			g.drawLine(positions[connection.from * 2], positions[connection.from * 2 + 1], positions[connection.to * 2], positions[connection.to * 2 + 1]);
+		}
 	}
-	
+
 	public void connect() {
 		for (Connection connection : genes) {
 			this.nodes.get(connection.getFrom()).getOutputs().add(connection);
 		}
 	}
-	
+
 	public void addNode(Node n) {
 		this.nodes.put(n.no, n);
 	}
-	
-    public void addConnection(Connection c) {
-    		this.genes.add(c);
+
+	public void addConnection(Connection c) {
+		this.genes.add(c);
 	}
-	
+
 	public class Node {
 		private int no, layer;
 		private final List<Connection> outputs;
 		private float value;
-		
+
 		public Node(int no, int layer) {
 			this.no = no;
 			this.layer = layer;
@@ -110,12 +146,12 @@ public class NEATNetwork extends NeuralNetwork {
 			this.value = value;
 		}
 	}
-	
+
 	public class Connection {
-		
+
 		private int from, to;
 		private float weight;
-		
+
 		public Connection(int from, int to, float weight) {
 			this.from = from;
 			this.to = to;

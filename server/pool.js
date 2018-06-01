@@ -88,6 +88,7 @@ Pool.prototype.onResult = function(id, message) {
     this.workers[id].status = "Waiting...";
     this.workers[id].busy = false;
     this.genomes[this.workers[id].genomeID].fitness = message.getFitness();
+    this.genomes[this.workers[id].genomeID].unajustedFitness = message.getFitness();
     this.sendTasksToClients();
 }
 
@@ -125,11 +126,11 @@ Pool.prototype.sendTasksToClients = function() {
         this.cycles++;
         this.idle = (this.cycles == this.targetCycles);
         //Compute generation's average fitness
-        this.avgFitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a,c) => a + c) / this.population;
+        this.avgFitnesses[this.cycles - 1] = this.genomes.map(x => x.unajustedFitness).reduce((a,c) => a + c) / this.population;
         //Get best fitness
-        this.bestFitnesses[this.cycles - 1] = this.genomes.map(x => x.fitness).reduce((a, c) => (a > c) ? a : c);
+        this.bestFitnesses[this.cycles - 1] = this.genomes.map(x => x.unajustedFitness).reduce((a, c) => (a > c) ? a : c);
 
-        let best = this.genomes.reduce((a, c) => (a.fitness > c.fitness) ? a : c);
+        let best = this.genomes.reduce((a, c) => (a.unajustedFitness > c.unajustedFitness) ? a : c);
         let computeInfo = new proto.MGComputeInfo();
         computeInfo.setGame(this.currentGame);
         computeInfo.setNetType(this.currentType);

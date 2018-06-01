@@ -27,6 +27,7 @@ function createNextGeneration(genomes) {
         let childAlloc = Math.floor(species[i].averageFitness / averageSum * genomes.length) - 1;
         console.log(i+" "+childAlloc+" "+species[i].bestFitness+" "+species[i].averageFitness);
         for (let j = 0; j < childAlloc; j++) {
+            console.log(j);
             nextgen.push(species[i].yieldChild());
         }
     }
@@ -116,7 +117,7 @@ function crossover(g1, g2) {
     let childGenes = [];
     let enabledGenes = [];
 
-    for(let i = 0; i < g1.genes.length; i++) {
+    for(let i in g1.genes) {
         let enabled = true;
 
         let parent2gene = matchingGene(g2, g1.genes[i].innovationNo);
@@ -129,7 +130,7 @@ function crossover(g1, g2) {
             if (Math.random() < 0.5) {
                 childGenes.push(g1.genes[i]);
             } else {
-                childGenes.push(g2.genes[i]);
+                childGenes.push(g2.genes[parent2gene]);
             }
         } else {
             childGenes.push(g1.genes[i]);
@@ -143,7 +144,7 @@ function crossover(g1, g2) {
     }
 
     for(let i in childGenes) {
-        child.genes.push({from: childGenes[i].from, to: childGenes[i].to, weight: childGenes[i].weight, innovationNo: childGenes[i].innovationNo});
+        child.genes.push({from: childGenes[i].from, to: childGenes[i].to, weight: childGenes[i].weight, innovationNo: childGenes[i].innovationNo, enabled: true});
         child.genes[i].enabled = enabledGenes[i];
     }
     return child;
@@ -166,46 +167,63 @@ function mutate(g) {
     }
 
     if (Math.random() < 0.05) {
+        console.log("a");
         addConnection(g);
+        console.log("b");
+
     }
 
     if (Math.random() < 0.03) {
+        console.log("c");
         addNode(g);
+        console.log("d");
     }
 }
 
 function addNode(g) {
     let randomConnection = 0; //The loop will assign the real value
 
-    do {
-        randomConnection = Math.floor(Math.random() * (g.genes.length));
-    } while(g.genes[randomConnection].from == g.biasNode); //Do not disconnect bias !
-
-    g.genes[randomConnection].enabled = false;
-
-    let newNodeNo = g.nextNode;
-    g.nextNode++;
-
-    let connectionInnovationNumber = getInnovationNumber(g, g.genes[randomConnection].from, newNodeNo);
-    g.genes.push({from: g.genes[randomConnection].from, to: newNodeNo, weight: 1, innovationNo: connectionInnovationNumber});
-
-
-    connectionInnovationNumber = getInnovationNumber(g, newNodeNo, g.genes[randomConnection].to);
-
-    g.genes.push({from: newNodeNo, to: g.genes[randomConnection].to, weight: g.genes[randomConnection].weight, innovationNo: connectionInnovationNumber});
-    g.nodes.push({no: newNodeNo, layer: getNode(g, g.genes[randomConnection].from).layer + 1});
-
-    connectionInnovationNumber = getInnovationNumber(g, g.biasNode, newNodeNo);
-
-    g.genes.push({from: g.biasNode, to: newNodeNo, weight: 0, innovationNo: connectionInnovationNumber});
-
-    if(getNode(g, newNodeNo).layer == getNode(g, g.genes[randomConnection].to).layer) {
-        for (let i in g.nodes) {
-            if (g.nodes[i].no != newNodeNo && g.nodes[i].layer >= getNode(g, newNodeNo).layer) {
-                g.nodes[i].layer++;
-            }
+    let availableConnection = false;
+    for(let i in g.genes) {
+        if(g.genes[i].from != g.biasNode) {
+            availableConnection = true;
+            break;
         }
-        g.layers++;
+    }
+
+    if(availableConnection) {
+        do {
+            randomConnection = Math.floor(Math.random() * (g.genes.length));
+        } while(g.genes[randomConnection].from == g.biasNode); //Do not disconnect bias !
+
+        g.genes[randomConnection].enabled = false;
+
+        let newNodeNo = g.nextNode;
+        g.nextNode++;
+
+        let connectionInnovationNumber = getInnovationNumber(g, g.genes[randomConnection].from, newNodeNo);
+        g.genes.push({from: g.genes[randomConnection].from, to: newNodeNo, weight: 1, innovationNo: connectionInnovationNumber, enabled: true});
+
+
+        connectionInnovationNumber = getInnovationNumber(g, newNodeNo, g.genes[randomConnection].to);
+
+        g.genes.push({from: newNodeNo, to: g.genes[randomConnection].to, weight: g.genes[randomConnection].weight, innovationNo: connectionInnovationNumber, enabled: true});
+        g.nodes.push({no: newNodeNo, layer: getNode(g, g.genes[randomConnection].from).layer + 1});
+
+        connectionInnovationNumber = getInnovationNumber(g, g.biasNode, newNodeNo);
+
+        if(Math.random() < 0.1) {
+            g.genes.push({from: g.biasNode, to: newNodeNo, weight: 0, innovationNo: connectionInnovationNumber, enabled: true});
+        }
+        
+        if(getNode(g, newNodeNo).layer == getNode(g, g.genes[randomConnection].to).layer) {
+            for (let i in g.nodes) {
+                if (g.nodes[i].no != newNodeNo && g.nodes[i].layer >= getNode(g, newNodeNo).layer) {
+                    g.nodes[i].layer++;
+                }
+            }
+            g.layers++;
+        }
     }
 }
 
@@ -234,7 +252,7 @@ function addConnection(g) {
         randomNode1 = temp;
     }
     let connectionInnovationNumber = getInnovationNumber(g, g.nodes[randomNode1].no, g.nodes[randomNode2].no);
-    g.genes.push({from: g.nodes[randomNode1].no, to: g.nodes[randomNode2].no, weight: Math.random() * 4 - 2, innovationNo: connectionInnovationNumber});
+    g.genes.push({from: g.nodes[randomNode1].no, to: g.nodes[randomNode2].no, weight: Math.random() * 4 - 2, innovationNo: connectionInnovationNumber, enabled: true});
 }
 
 function nodesConnected(g, a, b) {
@@ -311,7 +329,7 @@ function innovationMatches(g, innovation, from, to) {
 }
 
 const excessCoeff = 1.5;
-const weightDiffCoeff = 0.4;
+const weightDiffCoeff = 0.8;
 const compatibilityThreshold = 1;
 
 function Specie(genome) {

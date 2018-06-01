@@ -1,7 +1,6 @@
 package me.pv.mg.client.simulation;
 
 import java.awt.Color;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
@@ -15,6 +14,7 @@ public class AsteroidSimulator implements Simulator {
 	private List<Asteroid> asteroids;
 	private Bullet[] bullets;
 	private Ship ship;
+	private NeuralNetwork nn;
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 720;
 
@@ -27,11 +27,14 @@ public class AsteroidSimulator implements Simulator {
 	@Override
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		nn.display(g, WIDTH, 0);
+
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
-		
-    		for (Asteroid asteroid : asteroids) {
+
+		for (Asteroid asteroid : asteroids) {
 			int s = asteroid.size * Asteroid.RENDER_MULT;
 			g.drawOval((int) (asteroid.x - s / 2f), (int) (asteroid.y - s / 2f), s, s);
 		}
@@ -48,6 +51,7 @@ public class AsteroidSimulator implements Simulator {
 
 	@Override
 	public float simulate(NeuralNetwork nn, boolean display) {
+		this.nn = nn;
 		float tick = 0;
 		//float distance = 0;
 		float score = 1;
@@ -56,7 +60,7 @@ public class AsteroidSimulator implements Simulator {
 		int bulletTime = 60;
 		Display frame = null;
 		if (display) {
-			frame = new Display(WIDTH, HEIGHT, this);
+			frame = new Display(WIDTH + 300, HEIGHT, this);
 			frame.setVisible(true);
 		}
 
@@ -74,10 +78,10 @@ public class AsteroidSimulator implements Simulator {
 						if (j == 0) {
 							ax = asteroid.x;
 							ay = asteroid.y;
-						} else if(j == 1) {
+						} else if (j == 1) {
 							ax = asteroid.x > WIDTH / 2 ? asteroid.x - WIDTH : asteroid.x + WIDTH;
 							ay = asteroid.y > HEIGHT / 2 ? asteroid.y - HEIGHT : asteroid.y + HEIGHT;
-						} else if(j == 2) {
+						} else if (j == 2) {
 							ax = asteroid.x > WIDTH / 2 ? asteroid.x - WIDTH : asteroid.x + WIDTH;
 							ay = asteroid.y;
 						} else {
@@ -105,20 +109,17 @@ public class AsteroidSimulator implements Simulator {
 				}
 				input[i] = 1.0f / min;
 			}
-			
-			
+
 			//System.out.println(input[0]+" "+input[1]+" "+input[2]+" "+input[3]+" "+input[4]+" "+input[5]+" "+input[6]+" "+input[7]);
 			float[] out = nn.propagateForward(input);
 			//System.out.println(out[0]+" "+out[1]+" "+out[2]+" "+out[3]);
-			
+
 			/*
-			float[] out = new float[4];
-			out[0] = frame.down ? 1 : 0;
-			out[1] = frame.right ? 1 : 0;
-			out[2] = frame.left ? 1 : 0;
-			out[3] = frame.up ? 1 : 0;
-			*/
-			
+			 * float[] out = new float[4]; out[0] = frame.down ? 1 : 0; out[1] =
+			 * frame.right ? 1 : 0; out[2] = frame.left ? 1 : 0; out[3] =
+			 * frame.up ? 1 : 0;
+			 */
+
 			for (int i = 0; i < bullets.length; i++) {
 				if (bullets[i] == null && bulletTime == 0 && out[0] > 0.8) {
 					bulletTime = 60;
@@ -159,7 +160,7 @@ public class AsteroidSimulator implements Simulator {
 			}
 			if (asteroids.size() == 0) {
 				for (int i = 0; i < ascount; i++) {
-					if(i == 0) {
+					if (i == 0) {
 						Asteroid a = new Asteroid();
 						a.x = 0;
 						a.y = 0;
@@ -230,7 +231,7 @@ public class AsteroidSimulator implements Simulator {
 		private float x, y;
 		private float vx, vy;
 		private int size = 4;
-		private static final int RENDER_MULT = 30;
+		private static final int RENDER_MULT = 32;
 
 		public Asteroid() {
 			int x = (int) Math.round(Math.random());

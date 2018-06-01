@@ -80,7 +80,7 @@ public class MultilayerPerceptron extends NeuralNetwork {
 	}
 
 	@Override
-	public void display(Graphics g) {
+	public void display(Graphics g, int x, int y) {
 		
 	}
 	

@@ -14,6 +14,6 @@ public abstract class NeuralNetwork {
 	}
 	
 	public abstract float[] propagateForward(float[] input);
-	public abstract void display(Graphics g);
+	public abstract void display(Graphics g, int x, int y);
 	
 }
