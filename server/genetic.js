@@ -74,14 +74,14 @@ function createRandomGeneration(genomeType, population, netMetadata) {
             let next = 0;
             for (let i = 0; i < g.inputs; i++) {
                 for (let j = 0; j < g.outputs; j++) {
-                    g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 2 - 1, innovationNo: next, enabled: true});
+                    g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 4 - 2, innovationNo: next, enabled: true});
                     next++;
                 }
             }
 
             //Connect bias to outputs
             for (let i = 0; i < g.outputs; i++) {
-                g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next, enabled: true});
+                g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 4 - 2, innovationNo: next, enabled: true});
                 next++;
             }
             genomes.push(g);

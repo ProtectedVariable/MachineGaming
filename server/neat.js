@@ -25,6 +25,7 @@ function createNextGeneration(genomes) {
         species[i].genomes[0].computing = false;
         nextgen.push(species[i].genomes[0]);
         let childAlloc = Math.floor(species[i].averageFitness / averageSum * genomes.length) - 1;
+        console.log(i+" "+childAlloc+" "+species[i].bestFitness+" "+species[i].averageFitness);
         for (let j = 0; j < childAlloc; j++) {
             nextgen.push(species[i].yieldChild());
         }
@@ -233,7 +234,7 @@ function addConnection(g) {
         randomNode1 = temp;
     }
     let connectionInnovationNumber = getInnovationNumber(g, g.nodes[randomNode1].no, g.nodes[randomNode2].no);
-    g.genes.push({from: g.nodes[randomNode1].no, to: g.nodes[randomNode2].no, weight: Math.random() * 2 - 1, innovationNo: connectionInnovationNumber});
+    g.genes.push({from: g.nodes[randomNode1].no, to: g.nodes[randomNode2].no, weight: Math.random() * 4 - 2, innovationNo: connectionInnovationNumber});
 }
 
 function nodesConnected(g, a, b) {
@@ -270,7 +271,7 @@ function mutateWeight(w) {
     if(Math.random() < 0.1) {
         return Math.random() * 2 - 1;
     } else {
-        return w + ((Math.random() - 0.5) / 30);
+        return w + ((Math.random() * 2 - 1) / 50);
     }
 }
 
@@ -310,7 +311,7 @@ function innovationMatches(g, innovation, from, to) {
 }
 
 const excessCoeff = 1.5;
-const weightDiffCoeff = 0.8;
+const weightDiffCoeff = 0.4;
 const compatibilityThreshold = 1;
 
 function Specie(genome) {
