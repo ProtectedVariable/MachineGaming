@@ -73,22 +73,27 @@ public class NEATNetwork extends NeuralNetwork {
 
 		for (int i = 0; i < layers; i++) {
 			int j = 0;
-			int c = 0;
 			for (Entry<Integer, Node> e : nodes.entrySet()) {
 				if (e.getValue().getLayer() == i) {
-					int dx = x + 50 * i;
-					int dy = y + 60 * j + ((maxCount - counts[i]) * 30);
+					int dx = x + ((280 / (layers - 1)) * i);
+					int dy = y + 80 * j + ((maxCount - counts[i]) * 40);
 					g.fillOval(dx, dy, 10, 10);
 					positions[e.getValue().no * 2] = dx + 5;
 					positions[e.getValue().no * 2 + 1] = dy + 5;
 					j++;
 				}
-				c++;
 			}
 		}
 
 		for (Connection connection : genes) {
-			g.drawLine(positions[connection.from * 2], positions[connection.from * 2 + 1], positions[connection.to * 2], positions[connection.to * 2 + 1]);
+			if(connection.weight < 0) {
+				g.setColor(Color.red);
+			} else {
+				g.setColor(Color.green);
+			}
+			if(connection.weight != 0) {
+				g.drawLine(positions[connection.from * 2], positions[connection.from * 2 + 1], positions[connection.to * 2], positions[connection.to * 2 + 1]);
+			}	
 		}
 	}
 

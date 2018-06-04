@@ -53,9 +53,9 @@ public class AsteroidSimulator implements Simulator {
 	public float simulate(NeuralNetwork nn, boolean display) {
 		this.nn = nn;
 		float tick = 0;
-		//float distance = 0;
 		float score = 1;
-		int shots = 1;
+		float hits = 1;
+		float shots = 1;
 		int ascount = 4;
 		int bulletTime = 60;
 		Display frame = null;
@@ -110,9 +110,7 @@ public class AsteroidSimulator implements Simulator {
 				input[i] = 1.0f / min;
 			}
 
-			//System.out.println(input[0]+" "+input[1]+" "+input[2]+" "+input[3]+" "+input[4]+" "+input[5]+" "+input[6]+" "+input[7]);
 			float[] out = nn.propagateForward(input);
-			//System.out.println(out[0]+" "+out[1]+" "+out[2]+" "+out[3]);
 
 			/*
 			 * float[] out = new float[4]; out[0] = frame.down ? 1 : 0; out[1] =
@@ -183,7 +181,8 @@ public class AsteroidSimulator implements Simulator {
 					if (bullets[i] != null) {
 						dist = (float) Math.sqrt((asteroid.x - bullets[i].x) * (asteroid.x - bullets[i].x) + (asteroid.y - bullets[i].y) * (asteroid.y - bullets[i].y));
 						if (dist < asteroid.size * Asteroid.RENDER_MULT / 2) {
-							score += 10;
+							score++;
+							hits++;
 							bullets[i] = null;
 							if (asteroid.size > 1) {
 								for (Asteroid a : asteroid.split()) {
@@ -224,7 +223,7 @@ public class AsteroidSimulator implements Simulator {
 			}
 			frame.dispose();
 		}
-		return tick * score * (score / (shots * 10));
+		return tick * score * (hits / shots);
 	}
 
 	class Asteroid {
@@ -259,7 +258,7 @@ public class AsteroidSimulator implements Simulator {
 	class Bullet {
 		private float x, y;
 		private float vx, vy;
-		private float ttl = 72;
+		private float ttl = 144;
 
 		public Bullet(int x, int y, float angle) {
 			this.x = x;

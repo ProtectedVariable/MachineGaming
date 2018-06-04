@@ -38,7 +38,7 @@ function createRandomGeneration(genomeType, population, netMetadata) {
         for(let i = 0; i < population; i++) {
             let genomeCode = "";
             for(let j = 0; j < linkCount; j++) {
-                genomeCode += (Math.random() * 4 - 2) + (j == linkCount - 1 ? "": ",");
+                genomeCode += (Math.random() * 2 - 1) + (j == linkCount - 1 ? "": ",");
             }
             genomes.push({code: genomeCode, computing: false, fitness: -1});
         }
@@ -74,19 +74,15 @@ function createRandomGeneration(genomeType, population, netMetadata) {
             let next = 0;
             for (let i = 0; i < g.inputs; i++) {
                 for (let j = 0; j < g.outputs; j++) {
-                    if(Math.random() < 0.1) {
-                        g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 4 - 2, innovationNo: next, enabled: true});
-                        next++;
-                    }
+                    g.genes.push({from: i, to: g.inputs + j, weight: Math.random() * 2 - 1, innovationNo: next, enabled: true});
+                    next++;
                 }
             }
 
             //Connect bias to outputs
             for (let i = 0; i < g.outputs; i++) {
-                if(Math.random() < 0.1) {
-                    g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 4 - 2, innovationNo: next, enabled: true});
-                    next++;
-                }
+                g.genes.push({from: g.biasNode, to: g.inputs + i, weight: Math.random() * 2 - 1, innovationNo: next, enabled: true});
+                next++;
             }
             genomes.push(g);
         }

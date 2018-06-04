@@ -41,6 +41,11 @@ function mutate(g, mr) {
         let i = Math.ceil(Math.random() * (gArray.length - 1));
         let mutationGene = gArray[i];
         let newValue = parseFloat(mutationGene) + (Math.random() * 2 - 1);
+        if(newValue > 1) {
+            newValue = 1;
+        } else if(newValue < -1) {
+            newValue = -1;
+        }
         gArray[i] = ""+newValue;
         g.code = "";
         for(let j = 0; j < gArray.length; j++) {
