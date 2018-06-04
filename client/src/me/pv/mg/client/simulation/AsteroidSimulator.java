@@ -258,7 +258,7 @@ public class AsteroidSimulator implements Simulator {
 	class Bullet {
 		private float x, y;
 		private float vx, vy;
-		private float ttl = 144;
+		private float ttl = 110;
 
 		public Bullet(int x, int y, float angle) {
 			this.x = x;

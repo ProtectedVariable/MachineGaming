@@ -21,8 +21,6 @@ function createNextGeneration(genomes) {
     killBadSpecies(genomes.length);
     let averageSum = getAvgFitnessSum();
     for (let i in species) {
-        species[i].genomes[0].fitness = -1;
-        species[i].genomes[0].computing = false;
         nextgen.push(species[i].genomes[0]);
         let childAlloc = Math.floor(species[i].averageFitness / averageSum * genomes.length) - 1;
         for (let j = 0; j < childAlloc; j++) {
@@ -31,6 +29,10 @@ function createNextGeneration(genomes) {
     }
     for(let i = nextgen.length; i < genomes.length; i++) {
         nextgen.push(species[0].yieldChild());
+    }
+    for(let i in nextgen) {
+        nextgen[i].fitness = -1;
+        nextgen[i].computing = false;
     }
     return nextgen;
 }
@@ -279,7 +281,7 @@ function mutateWeight(w) {
     if(Math.random() < 0.1) {
         return Math.random() * 2 - 1;
     } else {
-        let neww = w + ((Math.random() * 2 - 1) / 50);
+        let neww = w + ((Math.random() - 0.5) / 50);
         if(neww > 1) {
             neww = 1;
         } else if(neww < -1){
@@ -406,8 +408,6 @@ Specie.prototype.yieldChild = function() {
     let child = {};
     if (Math.random() < 0.25) {
         child = this.select();
-        child.computing = false;
-        child.fitness = -1;
     } else {
         let p1 = this.select();
         let p2 = this.select();
@@ -431,6 +431,7 @@ Specie.prototype.select = function() {
             return this.genomes[i];
         }
     }
+    console.log("j "+fitsum+" "+threshold);
     return this.genomes[0];
 }
 
