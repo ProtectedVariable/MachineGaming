@@ -223,7 +223,7 @@ public class AsteroidSimulator implements Simulator {
 			}
 			frame.dispose();
 		}
-		return tick * score * (hits / shots);
+		return tick * score * 10 + score * (hits / shots) * (hits / shots);
 	}
 
 	class Asteroid {

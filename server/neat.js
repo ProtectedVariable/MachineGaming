@@ -431,7 +431,6 @@ Specie.prototype.select = function() {
             return this.genomes[i];
         }
     }
-    console.log("j "+fitsum+" "+threshold);
     return this.genomes[0];
 }
 
