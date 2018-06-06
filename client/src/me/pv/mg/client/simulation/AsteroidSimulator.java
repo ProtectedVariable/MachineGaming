@@ -17,6 +17,7 @@ public class AsteroidSimulator implements Simulator {
 	private NeuralNetwork nn;
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 720;
+	private boolean forward = false;
 
 	public AsteroidSimulator() {
 		this.asteroids = new ArrayList<>();
@@ -47,6 +48,9 @@ public class AsteroidSimulator implements Simulator {
 		g.translate((int) ship.x, (int) ship.y);
 		g.rotate(ship.angle);
 		g.drawPolygon(ship.poly);
+		if(forward) {
+        		g.drawPolygon(ship.boost);
+		}
 	}
 
 	@Override
@@ -57,6 +61,7 @@ public class AsteroidSimulator implements Simulator {
 		float hits = 1;
 		float shots = 1;
 		int ascount = 4;
+		int spawnCountdown = 10000;
 		int bulletTime = 60;
 		Display frame = null;
 		if (display) {
@@ -150,15 +155,22 @@ public class AsteroidSimulator implements Simulator {
 
 			if (out[3] > 0.8) {
 				ship.forward();
+				forward = true;
+			} else {
+				forward = false;
 			}
 			ship.update();
 
 			if (bulletTime > 0) {
 				bulletTime--;
 			}
-			if (asteroids.size() == 0) {
+			if (asteroids.size() == 0 || spawnCountdown-- == 0) {
+				spawnCountdown = 10000;
+				if(asteroids.size() == 0 && ascount != 4) {
+					score += 10;
+				}
 				for (int i = 0; i < ascount; i++) {
-					if (i == 0) {
+					if (i == 0 && ascount == 4) {
 						Asteroid a = new Asteroid();
 						a.x = 0;
 						a.y = 0;
@@ -170,6 +182,7 @@ public class AsteroidSimulator implements Simulator {
 				}
 				ascount++;
 			}
+			
 
 			for (Asteroid asteroid : new ArrayList<>(asteroids)) {
 				float dist = (float) Math.sqrt((asteroid.x - ship.x) * (asteroid.x - ship.x) + (asteroid.y - ship.y) * (asteroid.y - ship.y));
@@ -233,10 +246,14 @@ public class AsteroidSimulator implements Simulator {
 		private static final int RENDER_MULT = 32;
 
 		public Asteroid() {
-			int x = (int) Math.round(Math.random());
-			int y = (int) Math.round(Math.random());
-			this.x = x * WIDTH;
-			this.y = y * HEIGHT;
+			float dist = 0;
+			do {
+        			int x = (int) Math.round(Math.random());
+        			int y = (int) Math.round(Math.random());
+        			this.x = x * WIDTH;
+        			this.y = y * HEIGHT;
+        			dist = (float) Math.sqrt((this.x - ship.x) * (this.x - ship.x) + (this.y - ship.y) * (this.y - ship.y));
+			} while(dist < ((this.size * Asteroid.RENDER_MULT) + ship.SIZE));
 			this.vx = (float) (Math.random() * 4) - 2;
 			this.vy = (float) (Math.random() * 4) - 2;
 		}
@@ -276,9 +293,11 @@ public class AsteroidSimulator implements Simulator {
 		private final int MAX_SPEED = 10;
 		private boolean alive = true;
 		private Polygon poly;
+		private Polygon boost;
 
 		public Ship() {
-			poly = new Polygon(new int[] { SIZE / 2, -SIZE / 2, -SIZE / 2 }, new int[] { 0, SIZE / 4, -SIZE / 4 }, 3);
+			poly = new Polygon(new int[] { SIZE / 2, -SIZE / 2, -SIZE / 2 }, new int[] { 0, SIZE / 3, -SIZE / 3 }, 3);
+			boost = new Polygon(new int[] { -SIZE, -SIZE / 2, -SIZE / 2 }, new int[] { 0, SIZE / 6, -SIZE / 6 }, 3);
 			this.x = WIDTH / 2;
 			this.y = HEIGHT / 2;
 			this.angle = (float) -(Math.PI / 2);
