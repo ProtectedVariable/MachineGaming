@@ -77,6 +77,7 @@ function cullSpecies() {
 function killStaleSpecies() {
     for (let i = 0; i < species.length; i++) {
         if (species[i].staleness >= 15) {
+            console.log("Killed stall specie "+i);
             species.splice(i, 1);
             i--;
         } else {
@@ -90,6 +91,7 @@ function killBadSpecies(population) {
 
     for(let i = 0; i < species.length; i++) {
         if(species[i].averageFitness / averageSum * population < 1) {
+            console.log("Killed bad specie "+i+" ("+species[i].averageFitness+", "+averageSum+")");
             species.splice(i, 1);
             i--;
         }
@@ -281,7 +283,7 @@ function mutateWeight(w) {
     if(Math.random() < 0.1) {
         return Math.random() * 2 - 1;
     } else {
-        let neww = w + ((Math.random() - 0.5) / 50);
+        let neww = w + ((Math.random() - 0.5) / 20);
         if(neww > 1) {
             neww = 1;
         } else if(neww < -1){
@@ -390,7 +392,7 @@ Specie.prototype.setAverage = function() {
 
 Specie.prototype.cull = function() {
     if(this.genomes.length > 2) {
-        this.genomes.splice(Math.floor(this.genomes.length / 2 + 1), Math.floor(this.genomes.length / 2));
+        this.genomes.splice(Math.floor(this.genomes.length / 2), this.genomes.length - Math.floor(this.genomes.length / 2));
     }
 }
 

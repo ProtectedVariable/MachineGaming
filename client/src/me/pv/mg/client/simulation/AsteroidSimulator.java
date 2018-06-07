@@ -220,6 +220,7 @@ public class AsteroidSimulator implements Simulator {
 
 			if (display) {
 				try {
+					frame.setTitle("Asteroid | Fitness: "+(tick * score * 10 + score * (hits / shots) * (hits / shots)));
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -248,12 +249,12 @@ public class AsteroidSimulator implements Simulator {
 		public Asteroid() {
 			float dist = 0;
 			do {
-        			int x = (int) Math.round(Math.random());
-        			int y = (int) Math.round(Math.random());
-        			this.x = x * WIDTH;
-        			this.y = y * HEIGHT;
+        			double x = Math.random();
+        			double y = Math.random();
+        			this.x = (float) (x * WIDTH);
+        			this.y = (float) (y * HEIGHT);
         			dist = (float) Math.sqrt((this.x - ship.x) * (this.x - ship.x) + (this.y - ship.y) * (this.y - ship.y));
-			} while(dist < ((this.size * Asteroid.RENDER_MULT) + ship.SIZE));
+			} while(dist < this.size * Asteroid.RENDER_MULT * 2);
 			this.vx = (float) (Math.random() * 4) - 2;
 			this.vy = (float) (Math.random() * 4) - 2;
 		}
