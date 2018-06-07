@@ -77,7 +77,6 @@ function cullSpecies() {
 function killStaleSpecies() {
     for (let i = 0; i < species.length; i++) {
         if (species[i].staleness >= 15) {
-            console.log("Killed stall specie "+i);
             species.splice(i, 1);
             i--;
         } else {
@@ -91,7 +90,6 @@ function killBadSpecies(population) {
 
     for(let i = 0; i < species.length; i++) {
         if(species[i].averageFitness / averageSum * population < 1) {
-            console.log("Killed bad specie "+i+" ("+species[i].averageFitness+", "+averageSum+")");
             species.splice(i, 1);
             i--;
         }

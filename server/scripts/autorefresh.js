@@ -26,6 +26,7 @@ function refreshInfos() {
             bestfitChart.data.datasets[0].data[i] = result.bestFitnesses[i];
             //fitChart.data.datasets[1].data[i] = result.bestFitnesses[i];
         }
+        //TODO CHANGE
         if(chartCount != lastFitChartSize) {
             fitChart.update();
             bestfitChart.update();
