@@ -1,22 +1,22 @@
 \select@language {french}
-\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
-\contentsline {section}{\numberline {2}Architecture Réseau}{4}{section.2}
-\contentsline {subsection}{\numberline {2.1}Protcole}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Serveur}{5}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Client}{5}{subsection.2.3}
-\contentsline {section}{\numberline {3}Algorithme Génétique}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Population initiale}{5}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Elitisme}{5}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Crossover}{5}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Mutation}{5}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Génome}{5}{subsection.3.5}
-\contentsline {subsection}{\numberline {3.6}Phénome}{5}{subsection.3.6}
-\contentsline {section}{\numberline {4}Réseaux de Neurones}{5}{section.4}
-\contentsline {subsection}{\numberline {4.1}Perceptron Multicouche}{5}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}NEAT}{5}{subsection.4.2}
-\contentsline {section}{\numberline {5}Jeux}{5}{section.5}
-\contentsline {subsection}{\numberline {5.1}Asteroid}{5}{subsection.5.1}
-\contentsline {subsubsection}{\numberline {5.1.1}Principe}{5}{subsubsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Entrées}{5}{subsubsection.5.1.2}
-\contentsline {subsubsection}{\numberline {5.1.3}Sorties}{5}{subsubsection.5.1.3}
-\contentsline {subsubsection}{\numberline {5.1.4}Résultats}{5}{subsubsection.5.1.4}
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}
+\contentsline {section}{\numberline {2}Architecture Réseau}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Protcole}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Serveur}{7}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Client}{9}{subsection.2.3}
+\contentsline {section}{\numberline {3}Algorithme Génétique}{9}{section.3}
+\contentsline {subsection}{\numberline {3.1}Population initiale}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Elitisme}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Crossover}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Mutation}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Génome}{9}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Phénome}{9}{subsection.3.6}
+\contentsline {section}{\numberline {4}Réseaux de Neurones}{9}{section.4}
+\contentsline {subsection}{\numberline {4.1}Perceptron Multicouche}{9}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}NEAT}{9}{subsection.4.2}
+\contentsline {section}{\numberline {5}Jeux}{9}{section.5}
+\contentsline {subsection}{\numberline {5.1}Asteroid}{9}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Principe}{9}{subsubsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.2}Entrées}{9}{subsubsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.3}Sorties}{9}{subsubsection.5.1.3}
+\contentsline {subsubsection}{\numberline {5.1.4}Résultats}{9}{subsubsection.5.1.4}

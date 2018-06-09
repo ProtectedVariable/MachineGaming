@@ -54,9 +54,10 @@ o = f(\sum_{i=0}^{n} S_i * W_i)
 \end{equation}
 Où\\
 $o$ est le signal qui va sortir du perceptron\\
+$f$ est la fonction d'activation\\
 $n$ est le nombre de voisins de la couche précédente\\
-$S$ l'ensemble des signaux des voisins la couche précedente\\
-$W$ l'ensemble des poids entre le perceptrons et ses voisins de la couche précédente
+$S$ le vecteur des signaux des voisins la couche précedente\\
+$W$ le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
 
 \begin{center}
 \includegraphics[scale=0.5]{XOR_Gate.png}
@@ -70,9 +71,43 @@ Cependant générer une telle base de données est un travail énorme, ainsi ces
 
 Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distruber de manière équitable le travail entre tous les clients.\\
 
-
 \subsection{Protcole}
+
+Le protocole à été établi à l'aide du langage protobuf qui permet d'avoir une définition claire ne dépendant pas des langages dans lesquels le protcole est ensuite implémenté.
+
+Voici le fichier qui défini le protocole:
+\inputminted[breaklines,breaksymbol=, frame=single,label=Protocole, stepnumber=1,tabsize=2]{protobuf}{mg.proto}
+
+Le protocole définit donc 6 types de messages:
+\begin{itemize}
+\item MG\_JOIN, Envoyé par le client, c'est une demande à rejoindre le groupe de calcul. En paramètres sont donnés le nom du client et si il veut rejoindre en tant que specateur ou non (fonctionnalité expliquée dans la partie client).
+
+\item MG\_JOIN\_RESPONSE, Envoyé par le serveur, confirme ou infirme l'ajout au groupe du client. Il n'existe pour l'instant aucune raison pour le rejet d'un client.
+
+\item MG\_COMPUTE\_REQUEST, Envoyé par le serveur, demande au client de calculer le fitness d'un génome donné sur un jeu donné.
+
+\item MG\_COMPUTE\_RESPONSE, Envoyé par le client, indique au serveur si oui ou non le client est en mesure d'effectuer la simulation.
+
+\item MG\_COMPUTE\_RESULT, Envoyé par le client, donne le fitness obtenu par le génome donné dans le message MG\_COMPUTE\_REQUEST sur le jeu donné dans ce même message et le temps (ms) pris par le client pour effectuer la simulation.
+
+\item MG\_END, Envoyé par n'importe quel entité, indique un désir de terminer la connexion.
+
+\end{itemize}
+
 \subsection{Serveur}
+
+Comme écrit ci-dessus, le serveur à la lourde tâche de gérer tous les génomes et leurs fitness afin de mettre en oeuvre les algorithmes génétiques qui vont permettre l'évolution. En plus de cela il va également devoir servir les pages web servant à la gestion et à la surveillance du processus évolutif.\\
+Afin de pouvoir effectuer toutes ces tâches, le serveur est constitué de modules node.js qui vont chacun gérer une partie de ce qui est lui est demandé.\\
+L'architecture se présente ainsi:
+\begin{figure}
+\begin{center}
+	\includegraphics[scale=0.75]{"server.png"} 
+	\caption{Architecture des modules du serveur}
+\end{center}
+\end{figure}
+
+
+
 \subsection{Client}
 
 \section{Algorithme Génétique}

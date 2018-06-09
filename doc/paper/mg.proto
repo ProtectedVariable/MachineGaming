@@ -1,0 +1,50 @@
+syntax = "proto2";
+option java_package = "me.pv.mg.protobuf";
+
+enum MGMessages {
+    MG_JOIN = 1;
+    MG_JOIN_RESPONSE = 2;
+    MG_COMPUTE_REQUEST = 3;
+    MG_COMPUTE_RESPONSE = 4;
+    MG_COMPUTE_RESULT = 5;
+    MG_END = 6;
+}
+
+enum MGNetworkType {
+    MG_MULTILAYER_PERCEPTRON = 1;
+    MG_NEAT = 2;
+}
+
+message MGJoin {
+    optional string pretty_name = 1;
+    optional bool spectator = 2;
+}
+
+message MGJoinResponse {
+    required bool accepted = 1;
+    optional string reason = 2;
+}
+
+message MGComputeInfo {
+    required string game = 1;
+    required .MGNetworkType net_type = 3;
+    required string net_metadata = 4;
+}
+
+message MGComputeRequest {
+    required .MGComputeInfo compute_info = 1;
+    required string genome = 2;
+}
+
+message MGComputeResponse {
+    required bool can_do = 1;
+}
+
+message MGComputeResult {
+    required float fitness = 1;
+    optional uint32 time = 2;
+}
+
+message MGEnd {
+    optional string message = 1;
+}
