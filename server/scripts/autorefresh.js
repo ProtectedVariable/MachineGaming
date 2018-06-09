@@ -1,5 +1,3 @@
-let lastFitChartSize = 0;
-
 function refreshInfos() {
     $.ajax({url: "/status", success: function(result) {
         //Update Header
@@ -13,31 +11,27 @@ function refreshInfos() {
         $(".pause").prop('disabled', result.remainingCycles <= 1)
 
         //Update chart
-        let chartCount = 0;
+        let update = result.avgFitnesses[result.avgFitnesses.length - 1] != fitChart.data.datasets[0].data[fitChart.data.datasets[0].data.length - 1];
         for (let i in result.avgFitnesses) {
-            chartCount++;
-            fitChart.data.labels[i] = i;
+            fitChart.data.labels[i] = (Math.max(0, result.currentGeneration - 50) + i);
             fitChart.data.datasets[0].data[i] = result.avgFitnesses[i];
-            //fitChart.data.datasets[1].data[i] = result.bestFitnesses[i];
         }
+
         //Update chart
         for (let i in result.bestFitnesses) {
             bestfitChart.data.labels[i] = i;
             bestfitChart.data.datasets[0].data[i] = result.bestFitnesses[i];
-            //fitChart.data.datasets[1].data[i] = result.bestFitnesses[i];
         }
-        //TODO CHANGE
-        if(chartCount != lastFitChartSize) {
+
+        if(update) {
             fitChart.update();
             bestfitChart.update();
-            lastFitChartSize = chartCount;
         }
 
         //Update workers
         let whtml = "";
         let index = 0;
         for(let wi in result.workers) {
-            console.log(wi);
             if(index % 3 == 0) {
                 if(index != 0) {
                     whtml += "</div>"
@@ -60,7 +54,7 @@ function refreshInfos() {
             $("#wdiv").html("<p style='color: red'> No Workers</p>");
         }
     }, complete: function() {
-        setTimeout(refreshInfos(), 1000);
+        setTimeout(refreshInfos(), 2000);
     }
     });
 }

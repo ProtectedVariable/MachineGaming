@@ -3,7 +3,6 @@ const mgclient = require('./client.js');
 const mgnetwork = require('./mgnetwork.js');
 const proto = require('./protobuf/mg_pb.js');
 const genetic = require('./genetic.js');
-const mgspecie = require('./specie.js');
 
 function Pool(population) {
     this.workers = {};
