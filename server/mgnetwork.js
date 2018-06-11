@@ -1,3 +1,9 @@
+/**
+ * This module handles all the network communications for machine gaming
+ *
+ * @author Thomas Ibanez
+ * @version 1.0
+ */
 "use strict";
 const net = require('net');
 const uuid = require("uuid/v1");
@@ -9,6 +15,11 @@ const client = require('./client.js');
 let connections = [];
 let pool = null;
 
+/**
+ * Handles the desire to join from a client
+ * @param  {String} id      The unique client id
+ * @param  {MGJoin} message The join message sent by the client
+ */
 function handleJoin(id, message) {
     let response = new proto.MGJoinResponse();
     //Always accepted

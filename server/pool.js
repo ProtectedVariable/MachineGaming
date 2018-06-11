@@ -142,7 +142,7 @@ Pool.prototype.sendTasksToClients = function() {
         }
 
         //Regen genomes
-        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType, this.population);
+        this.genomes = genetic.createNextGeneration(this.genomes, this.currentType);
         //Reset client state
         for (let index in this.workers) {
             this.workers[index].busy = false;

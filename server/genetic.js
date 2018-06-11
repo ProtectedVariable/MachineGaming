@@ -1,12 +1,29 @@
+/**
+ * This module is an interface to execute genetic algorithms
+ *
+ * @author Thomas Ibanez
+ * @version 1.0
+ */
 "use strict";
 const proto = require('./protobuf/mg_pb.js');
 const NEAT = require('./neat.js');
 const MLP = require('./mlp.js');
 
+/**
+ * Gives the metadata string to send to the client for a network topology
+ * @param  {Object} topo The topology of the network
+ * @return {String}      String representation of the topology
+ */
 function metadataFromTopology(topo) {
     return topo.inputCount+","+topo.hLayerCount+","+topo.hLayers+","+topo.outputCount;
 }
 
+/**
+ * Encodes the genome to a string
+ * @param  {Object} genome The genome to encode
+ * @param  {MGNetworkType} type   Enum value of the type of the genome
+ * @return {String}        String representation of the genome
+ */
 function genomeString(genome, type) {
     if(type == proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON) {
         return genome.code;
@@ -25,6 +42,13 @@ function genomeString(genome, type) {
     }
 }
 
+/**
+ * Creates a random population
+ * @param  {MGNetworkType} genomeType  The type of the genomes to create
+ * @param  {Number} population  The amount of genome to create
+ * @param  {Object} netMetadata The metadata of the genomes to create
+ * @return {Array}             Array containing the random genomes
+ */
 function createRandomGeneration(genomeType, population, netMetadata) {
     let genomes = [];
 
@@ -90,7 +114,13 @@ function createRandomGeneration(genomeType, population, netMetadata) {
     return genomes;
 }
 
-function createNextGeneration(genomes, genomeType, population) {
+/**
+ * Creates the next generation of genomes, using the previous generation which has been evaluated
+ * @param  {Array} genomes    The previous generation
+ * @param  {MGNetworkType} genomeType The type of the genomes
+ * @return {Array}            The next generation, using the right genetic algorithm
+ */
+function createNextGeneration(genomes, genomeType) {
     let nextgen = [];
     genomes.sort(function(a, b) { //Sort greater fitness first
         if(a.fitness < b.fitness) {
@@ -108,6 +138,11 @@ function createNextGeneration(genomes, genomeType, population) {
     return nextgen;
 }
 
+/**
+ * Selects randomly a genome by taking in consideration it's fitness (CDF)
+ * @param  {Array} population Whole population of genomes
+ * @return {Genome}            The selected genome
+ */
 function select(population) {
     let fitsum = population.map(x => x.fitness).reduce((a,c) => a + c);
     let threshold = Math.random() * fitsum;
