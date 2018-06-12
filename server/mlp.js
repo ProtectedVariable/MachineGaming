@@ -1,7 +1,18 @@
+/**
+ * This module handles all the MLP Genetic Algorithm
+ *
+ * @author Thomas Ibanez
+ * @version 1.0
+ */
 "use strict";
 const genetic = require("./genetic.js");
 const MUTATION_RATE = 0.1;
 
+/**
+ * Creates a new generation of genomes from the previous one
+ * @param  {Array} genomes genomes of the previous generation
+ * @return {Array}         new generations of genomes
+ */
 function createNextGeneration(genomes) {
     let nextgen = [];
     nextgen.push({code: genomes[0].code, computing: false, fitness: -1});
@@ -18,6 +29,12 @@ function createNextGeneration(genomes) {
     return nextgen;
 }
 
+/**
+ * Makes an offspring from 2 parents by crossing over genes
+ * @param  {Genome} g1 Parent 1
+ * @param  {Genome} g2 Parent 2
+ * @return {Genome}    Offspring
+ */
 function crossover(g1, g2) {
     let g1Array = g1.split(",");
     let g2Array = g2.split(",");
@@ -35,6 +52,11 @@ function crossover(g1, g2) {
     return newCode;
 }
 
+/**
+ * Mutates slightly the weight of a genome
+ * @param  {Genome} g  genome to mutate
+ * @param  {Number} mr probability of a mutation occuring
+ */
 function mutate(g, mr) {
     if(Math.random() < mr) {
         let gArray = g.code.split(",");

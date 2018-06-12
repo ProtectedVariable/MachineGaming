@@ -32,6 +32,10 @@ function handleJoin(id, message) {
     }
 }
 
+/**
+ * Removes all of the resources used for a client
+ * @param  {String} id ID of the client
+ */
 function dispose(id) {
     pool.removeWorker(id);
 	if (connections[id] !== undefined)
@@ -39,6 +43,10 @@ function dispose(id) {
 	delete connections[id];
 }
 
+/**
+ * Initialize server socket to accept connections
+ * @param  {Object} _pool The worker pool
+ */
 function init(_pool) {
     pool = _pool;
     net.createServer(function(sock) {
@@ -94,6 +102,12 @@ function init(_pool) {
     log.info("WebSocket server is alive on port 4567");
 }
 
+/**
+ * Sends a message to a client
+ * @param  {String} id          Id of the client
+ * @param  {Number} messageType Type of the message to send
+ * @param  {Object} message     Object of the message made with protobuf
+ */
 function sendTo(id, messageType, message) {
     const buf = Buffer.alloc(5, 0);
     buf[0] = messageType;
