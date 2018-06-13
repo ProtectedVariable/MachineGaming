@@ -1,3 +1,9 @@
+/**
+ * This module handles all the NEAT Algorithm
+ *
+ * @author Thomas Ibanez
+ * @version 1.0
+ */
 "use strict";
 const genetic = require("./genetic.js")
 
@@ -5,6 +11,11 @@ let nextConnectionNo = 1000;
 let species = [];
 let innovationHistory = [];
 
+/**
+ * Creates a new generation of genomes from the previous one
+ * @param  {Array} genomes genomes of the previous generation
+ * @return {Array}         new generations of genomes
+ */
 function createNextGeneration(genomes) {
     let nextgen = [];
     speciate(genomes);
@@ -37,6 +48,10 @@ function createNextGeneration(genomes) {
     return nextgen;
 }
 
+/**
+ * Partition the genomes into theirs species
+ * @param  {Array} genomes Genomes to classify
+ */
 function speciate(genomes) {
     for(let i in species) {
         species[i].clear();
@@ -66,6 +81,9 @@ function speciate(genomes) {
     }
 }
 
+/**
+ * Cull the bottom half of each species, also shares fitness
+ */
 function cullSpecies() {
     for (let i in species) {
         species[i].cull();
@@ -74,6 +92,9 @@ function cullSpecies() {
     }
 }
 
+/**
+ * Removes the species who's fitness hasn't improved in 15 generations
+ */
 function killStaleSpecies() {
     for (let i = 0; i < species.length; i++) {
         if (species[i].staleness >= 15) {
@@ -85,6 +106,10 @@ function killStaleSpecies() {
     }
 }
 
+/**
+ * Removes species that are too bad to be given a child
+ * @param  {Number} population total population size
+ */
 function killBadSpecies(population) {
     let averageSum = getAvgFitnessSum();
 
@@ -96,10 +121,20 @@ function killBadSpecies(population) {
     }
 }
 
+/**
+ * Get the sum of each species average fitness
+ * @return {Number} Sum of all average fitnesses
+ */
 function getAvgFitnessSum() {
     return species.map(x => x.averageFitness).reduce((a, c) => a + c);
 }
 
+/**
+ * Creates an offspring from 2 parents
+ * @param  {Genome} g1 Parent 1
+ * @param  {Genome} g2 Parent 2
+ * @return {Genome}    Offspring
+ */
 function crossover(g1, g2) {
     let child = {
         genes: [],
@@ -149,6 +184,12 @@ function crossover(g1, g2) {
     return child;
 }
 
+/**
+ * Gets the gene from a genome who's innovation number matches a given number
+ * @param  {Genome} g    Genome to search in
+ * @param  {Number} inno Innovation number to search from
+ * @return {Number}      Index of the matching gene, or -1 if no gene matches
+ */
 function matchingGene(g, inno) {
     for (let i in g.genes) {
         if (g.genes[i].innovationNo == inno) {
@@ -158,6 +199,10 @@ function matchingGene(g, inno) {
     return -1;
 }
 
+/**
+ * Mutates a genome
+ * @param  {Genome} g Genome to mutate
+ */
 function mutate(g) {
     if (Math.random() < 0.8) {
         for(let i in g.genes) {
@@ -174,6 +219,10 @@ function mutate(g) {
     }
 }
 
+/**
+ * Adds a node to a genome
+ * @param {Genome} g Genome to mutate
+ */
 function addNode(g) {
     let randomConnection = 0; //The loop will assign the real value
 
@@ -219,6 +268,12 @@ function addNode(g) {
     }
 }
 
+/**
+ * Gets the node whos id matches a given number
+ * @param  {Genome} g  Genome to search in
+ * @param  {Number} id Id to search for
+ * @return {Node}    The matching node
+ */
 function getNode(g, id) {
     for(let i in g.nodes) {
         if(g.nodes[i].no == id) {
@@ -227,6 +282,10 @@ function getNode(g, id) {
     }
 }
 
+/**
+ * Adds a connection in a genome
+ * @param {Genome} g Genome to mutate
+ */
 function addConnection(g) {
     if (fullyConnected(g)) {
         //Cannot add a connection to a full network
@@ -247,6 +306,13 @@ function addConnection(g) {
     g.genes.push({from: g.nodes[randomNode1].no, to: g.nodes[randomNode2].no, weight: Math.random() * 2 - 1, innovationNo: connectionInnovationNumber, enabled: true});
 }
 
+/**
+ * Check if two given nodes are connected within a genome
+ * @param  {Genome} g Genome to look into
+ * @param  {Node}   a First node
+ * @param  {Node}   b Second node
+ * @return {Boolean}  True if the nodes are connected in any direction, false otherwise
+ */
 function nodesConnected(g, a, b) {
     for(let i in g.genes) {
         if(g.genes[i].from == a.no && g.genes[i].to == b.no) {
@@ -258,6 +324,11 @@ function nodesConnected(g, a, b) {
     return false;
 }
 
+/**
+ * Check whether a genome is fully connected or not
+ * @param  {Genome} g Genome to check
+ * @return {Boolean}  True if the genome is fully connected, false otherwise
+ */
 function fullyConnected(g) {
     let maxConnections = 0;
     let nodesInLayers = Array.apply(null, Array(g.layers)).map(Number.prototype.valueOf, 0);
@@ -277,6 +348,11 @@ function fullyConnected(g) {
     return maxConnections == g.genes.length;
 }
 
+/**
+ * Mutate a weight and gives the new value
+ * @param  {Number} w Current weight
+ * @return {Number}   The new, mutated, weight
+ */
 function mutateWeight(w) {
     if(Math.random() < 0.1) {
         return Math.random() * 2 - 1;
@@ -291,6 +367,14 @@ function mutateWeight(w) {
     }
 }
 
+/**
+ * Gets the innovation number for a connection (gene),
+ * Or creates a new one if it's the first time it appears
+ * @param  {Genome} g    Genome to search in
+ * @param  {Number} from Node the gene starts from
+ * @param  {Number} to   Node the gene ends to
+ * @return {Number}      Innovation Number of the gene
+ */
 function getInnovationNumber(g, from, to) {
     let isNew = true;
     let connectionInnovationNumber = nextConnectionNo;
