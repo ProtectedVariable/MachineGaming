@@ -1,3 +1,9 @@
+/**
+ * This module handles the workers pool, and distributes the work
+ *
+ * @author Thomas Ibanez
+ * @version 1.0
+ */
 "use strict";
 const mgclient = require('./client.js');
 const mgnetwork = require('./mgnetwork.js');
@@ -21,6 +27,11 @@ function Pool(population) {
     this.computingGenomes = 0;
 }
 
+/**
+ * Adds a worker to the pool
+ * @param  {String} id   id of the worker
+ * @param  {String} name Name of the worker
+ */
 Pool.prototype.addWorker = function(id, name) {
     this.workers[id] = new mgclient.Client(name);
     if(!this.idle) {
@@ -28,6 +39,10 @@ Pool.prototype.addWorker = function(id, name) {
     }
 }
 
+/**
+ * Removes a worker from the pool
+ * @param  {String} id id of the worker
+ */
 Pool.prototype.removeWorker = function(id) {
     if(this.workers[id] != undefined && this.workers[id].busy) {
         this.genomes[this.workers[id].genomeID].computing = false;
@@ -37,14 +52,26 @@ Pool.prototype.removeWorker = function(id) {
     delete this.spectators[id];
 }
 
+/**
+ * Adds a spectator
+ * @param  {[type]} id   Id of the spectator
+ * @param  {[type]} name Name of the spectator
+ */
 Pool.prototype.addSpectator = function(id, name) {
     this.spectators[id] = new mgclient.Client(name);
 }
 
+/**
+ * Initalizes the pool with a random population made for the selected task
+ */
 Pool.prototype.createInitialPopulation = function() {
     this.genomes = genetic.createRandomGeneration(this.currentType, this.population, this.currentTopo);
 }
 
+/**
+ * Launches a new task for a given number of generations
+ * @param  {Number} numGens Number of generations to make, you can use Infinity
+ */
 Pool.prototype.newTask = function(numGens) {
     if(!this.idle || this.currentGame == "-")
         return;
@@ -54,6 +81,12 @@ Pool.prototype.newTask = function(numGens) {
     this.sendTasksToClients();
 };
 
+/**
+ * Lock the selected task infos
+ * @param  {String} game Game to play
+ * @param  {Number} type Network type
+ * @param  {Object} topo Network topology
+ */
 Pool.prototype.lockInfo = function(game, type, topo) {
     if(!this.idle)
         return;
@@ -71,6 +104,11 @@ Pool.prototype.lockInfo = function(game, type, topo) {
     }
 };
 
+/**
+ * Response callback
+ * @param  {String} id      Worker ID
+ * @param  {MGComputeResponse} message Message content
+ */
 Pool.prototype.onResponse = function(id, message) {
     if(message.getCanDo() != true) {
         this.workers[id].status = "Unable to compute";
@@ -83,6 +121,11 @@ Pool.prototype.onResponse = function(id, message) {
     this.genomes[this.workers[id].genomeID].waiting = false;
 }
 
+/**
+ * Result callback
+ * @param  {String} id      Worker ID
+ * @param  {MGComputeResult} message Message content
+ */
 Pool.prototype.onResult = function(id, message) {
     this.workers[id].status = "Waiting...";
     this.workers[id].busy = false;
@@ -91,6 +134,9 @@ Pool.prototype.onResult = function(id, message) {
     this.sendTasksToClients();
 }
 
+/**
+ * Distributes work to clients
+ */
 Pool.prototype.sendTasksToClients = function() {
     let allDone = false;
 
@@ -153,6 +199,9 @@ Pool.prototype.sendTasksToClients = function() {
     }
 }
 
+/**
+ * Pauses the current task
+ */
 Pool.prototype.pauseTask = function() {
     this.targetCycles = this.cycles + 1;
     this.sendTasksToClients();

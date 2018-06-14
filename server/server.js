@@ -1,3 +1,9 @@
+/**
+ * This module handles web-client requests
+ *
+ * @author Thomas Ibanez
+ * @version 1.0
+ */
 "use strict";
 const proto = require('./protobuf/mg_pb.js');
 const mgnetwork = require('./mgnetwork.js')
@@ -101,7 +107,6 @@ app.get('/status', (req, res) => {
         "workers": pool.workers,
         "games": games,
         "currentGame": pool.currentGame,
-        "currentFitness": pool.currentFitness,
         "currentGeneration": pool.cycles,
         "remainingCycles": isFinite(pool.targetCycles) ? pool.targetCycles - pool.cycles : "Infinity",
         "avgFitnesses": pool.avgFitnesses.slice(pool.avgFitnesses.length < 50 ? 0 : pool.avgFitnesses.length - 50, pool.avgFitnesses.length),

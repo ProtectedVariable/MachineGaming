@@ -396,6 +396,14 @@ function getInnovationNumber(g, from, to) {
     return connectionInnovationNumber;
 }
 
+/**
+ * Checks if the genome's genes are part of the innovation history
+ * @param  {Genome} g              Genome to check
+ * @param  {Innovation} innovation Innovation to look into
+ * @param  {Number} from           Id of the input node
+ * @param  {Number} to             Id of the output node
+ * @return {Boolean}               True if all the genes are part of the innovation, false otherwise
+ */
 function innovationMatches(g, innovation, from, to) {
     if (g.genes.length == innovation.innovationNumbers.length) {
         if (from == innovation.from && to == innovation.to) {
@@ -422,6 +430,11 @@ function Specie(genome) {
     this.averageFitness = 0;
 }
 
+/**
+ * Checks if a genome is part of this specie
+ * @param  {Genome} genome Genome to verify
+ * @return {Boolean}       True if the genome is part of the specie, false otherwise
+ */
 Specie.prototype.sameSpecies = function(genome) {
     let excessAndDisjoint = this.getExcessDisjoint(genome, this.best);
     let averageWeightDiff = this.averageWeightDiff(genome, this.best);
@@ -431,6 +444,12 @@ Specie.prototype.sameSpecies = function(genome) {
     return (compatibilityThreshold > compatibility);
 }
 
+/**
+ * Gets the excess and disjoint genes count between two genomes
+ * @param  {Genome} g1 Genome 1
+ * @param  {Genome} g2 Genome 2
+ * @return {Number}    Amount of excess genes + amount of disjoint genes
+ */
 Specie.prototype.getExcessDisjoint = function(g1, g2) {
     let matching = 0;
     for (let i in g1.genes) {
@@ -444,6 +463,12 @@ Specie.prototype.getExcessDisjoint = function(g1, g2) {
     return (g1.genes.length + g2.genes.length - 2 * matching);
 }
 
+/**
+ * Gets the average weight difference between every matching genes of two genomes
+ * @param  {Genome} g1 Genome 1
+ * @param  {Genome} g2 Genome 2
+ * @return {Number}    Average weight difference
+ */
 Specie.prototype.averageWeightDiff = function(g1, g2) {
     let matching = 0;
     let totalDiff = 0;
@@ -459,6 +484,10 @@ Specie.prototype.averageWeightDiff = function(g1, g2) {
     return (matching == 0 ? 100 : (totalDiff / matching));
 }
 
+/**
+ * Adds a genome to the specie
+ * @param  {Genome} genome Genome to add
+ */
 Specie.prototype.addToSpecies = function(genome) {
     this.genomes.push(genome);
     if(genome.fitness > this.bestFitness) {
@@ -468,26 +497,42 @@ Specie.prototype.addToSpecies = function(genome) {
     }
 }
 
+/**
+ * Calculate the average weight of the specie
+ */
 Specie.prototype.setAverage = function() {
     this.averageFitness = this.genomes.length != 0 ? this.genomes.map(x => x.fitness).reduce((a, c) => a + c) / this.genomes.length : 0;
 }
 
+/**
+ * Kills the bottom half of the specie
+ */
 Specie.prototype.cull = function() {
     if(this.genomes.length > 2) {
         this.genomes.splice(Math.floor(this.genomes.length / 2), this.genomes.length - Math.floor(this.genomes.length / 2));
     }
 }
 
+/**
+ * Shares fitness between all genomes
+ */
 Specie.prototype.fitnessSharing = function() {
     for (let i in this.genomes) {
         this.genomes[i].fitness /= this.genomes.length;
     }
 }
 
+/**
+ * Removes all genome from the specie
+ */
 Specie.prototype.clear = function() {
     this.genomes = [];
 }
 
+/**
+ * Creates an offspring from the specie
+ * @return {Genome} Child made with genomes from the specie
+ */
 Specie.prototype.yieldChild = function() {
     let child = {};
     if (Math.random() < 0.25) {
@@ -505,6 +550,11 @@ Specie.prototype.yieldChild = function() {
     return child;
 }
 
+/**
+ * Selects randomly a genome by taking in consideration it's fitness (CDF)
+ * @param  {Array} population Whole population of genomes
+ * @return {Genome}            The selected genome
+ */
 Specie.prototype.select = function() {
     let fitsum = this.genomes.map(x => x.fitness).reduce((a, c) => a + c);
     let threshold = Math.random() * fitsum;
