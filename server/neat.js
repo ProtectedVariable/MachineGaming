@@ -45,6 +45,8 @@ function createNextGeneration(genomes) {
         nextgen[i].fitness = -1;
         nextgen[i].computing = false;
     }
+
+    console.log("generation X, Number of mutatations "+innovationHistory.length+" Species: "+species.length);
     return nextgen;
 }
 
@@ -460,7 +462,7 @@ Specie.prototype.getExcessDisjoint = function(g1, g2) {
             }
         }
     }
-    return (g1.genes.length + g2.genes.length - 2 * matching);
+    return (g1.genes.length + g2.genes.length - (2 * matching));
 }
 
 /**
@@ -470,8 +472,8 @@ Specie.prototype.getExcessDisjoint = function(g1, g2) {
  * @return {Number}    Average weight difference
  */
 Specie.prototype.averageWeightDiff = function(g1, g2) {
-    let matching = 0;
-    let totalDiff = 0;
+    let matching = 0.0;
+    let totalDiff = 0.0;
     for(let i in g1.genes) {
         for(let j in g2.genes) {
             if(g1.genes[i].innovationNo == g2.genes[j].innovationNo) {
@@ -501,7 +503,7 @@ Specie.prototype.addToSpecies = function(genome) {
  * Calculate the average weight of the specie
  */
 Specie.prototype.setAverage = function() {
-    this.averageFitness = this.genomes.length != 0 ? this.genomes.map(x => x.fitness).reduce((a, c) => a + c) / this.genomes.length : 0;
+    this.averageFitness = this.genomes.map(x => x.fitness).reduce((a, c) => a + c) / this.genomes.length;
 }
 
 /**
