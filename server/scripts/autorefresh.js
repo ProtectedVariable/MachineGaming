@@ -13,13 +13,13 @@ function refreshInfos() {
         //Update chart
         let update = result.avgFitnesses[result.avgFitnesses.length - 1] != fitChart.data.datasets[0].data[fitChart.data.datasets[0].data.length - 1];
         for (let i in result.avgFitnesses) {
-            fitChart.data.labels[i] = (Math.max(0, result.currentGeneration - 50) + i);
+            fitChart.data.labels[i] = (Math.max(0, parseFloat(result.currentGeneration) - 50) + parseFloat(i));
             fitChart.data.datasets[0].data[i] = result.avgFitnesses[i];
         }
 
         //Update chart
         for (let i in result.bestFitnesses) {
-            bestfitChart.data.labels[i] = i;
+            fitChart.data.labels[i] = (Math.max(0, parseFloat(result.currentGeneration) - 50) + parseFloat(i));
             bestfitChart.data.datasets[0].data[i] = result.bestFitnesses[i];
         }
 

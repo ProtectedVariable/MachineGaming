@@ -46,7 +46,6 @@ function createNextGeneration(genomes) {
         nextgen[i].computing = false;
     }
 
-    console.log("generation X, Number of mutatations "+innovationHistory.length+" Species: "+species.length);
     return nextgen;
 }
 
