@@ -19,7 +19,7 @@ function refreshInfos() {
 
         //Update chart
         for (let i in result.bestFitnesses) {
-            fitChart.data.labels[i] = (Math.max(0, parseFloat(result.currentGeneration) - 50) + parseFloat(i));
+            bestfitChart.data.labels[i] = (Math.max(0, parseFloat(result.currentGeneration) - 50) + parseFloat(i));
             bestfitChart.data.datasets[0].data[i] = result.bestFitnesses[i];
         }
 
