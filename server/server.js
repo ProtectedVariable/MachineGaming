@@ -92,11 +92,15 @@ app.locals.pretty = true;
 
 mgnetwork.init(pool);
 
+let topoID = 0;
+
 app.get('/', (req, res) => {
 	res.render('main', {
         "workers": pool.workers,
         "games": games,
         "currentGame": pool.currentGame,
+        "currentTopo": topoID,
+        "currentType": pool.currentType,
         "remainingCycles": pool.targetCycles - pool.cycles,
         "topologies": topos
     });
@@ -126,8 +130,12 @@ app.post('/task', (req, res) => {
 
 app.post('/work', (req, res) => {
     if(req.body.lock) {
-        pool.lockInfo(games[req.body.tgame].name, req.body.tnet, topos[req.body.ttopo % 1000].netMetadata);
-        console.log(topos[req.body.ttopo % 1000].netMetadata);
+        if(pool.currentGame == "-") {
+            pool.lockInfo(games[req.body.tgame].name, req.body.tnet, topos[req.body.ttopo % 1000].netMetadata);
+            topoID = req.body.ttopo;
+        } else {
+            pool.lockInfo(null, null, null);
+        }
     }
     res.redirect("/");
 });

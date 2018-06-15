@@ -11,22 +11,22 @@ html(lang="en")
             form(action="/work" method='POST')
                 div.form-group
                     label(for="tgame") Game:
-                    select.form-control.custom-select(name="tgame" id="tgame" onchange="refreshForm()")
+                    select.form-control.custom-select(name="tgame" id="tgame" onchange="refreshForm()" disabled=currentGame != "-")
                         each game in games
                             option(value=`${game.id}`) #{game.name}
                     label(for="tnet") Network type:
-                    select.form-control.custom-select(name="tnet" id="tnet" onchange="refreshForm()")
-                        option(value='1' selected) Multilayer Perceptron
-                        option(value='2') NEAT
+                    select.form-control.custom-select(name="tnet" id="tnet" onchange="refreshForm()" disabled=currentGame != "-")
+                        option(value='1' selected=currentType == 1) Multilayer Perceptron
+                        option(value='2' selected=currentType == 2) NEAT
                     label(for="ttopo") Network Topology:
-                    select.form-control.custom-select(name="ttopo" id="ttopo")
+                    select.form-control.custom-select(name="ttopo" id="ttopo" disabled=currentGame != "-")
                         each topo, index in topologies
                             - let hiddens = "";
                             - let val = topo.gameId * 10000 + topo.netType * 1000 + index;
                             - for (var i in topo.netMetadata.hLayers) {
                             -    hiddens += topo.netMetadata.hLayers[i]+" "
                             - }
-                            option(value=`${val}`) #{topo.netMetadata.inputCount} Inputs, #{topo.netMetadata.outputCount} Outputs, #{topo.netMetadata.hLayerCount} Hidden Layers ( #{hiddens}) 
+                            option(value=`${val}` selected=val == currentTopo) #{topo.netMetadata.inputCount} Inputs, #{topo.netMetadata.outputCount} Outputs, #{topo.netMetadata.hLayerCount} Hidden Layers ( #{hiddens}) 
                 div.form-group
                     - let text = currentGame == "-" ? "Lock" : "Unlock";
                     input.btn.btn-outline-primary(type="submit" name="lock" value=`${text}`)

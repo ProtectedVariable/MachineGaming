@@ -13,4 +13,7 @@ function refreshForm() {
             this.hidden = true;
         }
     });
+    if($("#ttopo").find(":selected").text() == "") {
+        $('#ttopo').find("option:not(:hidden):eq(0)").prop("selected", true);
+    }
 }
