@@ -32,7 +32,7 @@ function createNextGeneration(genomes) {
     killBadSpecies(genomes.length);
     let averageSum = getAvgFitnessSum();
     for (let i in species) {
-        nextgen.push(species[i].genomes[0]);
+        nextgen.push(clone(species[i].genomes[0]));
         let childAlloc = Math.floor(species[i].averageFitness / averageSum * genomes.length) - 1;
         for (let j = 0; j < childAlloc; j++) {
             nextgen.push(species[i].yieldChild());
@@ -180,7 +180,7 @@ function crossover(g1, g2) {
     }
 
     for(let i in childGenes) {
-        child.genes.push({from: childGenes[i].from, to: childGenes[i].to, weight: childGenes[i].weight, innovationNo: childGenes[i].innovationNo, enabled: true});
+        child.genes.push({from: childGenes[i].from, to: childGenes[i].to, weight: childGenes[i].weight, innovationNo: childGenes[i].innovationNo});
         child.genes[i].enabled = enabledGenes[i];
     }
     return child;
@@ -538,10 +538,10 @@ Specie.prototype.clear = function() {
 Specie.prototype.yieldChild = function() {
     let child = {};
     if (Math.random() < 0.25) {
-        child = this.select();
+        child = clone(this.select());
     } else {
-        let p1 = this.select();
-        let p2 = this.select();
+        let p1 = clone(this.select());
+        let p2 = clone(this.select());
         if (p1.fitness < p2.fitness) {
             child = crossover(p2, p1);
         } else {
@@ -568,6 +568,16 @@ Specie.prototype.select = function() {
         }
     }
     return this.genomes[0];
+}
+
+/**
+ * Clones the given object
+ *
+ * @param  {Object} obj The object to clone
+ * @return {Object} A clone of the given object
+ */
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
 module.exports.Specie = Specie;
