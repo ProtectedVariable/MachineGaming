@@ -1,22 +1,29 @@
 \select@language {french}
-\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
-\contentsline {section}{\numberline {2}Architecture Réseau}{3}{section.2}
-\contentsline {subsection}{\numberline {2.1}Protcole}{4}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Serveur}{5}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Client}{7}{subsection.2.3}
-\contentsline {section}{\numberline {3}Algorithme Génétique}{7}{section.3}
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}Algorithme Génétique Basique}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Population initiale}{5}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Crossover}{5}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Mutation}{6}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Elitisme}{6}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Génome}{7}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Phénome}{7}{subsection.2.6}
+\contentsline {section}{\numberline {3}NEAT}{7}{section.3}
 \contentsline {subsection}{\numberline {3.1}Population initiale}{7}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Elitisme}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Crossover}{7}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Mutation}{7}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.2}Crossover}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Mutation}{7}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Elitisme}{7}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Génome}{7}{subsection.3.5}
 \contentsline {subsection}{\numberline {3.6}Phénome}{7}{subsection.3.6}
 \contentsline {section}{\numberline {4}Réseaux de Neurones}{7}{section.4}
 \contentsline {subsection}{\numberline {4.1}Perceptron Multicouche}{7}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}NEAT}{7}{subsection.4.2}
-\contentsline {section}{\numberline {5}Jeux}{7}{section.5}
-\contentsline {subsection}{\numberline {5.1}Asteroid}{7}{subsection.5.1}
-\contentsline {subsubsection}{\numberline {5.1.1}Principe}{7}{subsubsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Entrées}{7}{subsubsection.5.1.2}
-\contentsline {subsubsection}{\numberline {5.1.3}Sorties}{7}{subsubsection.5.1.3}
-\contentsline {subsubsection}{\numberline {5.1.4}Résultats}{7}{subsubsection.5.1.4}
+\contentsline {subsection}{\numberline {4.2}Réseau NEAT}{7}{subsection.4.2}
+\contentsline {section}{\numberline {5}Architecture Réseau}{7}{section.5}
+\contentsline {subsection}{\numberline {5.1}Protcole}{7}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Serveur}{9}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Client}{10}{subsection.5.3}
+\contentsline {section}{\numberline {6}Jeux}{10}{section.6}
+\contentsline {subsection}{\numberline {6.1}Asteroid}{10}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Principe}{10}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Entrées}{10}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.3}Sorties}{10}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Résultats}{10}{subsubsection.6.1.4}

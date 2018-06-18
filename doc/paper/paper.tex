@@ -22,6 +22,12 @@
 
 \newpage
 
+\listoffigures
+
+\newpage
+
+\section*{Acronymes}
+
 \section{Introduction}
 
 Le but de ce travail de bachelor est d'étudier et de comparer le comportement de différentes techniques de Machine Learning basés sur la neuroévolution en analysant la faculté des algorithmes à apprendre à jouer à des jeux-vidéos.\\
@@ -46,13 +52,76 @@ $n$ est le nombre de voisins de la couche précédente\\
 $S$ le vecteur des signaux des voisins la couche précedente\\
 $W$ le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
 
+\begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.5]{XOR_Gate.png}
+	\includegraphics[scale=0.5]{"XOR_Gate.png"} 
+	\caption{Porte XOR simulée par un réseau de neurones}
 \end{center}
+\end{figure}
 
-La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseaux à la sortie attendu pour une entrée donnée. L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connais la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau. L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connais la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
 
-Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples
+Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.
+
+\section{Algorithme Génétique Basique}
+
+Dans le cadre de ce travail, ce sont les algorithmes génétiques qui vont nous aider à trouver des réseaux de neurones capables d'apprendre à jouer à des jeux-vidéo. Leur fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organsimes que nous allons évaluer à leur capacité à jouer à un jeu donné, nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante grâce aux techniques citées ci-dessous qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
+
+Cette section détaille le fonctionnement de l'algorithme génétique mis en place pour faire évoluer les perceptrons multicouche, celui-ci à été créé en s'inspirant des concepts connu de ce domaine.
+
+\subsection{Population initiale}
+
+La base d'un algorithme génétique est la population initiale, celle ci doit être générée aléatoirement afin de représenter un vaste spectre de possibilitées. Dans ce projet, au début de chaque évolution 500 organsimes sont générés. L'aléatoire intervient donc sur les valeurs des poids qui relient chaque perceptron dans les réseaux de neurones.\\
+Nous retrouverons dans cette popultation aléatoire aucuns individu capable de jouer parfaitement au jeu demandé, mais certains aurons des comportements qui les aiderons a survivre un peu mieux que leurs voisins, ceux-ci vont donc passer leurs caractèrisiques à la génération suivante.
+
+\subsection{Crossover}
+
+Un crossover (où enjambement en français) est une opération génétique qui croise les gènes de deux parents afin de créer le gène de l'enfant, ce dernier va donc hériter de certaines caractèristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peaux, yeux, cheveux) des parents chez les enfants.\\
+
+Le crossover fonctionne d'après un principe très simple:\\
+\begin{itemize}
+\item On choisis un point de croisement
+\item On assigne chez l'enfant tout les gènes qui précèdent ce point depuis le premier parent
+\item On assigne chez l'enfant tout les gènes qui suivent ce point depuis le second parent
+\end{itemize}
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.4]{"crossover.png"} 
+	\caption{Fonctionnement d'un crossover}
+\end{center}
+\end{figure}
+\newpage
+
+Ainsi, les traits premettant une meilleure survie vont rapidement se répendre dans la population.
+
+\subsection{Mutation}
+
+Les mutations sont des événemtns aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront benefiques (p.ex La capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex Malformation des membres).\\
+
+Dans le cas de cet algorithme, étant donne que la topologie est fixée, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.
+
+\subsection{Elitisme}
+
+L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\\
+
+Dans le cadre de cet algorithme, seul le champion de la génération est préservé sans altération de son code génétique.
+
+\subsection{Génome}
+\subsection{Phénome}
+
+\section{NEAT}
+
+\subsection{Population initiale}
+\subsection{Crossover}
+\subsection{Mutation}
+\subsection{Elitisme}
+\subsection{Génome}
+\subsection{Phénome}
+
+\section{Réseaux de Neurones}
+\subsection{Perceptron Multicouche}
+\subsection{Réseau NEAT}
 
 \section{Architecture Réseau}
 
@@ -86,28 +155,17 @@ Le protocole définit donc 6 types de messages:
 Comme écrit ci-dessus, le serveur à la lourde tâche de gérer tous les génomes et leurs fitness afin de mettre en oeuvre les algorithmes génétiques qui vont permettre l'évolution. En plus de cela il va également devoir servir les pages web servant à la gestion et à la surveillance du processus évolutif.\\
 Afin de pouvoir effectuer toutes ces tâches, le serveur est constitué de modules node.js qui vont chacun gérer une partie de ce qui est lui est demandé.\\
 L'architecture se présente ainsi:
-\begin{figure}
+\begin{figure}[h]
 \begin{center}
-	\includegraphics[scale=0.75]{"server.png"} 
+	\includegraphics[scale=0.5]{"server.png"} 
 	\caption{Architecture des modules du serveur}
 \end{center}
-\end{figure}
-
-
+\end{figure}\\
 
 \subsection{Client}
 
-\section{Algorithme Génétique}
-\subsection{Population initiale}
-\subsection{Elitisme}
-\subsection{Crossover}
-\subsection{Mutation}
-\subsection{Génome}
-\subsection{Phénome}
+Le client va devoir effectuer la simulation demandée par le serveur, avec le bon réseau de neurones
 
-\section{Réseaux de Neurones}
-\subsection{Perceptron Multicouche}
-\subsection{NEAT}
 
 \section{Jeux}
 \subsection{Asteroid}
