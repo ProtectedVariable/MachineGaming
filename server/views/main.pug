@@ -30,7 +30,7 @@ html(lang="en")
                 div.form-group
                     - let text = currentGame == "-" ? "Lock" : "Unlock";
                     input.btn.btn-outline-primary(type="submit" name="lock" value=`${text}`)
-                    input.btn.btn-outline-secondary(type="submit" name="load" value="Load Population" disabled=currentGame != "-")
+                    button.btn.btn-outline-secondary(type="button" disabled=currentGame != "-" data-toggle="modal" data-target="#loadpopmodal") Load Population
                     input.btn.btn-outline-success(type="submit" name="save" value="Save Population" disabled=currentGame == "-")
                     input.btn.btn-danger(type="submit" name="regen" value="Regen Inital Population" disabled=currentGame == "-")
             hr
@@ -66,6 +66,24 @@ html(lang="en")
             h2 Graphs
             canvas(id="canvasFitness" style="width: 100%; height: 720px;")
             canvas(id="canvasFitness2" style="width: 100%; height: 720px;")
+                
+            
+        div.modal(tabindex="-1" role="dialog" id="loadpopmodal")
+            div.modal-dialog(role="document")
+                div.modal-content
+                    div.modal-header
+                        h5.modal-title Load previous batch
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    div.modal-body
+                        form(action="/work" method="POST") 
+                            label(for="lbatch") Batch:
+                            select.form-control.custom-select(name="lbatch" id="lbatch")
+                                each save in saves
+                                    option(value=`${save.batchId}`) #{save.batchId}
+                            hr
+                            button(type="submit" name="load" class="btn btn-primary") Load batch
+                            button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
         script(type="text/javascript" src="/scripts/autorefresh.js")
         script(type="text/javascript" src="/scripts/chart.js")
         script(type="text/javascript" src="/scripts/taskform.js")

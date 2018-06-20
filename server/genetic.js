@@ -67,6 +67,9 @@ function createRandomGeneration(genomeType, population, netMetadata) {
             genomes.push({code: genomeCode, computing: false, fitness: -1});
         }
     } else {
+        NEAT.species = [];
+        NEAT.innovationHistory = [];
+        NEAT.nextConnectionNo = 1000;
         for(let i = 0; i < population; i++) {
             let g = {
                 genes: [],

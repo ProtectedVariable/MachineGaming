@@ -439,9 +439,8 @@ function Specie(genome) {
 Specie.prototype.sameSpecies = function(genome) {
     let excessAndDisjoint = this.getExcessDisjoint(genome, this.best);
     let averageWeightDiff = this.averageWeightDiff(genome, this.best);
-    let largeGenomeNormaliser = 1;
 
-    let compatibility = (excessCoeff * excessAndDisjoint / largeGenomeNormaliser) + (weightDiffCoeff * averageWeightDiff);
+    let compatibility = (excessCoeff * excessAndDisjoint) + (weightDiffCoeff * averageWeightDiff);
     return (compatibilityThreshold > compatibility);
 }
 

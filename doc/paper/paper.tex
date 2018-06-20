@@ -35,9 +35,13 @@ Le but de ce travail de bachelor est d'étudier et de comparer le comportement d
 La neuroévolution est une technique qui constiste à faire évoluer des réseaux de neurones artificiels afin qu'ils arrivent à effectuer une tâche.\\
 
 Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensembles de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information. En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).
+
+\begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.5]{neurones.png}
+	\includegraphics[scale=0.5]{neurones.png}
+	\caption{Représentation des neurones dans le cerveau humain}
 \end{center}
+\end{figure}
 
 Les perceptrons quant à eux vont imiter (de manière simplifiée) ce comportement, chaque perceptron va prendre le signal envoyée par chacuns de ses voisins de la couche précédente, puis multiplier cette valeur par le poids le connexion et finalement faire le somme de toutes les valeurs pondérées et passer cette somme dans une fonction (dites fonction d'activation) qui va placer cette somme dans un interval (entre 0 et 1 par exemple) et renvoyer le resultat de cette fonction à tous ses voisins de la couche suivante qui vont faire de même.
 
@@ -97,7 +101,7 @@ Ainsi, les traits premettant une meilleure survie vont rapidement se répendre d
 
 \subsection{Mutation}
 
-Les mutations sont des événemtns aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront benefiques (p.ex La capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex Malformation des membres).\\
+Les mutations sont des événements aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront benefiques (p.ex La capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex Malformation des membres).\\
 
 Dans le cas de cet algorithme, étant donne que la topologie est fixée, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.
 
@@ -108,6 +112,10 @@ L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'u
 Dans le cadre de cet algorithme, seul le champion de la génération est préservé sans altération de son code génétique.
 
 \subsection{Génome}
+
+Le génome est l'ensemble des gènes d'un individu, celui-ci content la totalité du code génétique constituant l'individu.\\
+Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donne que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids 
+
 \subsection{Phénome}
 
 \section{NEAT}

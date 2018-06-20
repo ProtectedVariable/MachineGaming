@@ -8,6 +8,7 @@
 const proto = require('./protobuf/mg_pb.js');
 const mgnetwork = require('./mgnetwork.js')
 const mgpool = require('./pool.js');
+const mgNEAT = require('./neat.js')
 const genetic = require('./genetic.js');
 const express = require('express');
 const cors = require('cors');
@@ -52,16 +53,6 @@ let topos = [
     },
     {
         gameId: 0,
-        netType: proto.MGNetworkType.MG_MULTILAYER_PERCEPTRON,
-        netMetadata: {
-            inputCount: 8,
-            hLayerCount: 4,
-            hLayers: [12, 10, 8, 6],
-            outputCount: 4
-            }
-    },
-    {
-        gameId: 0,
         netType: proto.MGNetworkType.MG_NEAT,
         netMetadata: {
             inputCount: 8,
@@ -75,14 +66,29 @@ db.on('error', console.error.bind(console, 'connection error:'));
 let genSchema = mongoose.Schema({
     batchId: Number,
     genNumber: Number,
-    game: String,
-    avgFitness: Number,
-    bestFitness: Number,
-    species: [[]]
+    topoID: Number,
+    avgFitnesses: [Number],
+    bestFitnesses: [Number],
+    genomes: [String],
+    species: [{
+        bestFitness: Number,
+        best: String,
+        stalness: Number,
+        averageFitness: Number
+    }],
+    innovationHistory: [{
+        from: Number,
+        to: Number,
+        innovationNumber: Number,
+        innovationNumbers: [Number]
+    }]
 });
+let saved = [];
 let Gen = mongoose.model('Generation', genSchema);
 db.once('open', function() {
-
+    Gen.find(function (err, gens) {
+        saved = gens;
+    });
 });
 
 app.set('view engine', 'pug');
@@ -102,7 +108,8 @@ app.get('/', (req, res) => {
         "currentTopo": topoID,
         "currentType": pool.currentType,
         "remainingCycles": pool.targetCycles - pool.cycles,
-        "topologies": topos
+        "topologies": topos,
+        "saves": saved
     });
 });
 
@@ -136,6 +143,23 @@ app.post('/work', (req, res) => {
         } else {
             pool.lockInfo(null, null, null);
         }
+    } else if(req.body.save) {
+        let current = new Gen({
+            batchId: Math.floor((new Date).getTime() / 1000),
+            genNumber: pool.cycles,
+            topoID: topoID,
+            avgFitnesses: pool.avgFitnesses,
+            bestFitnesses: pool.bestFitnesses,
+            genomes: pool.genomes.map(x => JSON.stringify(x)),
+            species: mgNEAT.species.map(x => {return {bestFitness: x.bestFitness, best: JSON.stringify(x.best), staleness: x.staleness, averageFitness: x.averageFitness}}),
+            innovationHistory: mgNEAT.innovationHistory
+        });
+        current.save();
+    } else if(req.body.load) {
+        
+    } else if(req.body.regen) {
+        pool.createInitialPopulation();
+        pool.sendTasksToClients();
     }
     res.redirect("/");
 });
