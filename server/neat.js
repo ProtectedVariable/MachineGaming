@@ -578,5 +578,15 @@ function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
+function setInnovationHistory(innohist) {
+    innovationHistory = innohist;
+}
+
+function setSpecies(_species) {
+    species = _species;
+}
+
+module.exports.setInnovationHistory = setInnovationHistory;
+module.exports.setSpecies = setSpecies;
 module.exports.Specie = Specie;
 module.exports.createNextGeneration = createNextGeneration;

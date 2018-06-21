@@ -82,7 +82,7 @@ html(lang="en")
                                 each save in saves
                                     option(value=`${save.batchId}`) #{save.batchId}
                             hr
-                            button(type="submit" name="load" class="btn btn-primary") Load batch
+                            input(type="submit" name="load" class="btn btn-primary" value="Load batch") 
                             button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
         script(type="text/javascript" src="/scripts/autorefresh.js")
         script(type="text/javascript" src="/scripts/chart.js")

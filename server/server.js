@@ -73,7 +73,7 @@ let genSchema = mongoose.Schema({
     species: [{
         bestFitness: Number,
         best: String,
-        stalness: Number,
+        staleness: Number,
         averageFitness: Number
     }],
     innovationHistory: [{
@@ -154,9 +154,30 @@ app.post('/work', (req, res) => {
             species: mgNEAT.species.map(x => {return {bestFitness: x.bestFitness, best: JSON.stringify(x.best), staleness: x.staleness, averageFitness: x.averageFitness}}),
             innovationHistory: mgNEAT.innovationHistory
         });
-        current.save();
+        current.save(function(err) {
+            Gen.find(function (err, gens) {
+                saved = gens;
+            });
+        });
     } else if(req.body.load) {
-        
+        Gen.findOne({ batchId: req.body.lbatch }, function(err, result) {
+            pool.lockInfo(games[topos[result.topoID % 1000].gameId].name, topos[result.topoID % 1000].netType, topos[result.topoID % 1000].netMetadata);
+            topoID = result.topoID;
+            pool.cycles = result.genNumber,
+            pool.targetCycles = result.genNumber,
+            pool.avgFitnesses = result.avgFitnesses,
+            pool.bestFitnesses = result.bestFitnesses,
+            pool.genomes = result.genomes.map(x => JSON.parse(x));
+            mgNEAT.setSpecies(result.species.map(x =>
+                {
+                    let s = new mgNEAT.Specie(JSON.parse(x.best));
+                    s.staleness = x.staleness;
+                    s.averageFitness = x.averageFitness;
+                    return s;
+                }
+            ));
+            mgNEAT.setInnovationHistory(result.innovationHistory);
+        });
     } else if(req.body.regen) {
         pool.createInitialPopulation();
         pool.sendTasksToClients();
