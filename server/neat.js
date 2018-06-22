@@ -579,6 +579,9 @@ function clone(obj) {
 }
 
 function setInnovationHistory(innohist) {
+    for(let i in innohist) {
+        console.log(i);
+    }
     innovationHistory = innohist;
 }
 
@@ -586,7 +589,18 @@ function setSpecies(_species) {
     species = _species;
 }
 
+function getSpecies() {
+    return species;
+}
+
+function getInnovationHistory() {
+    return innovationHistory;
+}
+
+
 module.exports.setInnovationHistory = setInnovationHistory;
 module.exports.setSpecies = setSpecies;
 module.exports.Specie = Specie;
 module.exports.createNextGeneration = createNextGeneration;
+module.exports.getSpecies = getSpecies;
+module.exports.getInnovationHistory = getInnovationHistory;

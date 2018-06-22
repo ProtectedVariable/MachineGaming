@@ -43,7 +43,6 @@ function refreshInfos() {
             whtml += '<div class="card-body">';
             whtml += '<h5 class="card-title">'+result.workers[wi].name+" ("+index+")</h5>";
             whtml += '<p class="card-text"> '+result.workers[wi].status+' </p>';
-            whtml += '<a class="btn btn-danger">Kick </a>';
             whtml += '</div>'
             whtml += "</div>"
             index++

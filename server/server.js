@@ -151,8 +151,8 @@ app.post('/work', (req, res) => {
             avgFitnesses: pool.avgFitnesses,
             bestFitnesses: pool.bestFitnesses,
             genomes: pool.genomes.map(x => JSON.stringify(x)),
-            species: mgNEAT.species.map(x => {return {bestFitness: x.bestFitness, best: JSON.stringify(x.best), staleness: x.staleness, averageFitness: x.averageFitness}}),
-            innovationHistory: mgNEAT.innovationHistory
+            species: mgNEAT.getSpecies().map(x => {return {bestFitness: x.bestFitness, best: JSON.stringify(x.best), staleness: x.staleness, averageFitness: x.averageFitness}}),
+            innovationHistory: mgNEAT.getInnovationHistory()
         });
         current.save(function(err) {
             Gen.find(function (err, gens) {
@@ -160,7 +160,7 @@ app.post('/work', (req, res) => {
             });
         });
     } else if(req.body.load) {
-        Gen.findOne({ batchId: req.body.lbatch }, function(err, result) {
+        Gen.findOne({ batchId: req.body.lbatch }).lean().exec(function(err, result) {
             pool.lockInfo(games[topos[result.topoID % 1000].gameId].name, topos[result.topoID % 1000].netType, topos[result.topoID % 1000].netMetadata);
             topoID = result.topoID;
             pool.cycles = result.genNumber,
