@@ -29,13 +29,13 @@ public class AsteroidSimulator implements Simulator {
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		nn.display(g, WIDTH, 0);
+		nn.display(g, WIDTH, 0, 320, HEIGHT);
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
 
-		for (Asteroid asteroid : asteroids) {
+		for (Asteroid asteroid : new ArrayList<>(asteroids)) {
 			int s = asteroid.size * Asteroid.RENDER_MULT;
 			g.drawOval((int) (asteroid.x - s / 2f), (int) (asteroid.y - s / 2f), s, s);
 		}
@@ -116,12 +116,6 @@ public class AsteroidSimulator implements Simulator {
 			}
 
 			float[] out = nn.propagateForward(input);
-
-			/*
-			 * float[] out = new float[4]; out[0] = frame.down ? 1 : 0; out[1] =
-			 * frame.right ? 1 : 0; out[2] = frame.left ? 1 : 0; out[3] =
-			 * frame.up ? 1 : 0;
-			 */
 
 			for (int i = 0; i < bullets.length; i++) {
 				if (bullets[i] == null && bulletTime == 0 && out[0] > 0.8) {
@@ -259,6 +253,10 @@ public class AsteroidSimulator implements Simulator {
 			this.vy = (float) (Math.random() * 4) - 2;
 		}
 
+		/**
+		 * Splits the asteroid into 2 little asteroids
+		 * @return		Array with 2 asteroid objects
+		 */
 		public Asteroid[] split() {
 			Asteroid[] childs = new Asteroid[2];
 			for (int i = 0; i < childs.length; i++) {
@@ -304,6 +302,9 @@ public class AsteroidSimulator implements Simulator {
 			this.angle = (float) -(Math.PI / 2);
 		}
 
+		/**
+		 * Move the ship forward
+		 */
 		public void forward() {
 			this.vx += Math.cos(angle) * 0.3;
 			this.vy += Math.sin(angle) * 0.3;
@@ -314,6 +315,9 @@ public class AsteroidSimulator implements Simulator {
 			}
 		}
 
+		/**
+		 * Update the ship position and speed
+		 */
 		public void update() {
 			this.x += vx;
 			this.y += vy;

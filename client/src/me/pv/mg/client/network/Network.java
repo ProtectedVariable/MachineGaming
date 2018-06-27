@@ -33,21 +33,38 @@ public class Network {
 		}
 	}
 
+	/**
+	 * Send a message to join the pool of workers
+	 * @param name	The name to give to the server
+	 * @param spec	True if joining as a spectator, false otherwise
+	 */
 	public void joinPool(String name, boolean spec) {
 		MGJoin msg = MGJoin.newBuilder().setPrettyName(name).setSpectator(spec).build();
 		sendMessage(MGMessages.MG_JOIN, msg);
 	}
 	
+	/**
+	 * Sends the resulting fitness of a simulation to the server
+	 * @param fitness	The fitness to send
+	 * @param time		The time it took to compute the simulation (ms)
+	 */
 	public void sendResult(float fitness, int time) {
 		MGComputeResult msg = MGComputeResult.newBuilder().setFitness(fitness).setTime(time).build();
 		sendMessage(MGMessages.MG_COMPUTE_RESULT, msg);
 	}
 	
+	/**
+	 * Sends a response to a request from the server
+	 * @param cando		True if the client is able to do the simulation, false otherwise
+	 */
 	public void sendResponse(boolean cando) {
 		MGComputeResponse msg = MGComputeResponse.newBuilder().setCanDo(cando).build();
 		sendMessage(MGMessages.MG_COMPUTE_RESPONSE, msg);
 	}
 
+	/**
+	 * Waits for a message to come
+	 */
 	public void waitNextMessage() {
 		try {
 			byte[] in_type = new byte[1];
@@ -87,6 +104,11 @@ public class Network {
 		}
 	}
 
+	/**
+	 * Sends a message to the server
+	 * @param type	Type of the message
+	 * @param msg	Message object
+	 */
 	private void sendMessage(MGMessages type, GeneratedMessageV3 msg) {
 		byte[] out = new byte[msg.getSerializedSize() + 2];
 		out[0] = (byte) type.getNumber();

@@ -54,7 +54,7 @@ public class NEATNetwork extends NeuralNetwork {
 	}
 
 	@Override
-	public void display(Graphics g, int x, int y) {
+	public void display(Graphics g, int x, int y, int w, int h) {
 		g.setColor(Color.black);
 		int[] positions = new int[nodes.entrySet().size() * 2];
 		int[] counts = new int[layers];
@@ -75,8 +75,8 @@ public class NEATNetwork extends NeuralNetwork {
 			int j = 0;
 			for (Entry<Integer, Node> e : nodes.entrySet()) {
 				if (e.getValue().getLayer() == i) {
-					int dx = x + ((280 / (layers - 1)) * i);
-					int dy = y + 80 * j + ((maxCount - counts[i]) * 40);
+					int dx = x + (((w - 20) / (layers - 1)) * i);
+					int dy = y + ((h - 20) / maxCount) * j + ((maxCount - counts[i]) * (((h - 20) / 2) / maxCount)) + 5;
 					g.fillOval(dx, dy, 10, 10);
 					positions[e.getValue().no * 2] = dx + 5;
 					positions[e.getValue().no * 2 + 1] = dy + 5;
@@ -97,16 +97,27 @@ public class NEATNetwork extends NeuralNetwork {
 		}
 	}
 
+	/**
+	 * Connects the node from the genes informations, this function has to be called before using the network
+	 */
 	public void connect() {
 		for (Connection connection : genes) {
 			this.nodes.get(connection.getFrom()).getOutputs().add(connection);
 		}
 	}
 
+	/**
+	 * Adds a node to the network
+	 * @param n		The node to add
+	 */
 	public void addNode(Node n) {
 		this.nodes.put(n.no, n);
 	}
 
+	/**
+	 * Adds a connection to the network
+	 * @param c		The connection to add
+	 */
 	public void addConnection(Connection c) {
 		this.genes.add(c);
 	}

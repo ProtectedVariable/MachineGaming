@@ -1,5 +1,6 @@
 package me.pv.mg.client.nn;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class MultilayerPerceptron extends NeuralNetwork {
@@ -10,7 +11,8 @@ public class MultilayerPerceptron extends NeuralNetwork {
  	
  	private float[][] hidValue;
  	
-	
+ 	private int[] hLayers;
+ 	
 	public MultilayerPerceptron(int inputCount, int hLayerCount, int[] hLayers, int outputCount, ActivationFunction activationFunction) {
 		super(inputCount, outputCount, activationFunction);
 		this.inToHid = new float[(inputCount + 1) * hLayers[0]];
@@ -24,8 +26,13 @@ public class MultilayerPerceptron extends NeuralNetwork {
 		for (int i = 0; i < hLayers.length; i++) {
 			this.hidValue[i] = new float[hLayers[i]];
 		}
+		this.hLayers = hLayers;
 	}
 
+	/**
+	 * Sets all the weight of the network
+	 * @param weights	Array of the new weights
+	 */
 	public void setAllWeight(float[] weights) {
 		int offset = 0;
 		for(int i = 0; i < this.inToHid.length; i++) {
@@ -80,9 +87,51 @@ public class MultilayerPerceptron extends NeuralNetwork {
 	}
 
 	@Override
-	public void display(Graphics g, int x, int y) {
-		
+	public void display(Graphics g, int x, int y, int w, int h) {
+		for(int i = 0; i <= hLayers.length + 1; i++) {
+			if(i == 0) {
+				for(int j = 0; j < inputCount + 1; j++) {
+					int x1 = x + 5;
+					int y1 = y + (j * h / (inputCount + 1));
+					for(int k = 0; k < hLayers[0]; k++) {
+						int x2 = x + 5 + (w / (hLayers.length + 2));
+						int y2 = y + (k * h / hLayers[0]);
+						if(inToHid[j + k * inputCount] > 0) {
+							g.setColor(Color.GREEN);
+						} else {
+							g.setColor(Color.RED);
+						}
+						g.drawLine(x1 + 5, y1 + 5, x2 + 5, y2 + 5);
+					}
+					g.setColor(Color.BLACK);
+					g.fillOval(x1, y1, 10, 10);
+				}
+			} else if(i == hLayers.length + 1) {
+				for(int j = 0; j < outputCount; j++) {
+        				int x1 = x + 5 + (i * w / (hLayers.length + 2));
+        				int y1 = y + (j * h / outputCount);
+        				g.setColor(Color.BLACK);
+        				g.fillOval(x1, y1, 10, 10);
+				}
+			} else {
+				for(int j = 0; j < hLayers[i - 1]; j++) {
+					int x1 = x + 5 + (i * w / (hLayers.length + 2));
+					int y1 = y + (j * h / hLayers[i - 1]);
+					int lim = (i < hLayers.length ? hLayers[i] : outputCount);
+					for(int k = 0; k < lim; k++) {
+						int x2 = x + 5 + ((i + 1) * w / (hLayers.length + 2));
+						int y2 = y + (k * h /  lim);
+						if((i < hLayers.length ? hidden[i - 1][j + k * lim] : hidToOut[j + k * lim]) > 0) {
+							g.setColor(Color.GREEN);
+						} else {
+							g.setColor(Color.RED);
+						}
+						g.drawLine(x1 + 5, y1 + 5, x2 + 5, y2 + 5);
+					}
+					g.setColor(Color.BLACK);
+					g.fillOval(x1, y1, 10, 10);
+				}
+			}
+		}
 	}
-	
-	
 }

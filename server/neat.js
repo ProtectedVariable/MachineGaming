@@ -578,25 +578,37 @@ function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
+/**
+ * Sets the innovation history array
+ * @param {Array} innohist New innovation history
+ */
 function setInnovationHistory(innohist) {
-    for(let i in innohist) {
-        console.log(i);
-    }
     innovationHistory = innohist;
 }
 
+/**
+ * Sets the species array
+ * @param {Array} _species New species array
+ */
 function setSpecies(_species) {
     species = _species;
 }
 
+/**
+ * Gets the species array
+ * @return {Array} Species
+ */
 function getSpecies() {
     return species;
 }
 
+/**
+ * Gets the innovation history array
+ * @return {Array} Innovation History
+ */
 function getInnovationHistory() {
     return innovationHistory;
 }
-
 
 module.exports.setInnovationHistory = setInnovationHistory;
 module.exports.setSpecies = setSpecies;

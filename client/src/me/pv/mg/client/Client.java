@@ -7,6 +7,9 @@ import me.pv.mg.client.simulation.AsteroidSimulator;
 import me.pv.mg.client.simulation.Simulator;
 import me.pv.mg.protobuf.Mg.MGNetworkType;
 
+/**
+ * Program's main class, the class will be instantiated one time per thread
+ */
 public class Client extends Thread {
 
 	private Network network;
@@ -32,6 +35,13 @@ public class Client extends Thread {
 		}
 	}
 	
+	/**
+	 * Starts to compute a simulation of the given network on the given game
+	 * @param game		Name of the game
+	 * @param genome		String representation of the genome
+	 * @param metadata	Metadata of the genome
+	 * @param type		Type of network to build
+	 */
 	public void startSimulation(String game, String genome, String metadata, MGNetworkType type) {
 		this.nn = this.gc.toNeuralNetwork(genome, metadata, type);
 		if(game.equals("Asteroid")) {
