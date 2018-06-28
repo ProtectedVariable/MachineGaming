@@ -53,8 +53,8 @@ Où\\
 $o$ est le signal qui va sortir du perceptron\\
 $f$ est la fonction d'activation\\
 $n$ est le nombre de voisins de la couche précédente\\
-$S$ le vecteur des signaux des voisins la couche précedente\\
-$W$ le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
+$S$ est le vecteur des signaux des voisins la couche précedente\\
+$W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
 
 \begin{figure}[h]
 \begin{center}
@@ -65,13 +65,15 @@ $W$ le vecteur des poids entre le perceptrons et ses voisins de la couche préc�
 
 La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau. L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connais la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
 
-Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.
+Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.\\
+
+La méthode choisie pour réaliser ce travail est la neuroévolution, la concept est basé sur les algorithmes génétiques. Leur fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organsimes que nous allons évaluer à leur capacité à jouer à un jeu donné, nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante grâce aux techniques citées ci-dessous qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
+
+L'algorithme génétique va donc faire évoluer différents réseaux de neurones, en faisant varier certains paramètres jusqu'à obtenir un réseau capable de jouer correctement au jeu demandé.
 
 \section{Algorithme Génétique Basique}
 
-Dans le cadre de ce travail, ce sont les algorithmes génétiques qui vont nous aider à trouver des réseaux de neurones capables d'apprendre à jouer à des jeux-vidéo. Leur fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organsimes que nous allons évaluer à leur capacité à jouer à un jeu donné, nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante grâce aux techniques citées ci-dessous qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
-
-Cette section détaille le fonctionnement de l'algorithme génétique mis en place pour faire évoluer les perceptrons multicouche, celui-ci à été créé en s'inspirant des concepts connu de ce domaine.
+Cette section détaille le fonctionnement de l'algorithme génétique mis en place pour faire évoluer les perceptrons multicouche à topologie fixe, celui-ci à été créé en s'inspirant des concepts connu de ce domaine.
 
 \subsection{Population initiale}
 
@@ -105,27 +107,51 @@ Les mutations sont des événements aléatoires qui vont altérer le génome de 
 
 Dans le cas de cet algorithme, étant donne que la topologie est fixée, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.
 
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.6]{mutation.png}
+	\caption{Exemple de mutation dans un génome}
+\end{center}
+\end{figure}
+
 \subsection{Elitisme}
 
 L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\\
 
 Dans le cadre de cet algorithme, seul le champion de la génération est préservé sans altération de son code génétique.
 
-\subsection{Génome}
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.6]{elitism.png}
+	\caption{Elitisme d'une génération vers la suivante}
+\end{center}
+\end{figure}
+
+\subsection{Génome \& Phénome}
 
 Le génome est l'ensemble des gènes d'un individu, celui-ci content la totalité du code génétique constituant l'individu.\\
-Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donne que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids 
 
-\subsection{Phénome}
+Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donne que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
+
+Le phénome dans le cas de cet algorithme sera une réseau de neurones à topologie fixe et entièrement connecté (Chaque neurones d'une couche donnée est connecté a chaque neurones de la couche suivante). 
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.6]{genomephenome.png}
+	\caption{Passage du génome au phénome}
+\end{center}
+\end{figure}
 
 \section{NEAT}
+
+L'autre algorithme génétique mis en place est le NEAT, cet algorithme à été créer par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
+Cet algorithme apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentales en partant de structures simples afin d'obtenir des résultats minimaux.
 
 \subsection{Population initiale}
 \subsection{Crossover}
 \subsection{Mutation}
 \subsection{Elitisme}
-\subsection{Génome}
-\subsection{Phénome}
+\subsection{Génome \& Phénome}
 
 \section{Réseaux de Neurones}
 \subsection{Perceptron Multicouche}

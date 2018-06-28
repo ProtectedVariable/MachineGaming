@@ -2,4 +2,7 @@
 \contentsline {figure}{\numberline {1}{\ignorespaces Représentation des neurones dans le cerveau humain}}{3}{figure.1}
 \contentsline {figure}{\numberline {2}{\ignorespaces Porte XOR simulée par un réseau de neurones}}{4}{figure.2}
 \contentsline {figure}{\numberline {3}{\ignorespaces Fonctionnement d'un crossover}}{6}{figure.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces Architecture des modules du serveur}}{9}{figure.4}
+\contentsline {figure}{\numberline {4}{\ignorespaces Exemple de mutation dans un génome}}{6}{figure.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Elitisme d'une génération vers la suivante}}{7}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces Passage du génome au phénome}}{8}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Architecture des modules du serveur}}{11}{figure.7}
