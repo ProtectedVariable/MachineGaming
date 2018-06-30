@@ -145,10 +145,34 @@ Le phénome dans le cas de cet algorithme sera une réseau de neurones à topolo
 \section{NEAT}
 
 L'autre algorithme génétique mis en place est le NEAT, cet algorithme à été créer par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
-Cet algorithme apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentales en partant de structures simples afin d'obtenir des résultats minimaux.
+Cet algorithme apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentales en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
 
 \subsection{Population initiale}
+
+La population initiale doit être aussi simple que possible, cependant il n'y a pas de règles dictant la manière dont elle doit être faite. Pour cet algorithme, la population initiale est donc un ensemble de perceptron multicouche avec seulement une couche d'entrée et une couche de sortie dans lequel chaque entrée est reliée à chaque sorties.
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.6]{initneat.png}
+	\caption{Exemple de population initiale dans NEAT}
+\end{center}
+\end{figure}
+
+Ce choix à été fait pour conserver un équilibre entre une population simple (pas de couche intérmédiaire) mais qui soit rapidement capable de s'ajuster car les connexions sont déjà disponnibles, on ne pert donc pas de générations uniquement pour créer les connexions.
+
 \subsection{Crossover}
+
+Le crossover dans le cadre du NEAT pose un problème, celui des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.4]{competingconventions.png}
+	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite{neatpaper}}
+\end{center}
+\end{figure}
+
+Afin de pallier à ce problème, nous suivons l'apparitions d'innovations 
+
 \subsection{Mutation}
 \subsection{Elitisme}
 \subsection{Génome \& Phénome}
@@ -208,4 +232,6 @@ Le client va devoir effectuer la simulation demandée par le serveur, avec le bo
 \subsubsection{Sorties}
 \subsubsection{Résultats}
 
+\bibliographystyle{unsrt}
+\bibliography{mg}
 \end{document}

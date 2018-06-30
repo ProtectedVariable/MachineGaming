@@ -7,21 +7,21 @@
 \contentsline {subsection}{\numberline {2.4}Elitisme}{7}{subsection.2.4}
 \contentsline {subsection}{\numberline {2.5}Génome \& Phénome}{7}{subsection.2.5}
 \contentsline {section}{\numberline {3}NEAT}{8}{section.3}
-\contentsline {subsection}{\numberline {3.1}Population initiale}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.1}Population initiale}{8}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Crossover}{9}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Mutation}{9}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Elitisme}{9}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Génome \& Phénome}{9}{subsection.3.5}
-\contentsline {section}{\numberline {4}Réseaux de Neurones}{9}{section.4}
-\contentsline {subsection}{\numberline {4.1}Perceptron Multicouche}{9}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Réseau NEAT}{9}{subsection.4.2}
-\contentsline {section}{\numberline {5}Architecture Réseau}{9}{section.5}
-\contentsline {subsection}{\numberline {5.1}Protcole}{9}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Serveur}{11}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Client}{11}{subsection.5.3}
-\contentsline {section}{\numberline {6}Jeux}{12}{section.6}
-\contentsline {subsection}{\numberline {6.1}Asteroid}{12}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Principe}{12}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Entrées}{12}{subsubsection.6.1.2}
-\contentsline {subsubsection}{\numberline {6.1.3}Sorties}{12}{subsubsection.6.1.3}
-\contentsline {subsubsection}{\numberline {6.1.4}Résultats}{12}{subsubsection.6.1.4}
+\contentsline {subsection}{\numberline {3.3}Mutation}{10}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Elitisme}{10}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Génome \& Phénome}{10}{subsection.3.5}
+\contentsline {section}{\numberline {4}Réseaux de Neurones}{10}{section.4}
+\contentsline {subsection}{\numberline {4.1}Perceptron Multicouche}{10}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Réseau NEAT}{10}{subsection.4.2}
+\contentsline {section}{\numberline {5}Architecture Réseau}{10}{section.5}
+\contentsline {subsection}{\numberline {5.1}Protcole}{10}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Serveur}{12}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Client}{12}{subsection.5.3}
+\contentsline {section}{\numberline {6}Jeux}{13}{section.6}
+\contentsline {subsection}{\numberline {6.1}Asteroid}{13}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Principe}{13}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Entrées}{13}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.3}Sorties}{13}{subsubsection.6.1.3}
+\contentsline {subsubsection}{\numberline {6.1.4}Résultats}{13}{subsubsection.6.1.4}

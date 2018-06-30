@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{wikineat}
+Wikipedia contributors.
+\newblock "neuroevolution of augmenting topologies --- {W}ikipedia{,} the free
+  encyclopedia", 2018.
+\newblock [Online; accessed 30-June-2018].
+
+\bibitem{neatpaper}
+Kenneth Stanley and Risto Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock {\em The MIT Press}, page~6, 2002.
+
+\end{thebibliography}

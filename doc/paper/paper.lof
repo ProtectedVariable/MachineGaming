@@ -5,4 +5,6 @@
 \contentsline {figure}{\numberline {4}{\ignorespaces Exemple de mutation dans un génome}}{6}{figure.4}
 \contentsline {figure}{\numberline {5}{\ignorespaces Elitisme d'une génération vers la suivante}}{7}{figure.5}
 \contentsline {figure}{\numberline {6}{\ignorespaces Passage du génome au phénome}}{8}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces Architecture des modules du serveur}}{11}{figure.7}
+\contentsline {figure}{\numberline {7}{\ignorespaces Exemple de population initiale dans NEAT}}{9}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{9}{figure.8}
+\contentsline {figure}{\numberline {9}{\ignorespaces Architecture des modules du serveur}}{12}{figure.9}
