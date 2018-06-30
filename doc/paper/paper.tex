@@ -39,7 +39,7 @@ Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau hum
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[scale=0.5]{neurones.png}
-	\caption{Représentation des neurones dans le cerveau humain}
+	\caption{Représentation des neurones dans le cerveau humain \cite{neurons}}
 \end{center}
 \end{figure}
 
@@ -58,8 +58,8 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[scale=0.5]{"XOR_Gate.png"} 
-	\caption{Porte XOR simulée par un réseau de neurones}
+	\includegraphics[scale=0.7]{xor.png} 
+	\caption{Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}
 \end{center}
 \end{figure}
 
@@ -80,6 +80,22 @@ Cette section détaille le fonctionnement de l'algorithme génétique mis en pla
 La base d'un algorithme génétique est la population initiale, celle ci doit être générée aléatoirement afin de représenter un vaste spectre de possibilitées. Dans ce projet, au début de chaque évolution 500 organsimes sont générés. L'aléatoire intervient donc sur les valeurs des poids qui relient chaque perceptron dans les réseaux de neurones.\\
 Nous retrouverons dans cette popultation aléatoire aucuns individu capable de jouer parfaitement au jeu demandé, mais certains aurons des comportements qui les aiderons a survivre un peu mieux que leurs voisins, ceux-ci vont donc passer leurs caractèrisiques à la génération suivante.
 
+\subsection{Génome \& Phénome}
+
+Le génome est l'ensemble des gènes d'un individu, celui-ci content la totalité du code génétique constituant l'individu.\\
+
+Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donne que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
+
+Le phénome dans le cas de cet algorithme sera une réseau de neurones à topologie fixe et entièrement connecté (Chaque neurones d'une couche donnée est connecté a chaque neurones de la couche suivante).
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.5]{genomephenome.png}
+	\caption{Passage du génome au phénome}
+\end{center}
+\end{figure}
+\newpage
+
 \subsection{Crossover}
 
 Un crossover (où enjambement en français) est une opération génétique qui croise les gènes de deux parents afin de créer le gène de l'enfant, ce dernier va donc hériter de certaines caractèristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peaux, yeux, cheveux) des parents chez les enfants.\\
@@ -93,7 +109,7 @@ Le crossover fonctionne d'après un principe très simple:\\
 
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[scale=0.4]{"crossover.png"} 
+	\includegraphics[scale=0.6]{"crossover.png"} 
 	\caption{Fonctionnement d'un crossover}
 \end{center}
 \end{figure}
@@ -122,23 +138,8 @@ Dans le cadre de cet algorithme, seul le champion de la génération est préser
 
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[scale=0.6]{elitism.png}
+	\includegraphics[scale=0.5]{elitism.png}
 	\caption{Elitisme d'une génération vers la suivante}
-\end{center}
-\end{figure}
-
-\subsection{Génome \& Phénome}
-
-Le génome est l'ensemble des gènes d'un individu, celui-ci content la totalité du code génétique constituant l'individu.\\
-
-Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donne que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
-
-Le phénome dans le cas de cet algorithme sera une réseau de neurones à topologie fixe et entièrement connecté (Chaque neurones d'une couche donnée est connecté a chaque neurones de la couche suivante). 
-
-\begin{figure}[h]
-\begin{center}
-	\includegraphics[scale=0.6]{genomephenome.png}
-	\caption{Passage du génome au phénome}
 \end{center}
 \end{figure}
 
@@ -146,6 +147,9 @@ Le phénome dans le cas de cet algorithme sera une réseau de neurones à topolo
 
 L'autre algorithme génétique mis en place est le NEAT, cet algorithme à été créer par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
 Cet algorithme apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentales en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
+
+
+\subsection{Génome \& Phénome}
 
 \subsection{Population initiale}
 
@@ -166,16 +170,16 @@ Le crossover dans le cadre du NEAT pose un problème, celui des conventions conc
 
 \begin{figure}[h]
 \begin{center}
-	\includegraphics[scale=0.4]{competingconventions.png}
+	\includegraphics[scale=0.5]{competingconventions.png}
 	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite{neatpaper}}
 \end{center}
 \end{figure}
+\newpage
 
 Afin de pallier à ce problème, nous suivons l'apparitions d'innovations 
 
 \subsection{Mutation}
 \subsection{Elitisme}
-\subsection{Génome \& Phénome}
 
 \section{Réseaux de Neurones}
 \subsection{Perceptron Multicouche}
@@ -218,7 +222,8 @@ L'architecture se présente ainsi:
 	\includegraphics[scale=0.5]{"server.png"} 
 	\caption{Architecture des modules du serveur}
 \end{center}
-\end{figure}\\
+\end{figure}
+\newpage
 
 \subsection{Client}
 
