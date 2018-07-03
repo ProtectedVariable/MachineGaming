@@ -1,4 +1,38 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{wikialphagolee}
+Wikipedia contributors.
+\newblock Alphago versus lee sedol --- {W}ikipedia{,} the free encyclopedia,
+  2018.
+\newblock [Online; accessed 3-July-2018].
+
+\bibitem{kasparov}
+Mark~Robert Anderson.
+\newblock Twenty years on from deep blue vs kasparov: how a chess match started
+  the big data revolution.
+\newblock {\em The Conversation}, 2017.
+
+\bibitem{nnpower}
+Robert~D. Hof.
+\newblock With massive amounts of computational power, machines can now
+  recognize objects and translate speech in real time. artificial intelligence
+  is finally getting smart.
+\newblock {\em The Conversation}.
+
+\bibitem{backprop}
+Raúl Rojas.
+\newblock Neural networks, 1996.
+
+\bibitem{alphago}
+David Silver and Demis Hassabis.
+\newblock Alphago: Mastering the ancient game of go with machine learning.
+\newblock {\em Google AI Blog}, 2016.
+
+\bibitem{wikirl}
+Wikipedia contributors.
+\newblock Reinforcement learning --- {W}ikipedia{,} the free encyclopedia,
+  2018.
+\newblock [Online; accessed 3-July-2018].
 
 \bibitem{wikineuroevolution}
 Wikipedia contributors.
@@ -21,9 +55,10 @@ Fernandes.
 \newblock Exosquelette et bionique, le système nerveux, 2013.
 \newblock [Online; accessed 30-June-2018].
 
-\bibitem{backprop}
-Raúl Rojas.
-\newblock Neural networks, 1996.
+\bibitem{wikiperceptron}
+Wikipedia contributors.
+\newblock Perceptron --- {W}ikipedia{,} the free encyclopedia, 2018.
+\newblock [Online; accessed 3-July-2018].
 
 \bibitem{wikineat}
 Wikipedia contributors.
