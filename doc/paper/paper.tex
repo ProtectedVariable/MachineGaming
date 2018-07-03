@@ -27,12 +27,26 @@
 \newpage
 
 \section*{Acronymes}
+\section*{Remerciements}
 
+\newpage
 \section{Introduction}
 
-Le but de ce travail de bachelor est d'étudier et de comparer le comportement de différentes techniques de Machine Learning basés sur la neuroévolution en analysant la faculté des algorithmes à apprendre à jouer à des jeux.\\
+Ces dernières années l'apprentissage automatique (Machine Learning) à pris une place très importante dans le monde de l'informatique et nous avons pu assister au prouesses accomplies par des intelligences artificielles tels que la victoire d'AlphaGo face à Lee Sedol au jeu de Go en 2016.\cite{wikialphagolee} Cet événement n'est pas sans rappeler la defaite de Kasparov contre Deep Blue en 1997 qui avait defrayé le chronique.\cite{kasparov}\\
+Mais comment en sommes nous arrivés là, et quels sont les techniques qui se cachent derrière ces impressionnant résultats ?\\
+Il y a plusieurs manière de faire du machine learning ; une des plus populaire, celle qui est utilisée pour ce travail, est le réseau de neurones artificiels. Cette technologie existe depuis bien longtemps, mais ce sont les récent progrès en terme de puissance de calcul qui ont amorcé sa montée comme technologie phare du domaine.\\
 
-La neuroévolution est une technique qui constiste à faire évoluer des réseaux de neurones artificiels afin qu'ils arrivent à effectuer une tâche, dans notre cas, jouer à un jeu vidéo simple.\cite{wikineuroevolution}\\
+La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau.\cite{backprop} L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+
+Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.\\
+
+Une de ces techniques, qui a été utilisée pour l'apprentissage d'AlphaGo, est le l'apprentissage par renforcement (Reinforcement learning). Cette méthode consiste à juger les décisions prises par un agent autonome en lui donnant une recompense positive ou négative afin que l'agent, au fur et à mesure des expériences trouve une strategie optimale. Cette façon de faire peut être comparé au comportement d'un enfant qui apprends à faire du vélo. Quand il tombe il va avoir mal, c'est une récompense négative. Il va donc corriger son comportement de façon à ne plus tomber. A l'inverse, quand il arrive a aller loin il va être fier et donc favoriser ce comportement, c'est une récompense positive.\\
+
+Cependant il existe une méthode encore plus généraliste pour l'apprentissage: La neuroévolution. Cette méthode se base sur les algorithmes génétiques dont le fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité effectuer une tâche donnée, ce que nous appelons le \textit{fitness} de l'organisme. Nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
+
+Le but de ce travail de bachelor est d'étudier et de comparer le comportement deux algorithmes de neuroévolution en analysant la faculté de chacuns à apprendre à jouer à des jeux vidéo.\\
+
+\section{Réseau de Neurones Artificiels}
 
 Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensembles de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information.\cite{wikiann} En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).\cite{neuronswork}
 
@@ -63,22 +77,29 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 \end{center}
 \end{figure}
 
-La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau.\cite{backprop} L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+\section{Algorithmes Génétique}
 
-Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.\\
+La neuroévolution est une technique qui constiste à faire évoluer des réseaux de neurones artificiels afin qu'ils arrivent à effectuer une tâche, dans notre cas, jouer à un jeu vidéo simple.\cite{wikineuroevolution}\\
 
-La méthode choisie pour réaliser ce travail est la neuroévolution dont le but est de faire évoluer des réseaux de neurones grâce à des algorithmes génétiques. Leur fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité à jouer à un jeu donné, cette évalutation est va définir ce que nous appelons le \textit{fitness} de l'organisme, nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante grâce aux techniques citées ci-dessous qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
+\subsection{Génome \& Phénome}
 
-L'algorithme génétique va donc faire évoluer différents réseaux de neurones, en faisant varier certains paramètres jusqu'à obtenir un réseau capable de jouer correctement au jeu demandé.
+\subsection{Population initiale}
 
-\section{Algorithme Génétique Basique}
+La base d'un algorithme génétique est la population initiale, celle ci doit être générée aléatoirement afin de représenter un vaste spectre de possibilitées. 
+Nous ne retrouverons dans cette popultation aléatoire aucuns individu capable d'accomplir parfaitement la tâche demandée, mais certains aurons des comportements qui les aiderons a d'obtenir un fitness plus élevé que leurs voisins, ceux-ci vont donc passer leurs caracteristiques à la génération suivante.
+
+\subsection{Selection}
+\subsection{Crossover}
+\subsection{Mutation}
+\subsection{Elitisme}
+
+
+\section{Evolution du perceptron multicouche}
 
 Cette section détaille le fonctionnement de l'algorithme génétique mis en place pour faire évoluer les perceptrons multicouche à topologie fixe, celui-ci à été créé en s'inspirant des concepts connu de ce domaine.
 
 \subsection{Population initiale}
 
-La base d'un algorithme génétique est la population initiale, celle ci doit être générée aléatoirement afin de représenter un vaste spectre de possibilitées. Dans ce projet, au début de chaque évolution 500 organsimes sont générés. L'aléatoire intervient donc sur les valeurs des poids qui relient chaque perceptron dans les réseaux de neurones.\\
-Nous retrouverons dans cette popultation aléatoire aucuns individu capable de jouer parfaitement au jeu demandé, mais certains aurons des comportements qui les aiderons a survivre un peu mieux que leurs voisins, ceux-ci vont donc passer leurs caractèrisiques à la génération suivante.
 
 \subsection{Génome \& Phénome}
 
@@ -183,10 +204,6 @@ Afin de pallier à ce problème, nous suivons l'apparitions d'innovations,
 
 \subsection{Mutation}
 \subsection{Elitisme}
-
-\section{Réseaux de Neurones}
-\subsection{Perceptron Multicouche}
-\subsection{Réseau NEAT}
 
 \section{Architecture Réseau}
 
