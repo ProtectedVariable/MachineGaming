@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: paper.aux
 The style file: unsrt.bst
 Database file #1: mg.bib
-You've used 3 entries,
+You've used 7 entries,
             1791 wiz_defined-function locations,
-            460 strings with 3841 characters,
-and the built_in function-call counts, 466 in all, are:
-= -- 36
-> -- 16
+            473 strings with 4149 characters,
+and the built_in function-call counts, 983 in all, are:
+= -- 75
+> -- 36
 < -- 1
-+ -- 7
-- -- 4
-* -- 12
-:= -- 78
-add.period$ -- 9
-call.type$ -- 3
-change.case$ -- 3
++ -- 16
+- -- 9
+* -- 18
+:= -- 155
+add.period$ -- 20
+call.type$ -- 7
+change.case$ -- 7
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 22
-empty$ -- 55
-format.name$ -- 4
-if$ -- 107
+cite$ -- 7
+duplicate$ -- 42
+empty$ -- 127
+format.name$ -- 9
+if$ -- 229
 int.to.chr$ -- 0
-int.to.str$ -- 3
+int.to.str$ -- 7
 missing$ -- 1
-newline$ -- 18
-num.names$ -- 3
-pop$ -- 18
+newline$ -- 37
+num.names$ -- 7
+pop$ -- 46
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 12
+skip$ -- 26
 stack$ -- 0
 substring$ -- 2
-swap$ -- 6
+swap$ -- 10
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 4
-width$ -- 4
-write$ -- 33
+while$ -- 8
+width$ -- 8
+write$ -- 71

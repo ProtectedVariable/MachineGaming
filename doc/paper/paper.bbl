@@ -1,19 +1,39 @@
 \begin{thebibliography}{1}
 
+\bibitem{wikineuroevolution}
+Wikipedia contributors.
+\newblock Neuroevolution --- {W}ikipedia{,} the free encyclopedia, 2018.
+\newblock [Online; accessed 22-April-2018].
+
+\bibitem{wikiann}
+Wikipedia contributors.
+\newblock Artificial neural network --- {W}ikipedia{,} the free encyclopedia,
+  2018.
+\newblock [Online; accessed 30-June-2018].
+
+\bibitem{neuronswork}
+Stephen Williams and Pankaj Sah.
+\newblock Brain functions, 2018.
+\newblock [Online; accessed 21-April-2018].
+
 \bibitem{neurons}
 Fernandes.
 \newblock Exosquelette et bionique, le système nerveux, 2013.
 \newblock [Online; accessed 30-June-2018].
 
-\bibitem{neatpaper}
-Kenneth Stanley and Risto Miikkulainen.
-\newblock Evolving neural networks through augmenting topologies.
-\newblock {\em The MIT Press}, page~6, 2002.
+\bibitem{backprop}
+Raúl Rojas.
+\newblock Neural networks, 1996.
 
 \bibitem{wikineat}
 Wikipedia contributors.
 \newblock Neuroevolution of augmenting topologies --- {W}ikipedia{,} the free
   encyclopedia, 2018.
 \newblock [Online; accessed 30-June-2018].
+
+\bibitem{neatpaper}
+Kenneth Stanley and Risto Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock {\em The MIT Press}, page~6, 2002.
 
 \end{thebibliography}

@@ -30,11 +30,11 @@
 
 \section{Introduction}
 
-Le but de ce travail de bachelor est d'étudier et de comparer le comportement de différentes techniques de Machine Learning basés sur la neuroévolution en analysant la faculté des algorithmes à apprendre à jouer à des jeux-vidéos.\\
+Le but de ce travail de bachelor est d'étudier et de comparer le comportement de différentes techniques de Machine Learning basés sur la neuroévolution en analysant la faculté des algorithmes à apprendre à jouer à des jeux.\\
 
-La neuroévolution est une technique qui constiste à faire évoluer des réseaux de neurones artificiels afin qu'ils arrivent à effectuer une tâche.\\
+La neuroévolution est une technique qui constiste à faire évoluer des réseaux de neurones artificiels afin qu'ils arrivent à effectuer une tâche, dans notre cas, jouer à un jeu vidéo simple.\cite{wikineuroevolution}\\
 
-Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensembles de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information. En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).
+Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensembles de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information.\cite{wikiann} En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).\cite{neuronswork}
 
 \begin{figure}[h]
 \begin{center}
@@ -63,11 +63,11 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 \end{center}
 \end{figure}
 
-La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau. L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connais la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique constiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau.\cite{backprop} L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
 
 Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.\\
 
-La méthode choisie pour réaliser ce travail est la neuroévolution, la concept est basé sur les algorithmes génétiques. Leur fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organsimes que nous allons évaluer à leur capacité à jouer à un jeu donné, nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante grâce aux techniques citées ci-dessous qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
+La méthode choisie pour réaliser ce travail est la neuroévolution dont le but est de faire évoluer des réseaux de neurones grâce à des algorithmes génétiques. Leur fonctionnement est inspiré de la séléction naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité à jouer à un jeu donné, cette évalutation est va définir ce que nous appelons le \textit{fitness} de l'organisme, nous allons séléctionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante grâce aux techniques citées ci-dessous qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\\
 
 L'algorithme génétique va donc faire évoluer différents réseaux de neurones, en faisant varier certains paramètres jusqu'à obtenir un réseau capable de jouer correctement au jeu demandé.
 
@@ -115,7 +115,7 @@ Le crossover fonctionne d'après un principe très simple:\\
 \end{figure}
 \newpage
 
-Ainsi, les traits premettant une meilleure survie vont rapidement se répendre dans la population.
+Ainsi, les traits premettant une meilleure survie vont rapidement se répendre dans la population car les individus ayant obtenu un meilleur fitness serons plus souvent séléctionnés pour faire une crossover avec un autre individu.
 
 \subsection{Mutation}
 
@@ -129,12 +129,13 @@ Dans le cas de cet algorithme, étant donne que la topologie est fixée, la muta
 	\caption{Exemple de mutation dans un génome}
 \end{center}
 \end{figure}
+\newpage
 
 \subsection{Elitisme}
 
 L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\\
 
-Dans le cadre de cet algorithme, seul le champion de la génération est préservé sans altération de son code génétique.
+Pour cet algorithme, seul le champion de la génération est préservé sans altération de son code génétique.
 
 \begin{figure}[h]
 \begin{center}
@@ -142,14 +143,16 @@ Dans le cadre de cet algorithme, seul le champion de la génération est préser
 	\caption{Elitisme d'une génération vers la suivante}
 \end{center}
 \end{figure}
+\newpage
 
 \section{NEAT}
 
-L'autre algorithme génétique mis en place est le NEAT, cet algorithme à été créer par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
-Cet algorithme apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentales en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
-
+L'autre algorithme génétique mis en place est le NEAT, créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
+Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentales en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
 
 \subsection{Génome \& Phénome}
+
+Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tout les neurones et toutes les connexions. Il a donc fallu trouver une manière d'encoder qui soit suffisement souple pour permette de représenter tout les réseaux possibles.
 
 \subsection{Population initiale}
 
@@ -166,7 +169,7 @@ Ce choix à été fait pour conserver un équilibre entre une population simple 
 
 \subsection{Crossover}
 
-Le crossover dans le cadre du NEAT pose un problème, celui des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
+Le crossover dans le cadre du NEAT pose le problème des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
 
 \begin{figure}[h]
 \begin{center}
@@ -176,7 +179,7 @@ Le crossover dans le cadre du NEAT pose un problème, celui des conventions conc
 \end{figure}
 \newpage
 
-Afin de pallier à ce problème, nous suivons l'apparitions d'innovations 
+Afin de pallier à ce problème, nous suivons l'apparitions d'innovations, 
 
 \subsection{Mutation}
 \subsection{Elitisme}

@@ -3,7 +3,7 @@
 \contentsline {figure}{\numberline {2}{\ignorespaces Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}}{4}{figure.2}
 \contentsline {figure}{\numberline {3}{\ignorespaces Passage du génome au phénome}}{6}{figure.3}
 \contentsline {figure}{\numberline {4}{\ignorespaces Fonctionnement d'un crossover}}{7}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Exemple de mutation dans un génome}}{7}{figure.5}
+\contentsline {figure}{\numberline {5}{\ignorespaces Exemple de mutation dans un génome}}{8}{figure.5}
 \contentsline {figure}{\numberline {6}{\ignorespaces Elitisme d'une génération vers la suivante}}{8}{figure.6}
 \contentsline {figure}{\numberline {7}{\ignorespaces Exemple de population initiale dans NEAT}}{9}{figure.7}
 \contentsline {figure}{\numberline {8}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{10}{figure.8}
