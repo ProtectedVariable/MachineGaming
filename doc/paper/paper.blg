@@ -1,48 +1,48 @@
 This is BibTeX, Version 0.99d (TeX Live 2015)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
-The top-level auxiliary file: paper.aux
+The top-level auxiliary file: /Users/Thomas/Documents/MachineGaming/doc/paper/paper.aux
 The style file: unsrt.bst
 Database file #1: mg.bib
 Warning--empty year in nnpower
-You've used 13 entries,
+You've used 17 entries,
             1791 wiz_defined-function locations,
-            493 strings with 4840 characters,
-and the built_in function-call counts, 1772 in all, are:
-= -- 138
-> -- 64
+            502 strings with 5230 characters,
+and the built_in function-call counts, 2280 in all, are:
+= -- 178
+> -- 80
 < -- 1
-+ -- 29
-- -- 16
-* -- 34
-:= -- 288
-add.period$ -- 38
-call.type$ -- 13
-change.case$ -- 13
++ -- 37
+- -- 20
+* -- 38
+:= -- 364
+add.period$ -- 50
+call.type$ -- 17
+change.case$ -- 17
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 81
-empty$ -- 223
-format.name$ -- 16
-if$ -- 406
+cite$ -- 18
+duplicate$ -- 101
+empty$ -- 295
+format.name$ -- 20
+if$ -- 526
 int.to.chr$ -- 0
-int.to.str$ -- 13
+int.to.str$ -- 17
 missing$ -- 4
-newline$ -- 67
-num.names$ -- 13
-pop$ -- 77
+newline$ -- 87
+num.names$ -- 17
+pop$ -- 105
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 44
+skip$ -- 56
 stack$ -- 0
 substring$ -- 2
-swap$ -- 16
+swap$ -- 20
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 14
-width$ -- 15
-write$ -- 130
+while$ -- 18
+width$ -- 19
+write$ -- 170
 (There was 1 warning)
