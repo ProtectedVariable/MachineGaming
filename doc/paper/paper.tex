@@ -54,7 +54,7 @@ Une de ces techniques, qui a été utilisée pour l'apprentissage d'AlphaGo\cite
 Cependant il existe une méthode encore plus généraliste pour l'apprentissage: La neuroévolution. Cette méthode se base sur les algorithmes évolutionniste dont le fonctionnement est inspiré de la sélection naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité effectuer une tâche donnée, ce que nous appelons le \textit{fitness} de l'organisme. Nous allons sélectionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\cite{wikineuroevolution}\\
 
 Le but de ce travail de bachelor est d'étudier et de comparer le comportement deux algorithmes de neuroévolution en analysant la faculté de chacun à apprendre à jouer à des jeux vidéo. Cette technique à été choisie car elle permet un développement plus libre de l'IA en ne jugeant que le résultat et non pas les actions qui y mène.
-
+\newpage
 \section{Réseau de Neurones Artificiels}
 
 Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensemble de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information.\cite{wikiann} En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).\cite{neuronswork}
@@ -86,6 +86,7 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 \end{center}
 \end{figure}
 
+\newpage
 \section{Algorithmes évolutionnistes}
 
 Un algorithme évolutionniste est un algorithme d'optimisation métaheuristique qui cherche, par un processus inspiré de la sélection naturelle, une solution optimale à un problème. Ces algorithmes utilisent des iterations stochastiques pour arriver à maximiser une fonction évaluant leurs performances, dite fonction de fitness.\cite{wikiea}\\
@@ -117,24 +118,21 @@ La sélection est un concept essentiel dans l'utilisation d'algorithmes évoluti
 
 \subsection{Crossover}
 
-Un crossover (où enjambement en français) est une opération génétique qui croise les gènes de deux parents afin de créer le gène de l'enfant, ce dernier va donc hériter de certaines caractéristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peaux, yeux, cheveux) des parents chez les enfants.\\
+Un crossover (où enjambement en français) est une opération génétique qui croise les gènes de deux parents afin de créer le gène de l'enfant, ce dernier va donc hériter de certaines caractéristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peau, yeux, cheveux) des parents chez les enfants.\cite{wikicrossover}\\
 
 \subsection{Mutation}
 
-Les mutations sont des événements aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront bénéfiques (p.ex La capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex Malformation des membres).\\
+Les mutations sont des événements aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront bénéfiques (p.ex La capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex Malformation des membres).\cite{wikimutation}\\
 
 \subsection{Elitisme}
 
-L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\\
+L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\cite{elitism}\\
 La raison pour laquelle ce concept est mis en place est que les solutions optimales trouvées ne doivent pas être perdues à cause de mutations désavantageuses.
 
-
+\newpage
 \section{Evolution du perceptron multicouche}
 
 Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en place pour faire évoluer les perceptrons multicouche à topologie fixe, celui-ci à été créé en s'inspirant des concepts connu de ce domaine.
-
-\subsection{Population initiale}
-
 
 \subsection{Génome \& Phénome}
 
@@ -148,15 +146,24 @@ Le phénome dans le cas de cet algorithme sera une réseau de neurones à topolo
 	\caption{Passage du génome au phénome}
 \end{center}
 \end{figure}
-\newpage
+
+\subsection{Population initiale}
+
+La population initiale est une ensemble de perceptrons multicouche dont la topologie est la même, les poids entre les couches sont assignés aléatoirement à une valeur entre -1 et +1.
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.6]{gen0mlp.png} 
+	\caption{Exemple de population initiale}
+\end{center}
+\end{figure}
 
 \subsection{Crossover}
 
 Le crossover fonctionne d'après un principe très simple:\\
 \begin{itemize}
-\item On choisis un point de croisement
-\item On assigne chez l'enfant tout les gènes qui précèdent ce point depuis le premier parent
-\item On assigne chez l'enfant tout les gènes qui suivent ce point depuis le second parent
+\item Choisir un point de croisement
+\item Assigner chez l'enfant tout les gènes qui précèdent ce point depuis le premier parent
+\item Assigner chez l'enfant tout les gènes qui suivent ce point depuis le second parent
 \end{itemize}
 
 \begin{figure}[h]
@@ -191,8 +198,8 @@ Pour cet algorithme, seul le champion de la génération est préservé sans alt
 	\caption{Elitisme d'une génération vers la suivante}
 \end{center}
 \end{figure}
-\newpage
 
+\newpage
 \section{NEAT}
 
 L'autre algorithme de neuroévolution mis en place est le NEAT, créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
@@ -232,6 +239,7 @@ Afin de pallier à ce problème, nous suivons l'apparitions d'innovations,
 \subsection{Mutation}
 \subsection{Elitisme}
 
+\newpage
 \section{Architecture Réseau}
 
 Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tous les clients.\\
@@ -280,14 +288,17 @@ Le client va devoir effectuer la simulation demandée par le serveur, avec le bo
 \subsection{Simulateur}
 \subsection{Tests}
 
+\newpage
 \section{Interface de Controle}
 \subsection{Mode}
 \subsection{Tâche}
 \subsection{Ouvriers}
 \subsection{Graphs}
 
+\newpage
 \section{Base de donnés}
 
+\newpage
 \section{Jeux}
 \subsection{Asteroid}
 \subsubsection{Principe}

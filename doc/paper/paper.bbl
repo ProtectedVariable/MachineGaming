@@ -87,6 +87,20 @@ Wikipedia contributors.
 \newblock Phenome --- {W}ikipedia{,} the free encyclopedia, 2018.
 \newblock [Online; accessed 4-July-2018].
 
+\bibitem{wikicrossover}
+Wikipedia contributors.
+\newblock Chromosomal crossover --- {W}ikipedia{,} the free encyclopedia, 2018.
+\newblock [Online; accessed 4-July-2018].
+
+\bibitem{wikimutation}
+Wikipedia contributors.
+\newblock Mutation --- {W}ikipedia{,} the free encyclopedia, 2018.
+\newblock [Online; accessed 4-July-2018].
+
+\bibitem{elitism}
+Shumeet Baluja and Rich Caruana.
+\newblock Removing the genetics from the standard genetic algorithm, 1995.
+
 \bibitem{wikineat}
 Wikipedia contributors.
 \newblock Neuroevolution of augmenting topologies --- {W}ikipedia{,} the free

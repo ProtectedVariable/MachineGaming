@@ -1,11 +1,12 @@
 \select@language {french}
 \contentsline {figure}{\numberline {1}{\ignorespaces Représentation des neurones dans le cerveau humain \cite {neurons}}}{8}{figure.1}
 \contentsline {figure}{\numberline {2}{\ignorespaces Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}}{9}{figure.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces Exemple de sélection proportionnelle au fitness\cite {wikifps}}}{10}{figure.3}
+\contentsline {figure}{\numberline {3}{\ignorespaces Exemple de sélection proportionnelle au fitness\cite {wikifps}}}{11}{figure.3}
 \contentsline {figure}{\numberline {4}{\ignorespaces Passage du génome au phénome}}{12}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Fonctionnement d'un crossover}}{13}{figure.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces Exemple de mutation dans un génome}}{13}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces Elitisme d'une génération vers la suivante}}{14}{figure.7}
-\contentsline {figure}{\numberline {8}{\ignorespaces Exemple de population initiale dans NEAT}}{15}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{16}{figure.9}
-\contentsline {figure}{\numberline {10}{\ignorespaces Architecture des modules du serveur}}{19}{figure.10}
+\contentsline {figure}{\numberline {5}{\ignorespaces Exemple de population initiale}}{13}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces Fonctionnement d'un crossover}}{14}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Exemple de mutation dans un génome}}{14}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces Elitisme d'une génération vers la suivante}}{15}{figure.8}
+\contentsline {figure}{\numberline {9}{\ignorespaces Exemple de population initiale dans NEAT}}{16}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{17}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Architecture des modules du serveur}}{21}{figure.11}
