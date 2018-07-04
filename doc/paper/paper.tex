@@ -22,7 +22,7 @@
 \maketitle
 \newpage
 
-\includepdf[pages=1]{enonce}
+\includepdf[pages=1, offset=2cm 0]{enonce}
 
 \tableofcontents
 
@@ -178,7 +178,7 @@ Ainsi, les traits permettant une meilleure survie vont rapidement se répandre d
 
 \subsection{Mutation}
 
-Dans le cas de cet algorithme, étant donne que la topologie est fixée, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.
+Dans le cas de cet algorithme, étant donné que la topologie est fixe, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.
 
 \begin{figure}[h]
 \begin{center}
@@ -190,7 +190,7 @@ Dans le cas de cet algorithme, étant donne que la topologie est fixée, la muta
 
 \subsection{Elitisme}
 
-Pour cet algorithme, seul le champion de la génération est préservé sans altération de son code génétique.
+Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu le meilleur fitness) est préservé sans altération de son code génétique pour la génération suivante.
 
 \begin{figure}[h]
 \begin{center}
