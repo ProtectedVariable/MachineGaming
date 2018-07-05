@@ -62,7 +62,7 @@ function mutate(g, mr) {
         let gArray = g.code.split(",");
         let i = Math.ceil(Math.random() * (gArray.length - 1));
         let mutationGene = gArray[i];
-        let newValue = parseFloat(mutationGene) + (Math.random() * 2 - 1);
+        let newValue = parseFloat(mutationGene) + (Math.random() - 0.5);
         if(newValue > 1) {
             newValue = 1;
         } else if(newValue < -1) {

@@ -115,6 +115,7 @@ La sélection est un concept essentiel dans l'utilisation d'algorithmes évoluti
 	\caption{Exemple de sélection proportionnelle au fitness\cite{wikifps}}
 \end{center}
 \end{figure}
+\newpage
 
 \subsection{Crossover}
 
@@ -129,10 +130,12 @@ Les mutations sont des événements aléatoires qui vont altérer le génome de 
 L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\cite{elitism}\\
 La raison pour laquelle ce concept est mis en place est que les solutions optimales trouvées ne doivent pas être perdues à cause de mutations désavantageuses.
 
+\subsection{Déroulement de l'algorithme}
+
 \newpage
 \section{Evolution du perceptron multicouche}
 
-Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en place pour faire évoluer les perceptrons multicouche à topologie fixe, celui-ci à été créé en s'inspirant des concepts connu de ce domaine.
+Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en place pour faire évoluer les perceptrons multicouche à topologie fixe. Celui-ci va donc uniquement faire varier les poids des connexion dans le réseau pour optimiser son comportement. L'algorithme à été créé en s'inspirant des concepts d'algorithmes évolutionnistes décrit précédemment.
 
 \subsection{Génome \& Phénome}
 
@@ -149,13 +152,18 @@ Le phénome dans le cas de cet algorithme sera une réseau de neurones à topolo
 
 \subsection{Population initiale}
 
-La population initiale est une ensemble de perceptrons multicouche dont la topologie est la même, les poids entre les couches sont assignés aléatoirement à une valeur entre -1 et +1.
+La population initiale est un ensemble de perceptrons multicouche dont la topologie est la même, les poids entre les couches sont assignés aléatoirement à une valeur entre -1 et +1 afin de représenter un spectre de possibilités aussi large que possible.
 \begin{figure}[h]
 \begin{center}
 	\includegraphics[scale=0.6]{gen0mlp.png} 
 	\caption{Exemple de population initiale}
 \end{center}
 \end{figure}
+
+\subsection{Sélection}
+
+La sélection est utilisée pour choisir un individu de la génération précédente qui va soit passer ses gènes directement (être cloné), soit faire un crossover avec les gènes d'un autre individu lui aussi sélectionné. La probabilité de l'une ou l'autre de ces actions est de 50\%.\\
+Le génome résultant de cette sélection subira ensuite une potentielle mutation. Ce processus est répété autant de fois que nécessaire pour créer une nouvelle génération contenant autant d'organismes que la précédente.
 
 \subsection{Crossover}
 
@@ -178,7 +186,8 @@ Ainsi, les traits permettant une meilleure survie vont rapidement se répandre d
 
 \subsection{Mutation}
 
-Dans le cas de cet algorithme, étant donné que la topologie est fixe, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.
+Dans le cas de cet algorithme, étant donné que la topologie est fixe, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.\\
+Le poids subira donc une variation d'une valeur aléatoire choisie entre +0.5 et -0.5 cependant le poids sera ensuite fixée dans l'interval $[-1, 1]$.
 
 \begin{figure}[h]
 \begin{center}
@@ -203,11 +212,11 @@ Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu
 \section{NEAT}
 
 L'autre algorithme de neuroévolution mis en place est le NEAT, créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
-Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmis les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentale en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
+Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmi les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentale en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
 
 \subsection{Génome \& Phénome}
 
-Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tout les neurones et toutes les connexions. Il a donc fallu trouver une manière d'encoder qui soit suffisamment souple pour permette de représenter tout les réseaux possibles.
+Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tout les neurones et toutes les connexions. 
 
 \subsection{Population initiale}
 
@@ -221,6 +230,11 @@ La population initiale doit être aussi simple que possible, cependant il n'y a 
 \end{figure}
 
 Ce choix à été fait pour conserver un équilibre entre une population simple (pas de couche intermédiaire) mais qui soit rapidement capable de s'ajuster car les connexions sont déjà disponibles, on ne pert donc pas de générations uniquement pour créer les connexions.
+
+\subsection{Spéciation}
+
+\subsection{Sélection}
+
 
 \subsection{Crossover}
 
@@ -284,9 +298,9 @@ L'architecture se présente ainsi:
 
 Le client va devoir effectuer la simulation demandée par le serveur, avec le bon réseau de neurones
 
-\subsection{Réseaux de neurones}
-\subsection{Simulateur}
-\subsection{Tests}
+\subsubsection{Réseaux de neurones}
+\subsubsection{Simulateur}
+\subsubsection{Tests}
 
 \newpage
 \section{Interface de Controle}
@@ -299,6 +313,9 @@ Le client va devoir effectuer la simulation demandée par le serveur, avec le bo
 \section{Base de donnés}
 
 \newpage
+\section{API}
+
+\newpage
 \section{Jeux}
 \subsection{Asteroid}
 \subsubsection{Principe}
@@ -306,6 +323,10 @@ Le client va devoir effectuer la simulation demandée par le serveur, avec le bo
 \subsubsection{Sorties}
 \subsubsection{Résultats}
 
+\newpage
+\section{Conclusion}
+
+\newpage
 \bibliographystyle{unsrt}
 \bibliography{mg}
 \end{document}
