@@ -130,10 +130,9 @@ Les mutations sont des événements aléatoires qui vont altérer le génome de 
 L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\cite{elitism}\\
 La raison pour laquelle ce concept est mis en place est que les solutions optimales trouvées ne doivent pas être perdues à cause de mutations désavantageuses.
 
-\subsection{Déroulement de l'algorithme}
 
 \newpage
-\section{Evolution du perceptron multicouche}
+\section{Evolution du perceptron multicouche - Algorithme Naïf}
 
 Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en place pour faire évoluer les perceptrons multicouche à topologie fixe. Celui-ci va donc uniquement faire varier les poids des connexion dans le réseau pour optimiser son comportement. L'algorithme à été créé en s'inspirant des concepts d'algorithmes évolutionnistes décrit précédemment.
 
@@ -208,7 +207,21 @@ Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu
 \end{center}
 \end{figure}
 
+\subsection{Déroulement de l'algorithme}
+
+L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$.
+\afterpage{%
+\begin{figure}[!htbp]
+\centering
+\vspace*{-3cm}
+\thispagestyle{empty}
+\includegraphics[scale=0.6]{mlporga.png}
+\caption{Organigramme de l'algorithme naïf}
+\end{figure}
+\clearpage
+}
 \newpage
+
 \section{NEAT}
 
 L'autre algorithme de neuroévolution mis en place est le NEAT, créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\

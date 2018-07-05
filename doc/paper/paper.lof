@@ -7,6 +7,7 @@
 \contentsline {figure}{\numberline {6}{\ignorespaces Fonctionnement d'un crossover}}{14}{figure.6}
 \contentsline {figure}{\numberline {7}{\ignorespaces Exemple de mutation dans un génome}}{14}{figure.7}
 \contentsline {figure}{\numberline {8}{\ignorespaces Elitisme d'une génération vers la suivante}}{15}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Exemple de population initiale dans NEAT}}{16}{figure.9}
-\contentsline {figure}{\numberline {10}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{17}{figure.10}
-\contentsline {figure}{\numberline {11}{\ignorespaces Architecture des modules du serveur}}{21}{figure.11}
+\contentsline {figure}{\numberline {9}{\ignorespaces Organigramme de l'algorithme naïf}}{16}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces Exemple de population initiale dans NEAT}}{17}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{18}{figure.11}
+\contentsline {figure}{\numberline {12}{\ignorespaces Architecture des modules du serveur}}{22}{figure.12}
