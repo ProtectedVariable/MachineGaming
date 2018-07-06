@@ -11,6 +11,8 @@
 \usepackage{minted}
 \usepackage{pdflscape}
 \usepackage{pdfpages}
+\usepackage{amssymb}
+\usepackage{amsmath}
 
 \title{Réseau de Neuroévolution Appliqué au Jeu Vidéo}
 \author{Thomas Ibanez}
@@ -41,7 +43,7 @@ NEAT
 \newpage
 \section{Introduction}
 
-Ces dernières années l'apprentissage automatique (Machine Learning) à pris une place très importante dans le monde de l'informatique et nous avons pu assister au prouesses accomplies par des intelligences artificielles tels que la victoire d'AlphaGo face à Lee Sedol au jeu de Go en 2016.\cite{wikialphagolee} Cet événement n'est pas sans rappeler la defaite de Kasparov contre Deep Blue en 1997 qui avait défrayé le chronique.\cite{kasparov}\\
+Ces dernières années l'apprentissage automatique (Machine Learning) à pris une place très importante dans le monde de l'informatique et nous avons pu assister au prouesses accomplies par des intelligences artificielles tels que la victoire d'AlphaGo face à Lee Sedol au jeu de Go en 2016.\cite{wikialphagolee} Cet événement n'est pas sans rappeler la défaite de Kasparov contre Deep Blue en 1997 qui avait défrayé le chronique.\cite{kasparov}\\
 Mais comment en sommes nous arrivés là, et quels sont les techniques qui se cachent derrière ces impressionnant résultats ?\\
 Il y a plusieurs manière de faire du machine learning ; une des plus populaire, celle qui est utilisée pour ce travail, est le réseau de neurones artificiels. Cette technologie existe depuis bien longtemps, mais ce sont les récent progrès en terme de puissance de calcul qui ont amorcé sa montée comme technologie phare du domaine.\cite{nnpower}\\
 
@@ -71,6 +73,7 @@ Les perceptrons quant à eux vont imiter (de manière simplifiée) ce comporteme
 D'un point de vue mathématique le comportement d'un perceptron peut être écrit comme:
 \begin{equation}
 o = f(\sum_{i=0}^{n} S_i * W_i)
+\label{eq:percep}
 \end{equation}
 Où\\
 $o$ est le signal qui va sortir du perceptron\\
@@ -86,12 +89,93 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 \end{center}
 \end{figure}
 
+Les neurones de la première couche vont recevoir le. Ces entrées (aussi appelées \textit{features}) dépendent du problème pour lequel le réseau est employé. Ainsi si nous cherchons à prédire le note d'un examen en fonction du temps de révision et de nombre d'heures de sommeil, les entrées du réseau seront le temps de révision et le nombres d'heures de sommeil.\\
+ Chaque neurones de la couche suivante calculera sa valeur par propagation du signal de la couche précédente afin d'arriver jusqu'à la dernière couche de neurones qui déterminera la prédiction du réseau de neurones. Cette prédiction est également appelée \textit{label}. Dans le cas de notre exemple, le label du réseau sera la note prévue.\\
+ Avant de pouvoir utiliser notre réseau pour faire des prédictions, il faut l'entrainer, c'est à dire ajuster les paramètres (poids, topologie) afin que les labels soient le plus correct possible pour des features données.\\
+ 
+ Il est cependant important de ne pas mystifier le fonctionnement des réseaux de neurones. Ce sont certes des "boites noires", c'est à dire qu'il n'est pas possible d'analyser un réseau et d'expliquer pourquoi une connexion donnée a un tel poids. En revanche, il ne faut pas perdre de vue que leur comportement est exprimable par une fonction mathématique. En effet tout comme le comportement d'un perceptron est décrit dans l'équation \ref{eq:percep} le comportement de n'importe quel réseau de neurones peut-être décrit par une equation dépendant du réseau.
+
+\subsection{Apprentissage supervisé}
+
+L'apprentissage supervisé est une manière d'entrainer un réseau de neurones avec un ensemble de couples (features, labels). Le but est de commencer avec un réseau initialisé aléatoirement, puis de lui donner en entrée des features dont le labels sont connu et de comparer les labels donnés par le réseaux aux labels attendus.\\
+En fonction du taux d'erreur, il sera possible de corriger les poids des connexions du réseau pour minimiser ce taux.\\
+
+Les avantages principaux de cette technique d'apprentissage sont la rapidité d'entrainement et la justesse atteignable étant donné que le fonctionnement ne dépend pas d'heuristiques.\\
+
+Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sur qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu). 
+
+\subsection{Apprentissage non supervisé}
+
+L'apprentissage non supervisé est une méthode d'apprentissage où l'entrainement se fait avec un semble de features dont le label n'est pas connu. Une utilisation de cette technique est le partitionnement de données où le réseau va apprendre à regrouper des features similaires dans la même catégorie.\\
+
+Cette méthode peut être comparée à la manière dont un enfant apprends à reconnaître son environnement, si il voit 50 voitures il va pouvoir les associer comme étant des object similaires, sans pour autant qu'on ai eu besoin de lui expliqué ce qu'est un voiture.
+
+\subsection{Neuroevolution}
+
+La neuroévolution en est une technique d'entrainement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée.\\
+
+L'avantage de cette méthode est qu'elle ne nécessite aucuns exemples et laisse le champ libre au réseau pour trouver une manière d'optimiser son comportement.\\
+
+\subsection{Fonctions d'activation}
+
+Les fonction d'activations sont des fonctions qui ont pour tâche de limiter la valeur des neurones dans un interval donné. Afin de pouvoir appliquer la rétropropagation du gradient il faut également que la fonction soit dérivable.
+Voici quelques exemples de fonctions utilisées couramment:\\
+
+La sigmoid $\sigma : \mathbb{R} \rightarrow ]0, 1[$
+\begin{equation}
+	\sigma : x \mapsto \frac{1}{1 + e^{-\beta x}}
+\end{equation}
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.4]{sigmoid.png} 
+	\caption{Fonction Sigmoid avec des $\beta$ variables}
+\end{center}
+\end{figure}
+
+La tangente hyperbolique $tanh : \mathbb{R} \rightarrow ]-1, 1[$
+\begin{equation}
+	tanh : x \mapsto \frac{e^x - e^{-x}}{e^x + e^{-x}}
+\end{equation}
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.4]{tanh.png} 
+	\caption{Fonction tangente hyperbolique}
+\end{center}
+\end{figure}
+
+La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
+\begin{equation}
+	step : x \mapsto
+		\begin{cases}
+			0, & \text{if}\ x \leq 0\\
+			1, & \text{otherwise}
+		\end{cases}
+\end{equation}
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.4]{step.png} 
+	\caption{Fonction step}
+\end{center}
+\end{figure}
+
+\subsection{Types de réseau}
+\subsubsection{Feed-Forward}
+\subsubsection{Long Short Term Memory}
+\subsubsection{Convolutional Neural Networks}
+
+
+
+\newpage
+\section{Agent Intelligent}
+
+
 \newpage
 \section{Algorithmes évolutionnistes}
 
 Un algorithme évolutionniste est un algorithme d'optimisation métaheuristique qui cherche, par un processus inspiré de la sélection naturelle, une solution optimale à un problème. Ces algorithmes utilisent des iterations stochastiques pour arriver à maximiser une fonction évaluant leurs performances, dite fonction de fitness.\cite{wikiea}\\
-Il existe plusieurs sortes d'algorithmes évolutionniste, la neuroévolution en est une et c'est celle-ci qui va nous intéresser. Le but de cette technique est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée.\\
-Les paramètres sur lesquels l'algorithme va intervenir peuvent être les poids des connexions dans le réseau ainsi que la topologie du réseau (nombre de neurones, connexions entre chaque neurones, nombre de couches).
 
 \subsection{Génome \& Phénome}
 
