@@ -14,7 +14,7 @@ Wikipedia contributors.
 \bibitem{neatpaper}
 Kenneth Stanley and Risto Miikkulainen.
 \newblock Evolving neural networks through augmenting topologies.
-\newblock {\em The MIT Press}, page~6, 2002.
+\newblock {\em The MIT Press}, 2002.
 
 \bibitem{wikialphagolee}
 Wikipedia contributors.
@@ -58,6 +58,11 @@ Wikipedia contributors.
 \bibitem{wikiia}
 Wikipedia contributors.
 \newblock Intelligent agent --- {W}ikipedia{,} the free encyclopedia, 2018.
+\newblock [Online; accessed 8-July-2018].
+
+\bibitem{tutoptai}
+tutorialspoint.
+\newblock Ai - agents \& environments, 2018.
 \newblock [Online; accessed 8-July-2018].
 
 \bibitem{wikiann}

@@ -3,16 +3,18 @@
 \contentsline {figure}{\numberline {2}{\ignorespaces Représentation des neurones dans le cerveau humain \cite {neurons}}}{10}{figure.2}
 \contentsline {figure}{\numberline {3}{\ignorespaces Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}}{11}{figure.3}
 \contentsline {figure}{\numberline {4}{\ignorespaces Réseau de neurones}}{12}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Fonction Sigmoid avec des $\beta $ variables}}{13}{figure.5}
+\contentsline {figure}{\numberline {5}{\ignorespaces Fonction Sigmoid avec des $\beta $ variables}}{14}{figure.5}
 \contentsline {figure}{\numberline {6}{\ignorespaces Fonction tangente hyperbolique}}{14}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces Fonction step}}{14}{figure.7}
-\contentsline {figure}{\numberline {8}{\ignorespaces Exemple de sélection proportionnelle au fitness\cite {wikifps}}}{15}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Passage du génome au phénome}}{17}{figure.9}
-\contentsline {figure}{\numberline {10}{\ignorespaces Exemple de population initiale}}{18}{figure.10}
-\contentsline {figure}{\numberline {11}{\ignorespaces Fonctionnement d'un crossover}}{19}{figure.11}
-\contentsline {figure}{\numberline {12}{\ignorespaces Exemple de mutation dans un génome}}{19}{figure.12}
-\contentsline {figure}{\numberline {13}{\ignorespaces Elitisme d'une génération vers la suivante}}{20}{figure.13}
-\contentsline {figure}{\numberline {14}{\ignorespaces Organigramme de l'algorithme naïf}}{21}{figure.14}
-\contentsline {figure}{\numberline {15}{\ignorespaces Exemple de population initiale dans NEAT}}{22}{figure.15}
-\contentsline {figure}{\numberline {16}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{23}{figure.16}
-\contentsline {figure}{\numberline {17}{\ignorespaces Architecture des modules du serveur}}{27}{figure.17}
+\contentsline {figure}{\numberline {7}{\ignorespaces Fonction step}}{15}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces Exemple de sélection proportionnelle au fitness\cite {wikifps}}}{16}{figure.8}
+\contentsline {figure}{\numberline {9}{\ignorespaces Passage du génome au phénome}}{18}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces Exemple de population initiale}}{19}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Fonctionnement d'un crossover}}{20}{figure.11}
+\contentsline {figure}{\numberline {12}{\ignorespaces Exemple de mutation dans un génome}}{20}{figure.12}
+\contentsline {figure}{\numberline {13}{\ignorespaces Elitisme d'une génération vers la suivante}}{21}{figure.13}
+\contentsline {figure}{\numberline {14}{\ignorespaces Organigramme de l'algorithme naïf}}{22}{figure.14}
+\contentsline {figure}{\numberline {15}{\ignorespaces Passage du génome au phénome dans NEAT}}{23}{figure.15}
+\contentsline {figure}{\numberline {16}{\ignorespaces Exemple de population initiale dans NEAT}}{24}{figure.16}
+\contentsline {figure}{\numberline {17}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{25}{figure.17}
+\contentsline {figure}{\numberline {18}{\ignorespaces Architecture réseau}}{26}{figure.18}
+\contentsline {figure}{\numberline {19}{\ignorespaces Architecture des modules du serveur}}{29}{figure.19}

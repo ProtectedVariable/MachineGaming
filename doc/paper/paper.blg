@@ -3,50 +3,46 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: /Users/Thomas/Documents/MachineGaming/doc/paper/paper.aux
 The style file: unsrt.bst
 Database file #1: mg.bib
-Repeated entry---line 176 of file mg.bib
- : @misc{wikiia
- :             ,
-I'm skipping whatever remains of this entry
 Warning--empty year in nnpower
-You've used 23 entries,
+You've used 24 entries,
             1791 wiz_defined-function locations,
-            518 strings with 5743 characters,
-and the built_in function-call counts, 3051 in all, are:
-= -- 237
-> -- 108
-< -- 1
-+ -- 50
-- -- 27
-* -- 46
-:= -- 479
-add.period$ -- 67
-call.type$ -- 23
-change.case$ -- 23
+            520 strings with 5791 characters,
+and the built_in function-call counts, 3133 in all, are:
+= -- 243
+> -- 112
+< -- 0
++ -- 52
+- -- 28
+* -- 44
+:= -- 494
+add.period$ -- 70
+call.type$ -- 24
+change.case$ -- 24
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 131
-empty$ -- 403
-format.name$ -- 27
-if$ -- 708
+cite$ -- 25
+duplicate$ -- 132
+empty$ -- 417
+format.name$ -- 28
+if$ -- 724
 int.to.chr$ -- 0
-int.to.str$ -- 23
+int.to.str$ -- 24
 missing$ -- 4
-newline$ -- 116
-num.names$ -- 23
-pop$ -- 147
+newline$ -- 121
+num.names$ -- 24
+pop$ -- 153
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 76
+skip$ -- 77
 stack$ -- 0
-substring$ -- 2
-swap$ -- 26
-text.length$ -- 1
+substring$ -- 0
+swap$ -- 24
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
 while$ -- 24
-width$ -- 25
-write$ -- 228
-(There was 1 error message)
+width$ -- 26
+write$ -- 237
+(There was 1 warning)

@@ -13,6 +13,7 @@
 \usepackage{pdfpages}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{float}
 
 \title{Réseau de Neuroévolution Appliqué au Jeu Vidéo}
 \author{Thomas Ibanez}
@@ -62,7 +63,7 @@ Le but de ce travail de bachelor est d'étudier et de comparer le comportement d
 
 Un agent intelligent est une entité autonome qui observe son environnement grâce à des capteurs et qui peut agir sur l'état de son environnement grâce à des effecteurs. Cette entité doit avoir un objectif, elle peut également apprendre où utiliser ses connaissances pour atteindre son but.\cite{wikiia}\\
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.5]{agent_environment.jpg}
 	\caption{Illustration d'un agent}
@@ -76,7 +77,7 @@ La mesure de la performance est un critère qui va définir l'efficacité d'un a
 \subsection{Rationalité}
 
 La rationalité est le fait d'être raisonnable, sensible et d'avoir un bon sens du jugement.\\
-Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue.
+Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue.\cite{tutoptai}
 
 \subsection{Environnement}
 
@@ -84,35 +85,35 @@ L'environnement peut être de différentes natures en fonction du problème pour
 
 \subsubsection{Discret / Continu}
 
-Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple le jeu de Go est un environnement discret car on peut lister tout les états possibles du plateau. En revanche un simulateur de conduite est continu, on ne peut pas lister toutes les positions possible de la voiture.
+Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple le jeu de Go est un environnement discret car on peut lister tout les états possibles du plateau. En revanche un simulateur de conduite est continu, on ne peut pas lister toutes les positions possible de la voiture.\cite{tutoptai}
 
 \subsubsection{Observable / Partiellement Observable}
 
-L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement.
+L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement.\cite{tutoptai}
 
 \subsubsection{Statique / Dynamique}
 
-Si l'environnement ne change pas tant qu'un agent n'agit pas, il est dit statique. Sinon il est dynamique. Un exemple d'environnement statique est le jeu du monopoly, tant qu'un joueur n'agit pas l'état du jeu ne change pas. Au contraire dans les flippers, la balles va continuer à bouger même si le joueur ne fait rien.
+Si l'environnement ne change pas tant qu'un agent n'agit pas, il est dit statique. Sinon il est dynamique. Un exemple d'environnement statique est le jeu du monopoly, tant qu'un joueur n'agit pas l'état du jeu ne change pas. Au contraire dans les flippers, la balles va continuer à bouger même si le joueur ne fait rien.\cite{tutoptai}
 
 \subsubsection{Simple agent / Multi-agents}
 
-Lorsque l'environnement n'est influencé que par un seul agent il est dit simple agent, c'est la cas du jeu space invaders qui se joue seul. Si l'environnement est influencé par plusieurs agents il est dit multi-agents, la planète terre est donc un environnement multi-agents.
+Lorsque l'environnement n'est influencé que par un seul agent il est dit simple agent, c'est la cas du jeu space invaders qui se joue seul. Si l'environnement est influencé par plusieurs agents il est dit multi-agents, la planète terre est donc un environnement multi-agents.\cite{tutoptai}
 
 \subsubsection{Déterministe / Non-déterministe}
 
-L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe.
+L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe.\cite{tutoptai}
 
 \subsubsection{Épisodique / Non-épisodique}
 
 Un environnement épisodique est divisé en épisodes, un épisode est une série d'observation qui mène à une et une seule action, une fois l'action effectuée l'épisode est terminé. Ainsi les actions et décisions passée de l'agent (les épisodes passés) n'ont aucune influence sur l'état actuel de l'environnement.\\
-Un exemple d'environnement épisodique est un agent qui regarde des images pour les classer, une fois le choix fait celui-ci n'aura pas d'influence sur les images suivantes. Au contraire dans un jeu comme le jeu d'échecs, chaque coup dépends du coup précédent, c'est donc un environnement non-épisodique.
+Un exemple d'environnement épisodique est un agent qui regarde des images pour les classer, une fois le choix fait celui-ci n'aura pas d'influence sur les images suivantes. Au contraire dans un jeu comme le jeu d'échecs, chaque coup dépends du coup précédent, c'est donc un environnement non-épisodique.\cite{tutoptai}
 
 \newpage
 \section{Réseau de Neurones Artificiels}
 
 Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensemble de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information.\cite{wikiann} En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).\cite{neuronswork}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.5]{neurones.png}
 	\caption{Représentation des neurones dans le cerveau humain \cite{neurons}}
@@ -133,7 +134,7 @@ $n$ est le nombre de voisins de la couche précédente\\
 $S$ est le vecteur des signaux des voisins la couche précédente\\
 $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.7]{xor.png} 
 	\caption{Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}
@@ -144,7 +145,7 @@ Les neurones de la première couche vont recevoir leurs valeur depuis l'extérie
  Chaque neurones de la couche suivante calculera sa valeur par propagation du signal de la couche précédente afin d'arriver jusqu'à la dernière couche de neurones qui déterminera la prédiction du réseau de neurones. Cette prédiction est également appelée \textit{label}. Dans le cas de notre exemple, le label du réseau sera la note prévue.\\
  Avant de pouvoir utiliser notre réseau pour faire des prédictions, il faut l'entrainer, c'est à dire ajuster les paramètres (poids, topologie) afin que les labels soient le plus correct possible pour des features données.\\
  
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.7]{ff.png}
 	\caption{Réseau de neurones}
@@ -186,7 +187,7 @@ La sigmoid $\sigma : \mathbb{R} \rightarrow ]0, 1[$
 	\sigma : x \mapsto \frac{1}{1 + e^{-\beta x}}
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.4]{sigmoid.png} 
 	\caption{Fonction Sigmoid avec des $\beta$ variables}
@@ -198,7 +199,7 @@ La tangente hyperbolique $tanh : \mathbb{R} \rightarrow ]-1, 1[$
 	tanh : x \mapsto \frac{e^x - e^{-x}}{e^x + e^{-x}}
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.4]{tanh.png} 
 	\caption{Fonction tangente hyperbolique}
@@ -214,7 +215,7 @@ La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
 		\end{cases}
 \end{equation}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.4]{step.png} 
 	\caption{Fonction step}
@@ -242,13 +243,12 @@ Nous ne retrouverons dans cette population aléatoire aucuns individu capable d'
 
 La sélection est un concept essentiel dans l'utilisation d'algorithmes évolutionnistes. L'objectif est de choisir, en prenant en compte le fitness afin que les individus performant soit plus souvent sélectionnés pour être parents. Ainsi, les caractéristiques qui les rendent plus performant seront plus largement passés vers la génération suivante alors que les caractéristiques des individus plus faibles disparaîtront rapidement.\cite{wikifps}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{fps.png} 
 	\caption{Exemple de sélection proportionnelle au fitness\cite{wikifps}}
 \end{center}
 \end{figure}
-\newpage
 
 \subsection{Crossover}
 
@@ -275,7 +275,7 @@ Pour cet algorithme le génome est simplement la liste des poids constituant le 
 
 Le phénome dans le cas de cet algorithme sera une réseau de neurones à topologie fixe et entièrement connecté (Chaque neurones d'une couche donnée est connecté a chaque neurones de la couche suivante).
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.5]{genomephenome.png}
 	\caption{Passage du génome au phénome}
@@ -285,7 +285,7 @@ Le phénome dans le cas de cet algorithme sera une réseau de neurones à topolo
 \subsection{Population initiale}
 
 La population initiale est un ensemble de perceptrons multicouche dont la topologie est la même, les poids entre les couches sont assignés aléatoirement à une valeur entre -1 et +1 afin de représenter un spectre de possibilités aussi large que possible.
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{gen0mlp.png} 
 	\caption{Exemple de population initiale}
@@ -306,13 +306,12 @@ Le crossover fonctionne d'après un principe très simple:\\
 \item Assigner chez l'enfant tout les gènes qui suivent ce point depuis le second parent
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{"crossover.png"} 
 	\caption{Fonctionnement d'un crossover}
 \end{center}
 \end{figure}
-\newpage
 
 Ainsi, les traits permettant une meilleure survie vont rapidement se répandre dans la population car les individus ayant obtenu un meilleur fitness serons plus souvent sélectionnés pour faire une crossover avec un autre individu.
 
@@ -321,19 +320,18 @@ Ainsi, les traits permettant une meilleure survie vont rapidement se répandre d
 Dans le cas de cet algorithme, étant donné que la topologie est fixe, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.\\
 Le poids subira donc une variation d'une valeur aléatoire choisie entre +0.5 et -0.5 cependant le poids sera ensuite fixée dans l'interval $[-1, 1]$.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{mutation.png}
 	\caption{Exemple de mutation dans un génome}
 \end{center}
 \end{figure}
-\newpage
 
 \subsection{Elitisme}
 
 Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu le meilleur fitness) est préservé sans altération de son code génétique pour la génération suivante.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.5]{elitism.png}
 	\caption{Elitisme d'une génération vers la suivante}
@@ -344,7 +342,7 @@ Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu
 
 L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$.
 \afterpage{%
-\begin{figure}[!htbp]
+\begin{figure}[H]
 \centering
 \vspace*{-3cm}
 \thispagestyle{empty}
@@ -362,13 +360,20 @@ Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolut
 
 \subsection{Génome \& Phénome}
 
-Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tout les neurones et toutes les connexions. 
+Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tout les neurones et toutes les connexions. Etant donné que le réseau n'est pas forcément entièrement connecté, et que les connexions peuvent "sauter" des couches, le génome est constitué de deux listes, une qui représente tout les neurones du réseau et une qui représente toutes les connexions du réseau. 
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.55]{genomephenomeneat.png}
+	\caption{Passage du génome au phénome dans NEAT}
+\end{center}
+\end{figure}
 
 \subsection{Population initiale}
 
 La population initiale doit être aussi simple que possible, cependant il n'y a pas de règles dictant la manière dont elle doit être faite. Pour cet algorithme, la population initiale est donc un ensemble de perceptron multicouche avec seulement une couche d'entrée et une couche de sortie dans lequel chaque entrée est reliée à chaque sorties.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{initneat.png}
 	\caption{Exemple de population initiale dans NEAT}
@@ -379,23 +384,22 @@ Ce choix à été fait pour conserver un équilibre entre une population simple 
 
 \subsection{Spéciation}
 
+Une particularité de NEAT est la séparation des organismes en espèces, l'objectif de cette séparation est de classer les individus ayant suffisamment de traits communs pour pouvoir faire un crossover sans que l'enfant soit perde trop d'information pour être efficace. C'est le problème des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.7]{competingconventions.png}
+	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite{neatpaper}}
+\end{center}
+\end{figure}
+
+Afin de pouvoir effectuer cette spéciation, il faut d'abort traquer l'apparition d'innovations dans les gènes. Pour ce faire nous allons grader un historique des innovations qui se remplit lorsqu'une connexion est ajoutée à un réseau.\\
+Ainsi lorsqu'une connexion est ajoutée au réseau, une recherche est effectuée pour savoir si cette connexion à déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation ce numéro ainsi que les neurones de départ et d'arrivée de la nouvelle connexion et tout les numéros d'innovations déjà présents dans le genome.
+
 \subsection{Sélection}
 
 
 \subsection{Crossover}
-
-Le crossover dans le cadre du NEAT pose le problème des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
-
-\begin{figure}[h]
-\begin{center}
-	\includegraphics[scale=0.5]{competingconventions.png}
-	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite{neatpaper}}
-\end{center}
-\end{figure}
-\newpage
-
-Afin de pallier à ce problème, nous suivons l'apparitions d'innovations, 
-
 \subsection{Mutation}
 \subsection{Elitisme}
 
@@ -404,9 +408,16 @@ Afin de pallier à ce problème, nous suivons l'apparitions d'innovations,
 
 Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tous les clients.\\
 
-\subsection{Protcole}
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{archnet.png}
+	\caption{Architecture réseau}
+\end{center}
+\end{figure}
 
-Le protocole à été établi à l'aide du langage protobuf qui permet d'avoir une définition claire ne dépendant pas des langages dans lesquels le protcole est ensuite implémenté.
+\subsection{Protocole}
+
+Le protocole à été établi à l'aide du langage protobuf qui permet d'avoir une définition claire ne dépendant pas des langages dans lesquels le protocole est ensuite implémenté.
 
 Voici le fichier qui défini le protocole:
 \inputminted[breaklines,breaksymbol=, frame=single,label=Protocole, stepnumber=1,tabsize=2]{protobuf}{mg.proto}
@@ -432,13 +443,12 @@ Le protocole définit donc 6 types de messages:
 Comme écrit ci-dessus, le serveur à la lourde tâche de gérer tous les génomes et leurs fitness afin de mettre en oeuvre les algorithmes évolutionniste qui vont permettre l'évolution. En plus de cela il va également devoir servir les pages web servant à la gestion et à la surveillance du processus évolutif.\\
 Afin de pouvoir effectuer toutes ces tâches, le serveur est constitué de modules node.js qui vont chacun gérer une partie de ce qui est lui est demandé.\\
 L'architecture se présente ainsi:
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.5]{"server.png"} 
 	\caption{Architecture des modules du serveur}
 \end{center}
 \end{figure}
-\newpage
 
 \subsection{Client}
 
