@@ -57,6 +57,57 @@ Cependant il existe une méthode encore plus généraliste pour l'apprentissage:
 
 Le but de ce travail de bachelor est d'étudier et de comparer le comportement deux algorithmes de neuroévolution en analysant la faculté de chacun à apprendre à jouer à des jeux vidéo. Cette technique à été choisie car elle permet un développement plus libre de l'IA en ne jugeant que le résultat et non pas les actions qui y mène.
 \newpage
+
+\section{Agent Intelligent}
+
+Un agent intelligent est une entité autonome qui observe son environnement grâce à des capteurs et qui peut agir sur l'état de son environnement grâce à des effecteurs. Cette entité doit avoir un objectif, elle peut également apprendre où utiliser ses connaissances pour atteindre son but.\cite{wikiia}\\
+
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.5]{agent_environment.jpg}
+	\caption{Illustration d'un agent}
+\end{center}
+\end{figure}
+
+\subsection{Mesure de la performance}
+
+La mesure de la performance est un critère qui va définir l'efficacité d'un agent, ce critère dépend évidement de la tâche demandée à l'agent. Cette mesure est analogue à la mesure de la valeur sélective (fitness) d'un organisme en biologie. Ainsi si le tâche demandée à l'agent est de séparer les M\&M's bleu des M\&M's rouges, sa performance peut être mesurée par son taux d'erreur et sa rapidité.
+
+\subsection{Rationalité}
+
+La rationalité est le fait d'être raisonnable, sensible et d'avoir un bon sens du jugement.\\
+Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue.
+
+\subsection{Environnement}
+
+L'environnement peut être de différentes natures en fonction du problème pour lequel l'agent est déployé.
+
+\subsubsection{Discret / Continu}
+
+Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple le jeu de Go est un environnement discret car on peut lister tout les états possibles du plateau. En revanche un simulateur de conduite est continu, on ne peut pas lister toutes les positions possible de la voiture.
+
+\subsubsection{Observable / Partiellement Observable}
+
+L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement.
+
+\subsubsection{Statique / Dynamique}
+
+Si l'environnement ne change pas tant qu'un agent n'agit pas, il est dit statique. Sinon il est dynamique. Un exemple d'environnement statique est le jeu du monopoly, tant qu'un joueur n'agit pas l'état du jeu ne change pas. Au contraire dans les flippers, la balles va continuer à bouger même si le joueur ne fait rien.
+
+\subsubsection{Simple agent / Multi-agents}
+
+Lorsque l'environnement n'est influencé que par un seul agent il est dit simple agent, c'est la cas du jeu space invaders qui se joue seul. Si l'environnement est influencé par plusieurs agents il est dit multi-agents, la planète terre est donc un environnement multi-agents.
+
+\subsubsection{Déterministe / Non-déterministe}
+
+L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe.
+
+\subsubsection{Épisodique / Non-épisodique}
+
+Un environnement épisodique est divisé en épisodes, un épisode est une série d'observation qui mène à une et une seule action, une fois l'action effectuée l'épisode est terminé. Ainsi les actions et décisions passée de l'agent (les épisodes passés) n'ont aucune influence sur l'état actuel de l'environnement.\\
+Un exemple d'environnement épisodique est un agent qui regarde des images pour les classer, une fois le choix fait celui-ci n'aura pas d'influence sur les images suivantes. Au contraire dans un jeu comme le jeu d'échecs, chaque coup dépends du coup précédent, c'est donc un environnement non-épisodique.
+
+\newpage
 \section{Réseau de Neurones Artificiels}
 
 Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensemble de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information.\cite{wikiann} En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).\cite{neuronswork}
@@ -89,32 +140,41 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 \end{center}
 \end{figure}
 
-Les neurones de la première couche vont recevoir le. Ces entrées (aussi appelées \textit{features}) dépendent du problème pour lequel le réseau est employé. Ainsi si nous cherchons à prédire le note d'un examen en fonction du temps de révision et de nombre d'heures de sommeil, les entrées du réseau seront le temps de révision et le nombres d'heures de sommeil.\\
+Les neurones de la première couche vont recevoir leurs valeur depuis l'extérieur. Ces entrées (aussi appelées \textit{features}) dépendent du problème pour lequel le réseau est employé. Ainsi si nous cherchons à prédire le note d'un examen en fonction du temps de révision et de nombre d'heures de sommeil, les entrées du réseau seront le temps de révision et le nombres d'heures de sommeil.\\
  Chaque neurones de la couche suivante calculera sa valeur par propagation du signal de la couche précédente afin d'arriver jusqu'à la dernière couche de neurones qui déterminera la prédiction du réseau de neurones. Cette prédiction est également appelée \textit{label}. Dans le cas de notre exemple, le label du réseau sera la note prévue.\\
  Avant de pouvoir utiliser notre réseau pour faire des prédictions, il faut l'entrainer, c'est à dire ajuster les paramètres (poids, topologie) afin que les labels soient le plus correct possible pour des features données.\\
+ 
+\begin{figure}[h]
+\begin{center}
+	\includegraphics[scale=0.7]{ff.png}
+	\caption{Réseau de neurones}
+\end{center}
+\end{figure}
  
  Il est cependant important de ne pas mystifier le fonctionnement des réseaux de neurones. Ce sont certes des "boites noires", c'est à dire qu'il n'est pas possible d'analyser un réseau et d'expliquer pourquoi une connexion donnée a un tel poids. En revanche, il ne faut pas perdre de vue que leur comportement est exprimable par une fonction mathématique. En effet tout comme le comportement d'un perceptron est décrit dans l'équation \ref{eq:percep} le comportement de n'importe quel réseau de neurones peut-être décrit par une equation dépendant du réseau.
 
 \subsection{Apprentissage supervisé}
 
 L'apprentissage supervisé est une manière d'entrainer un réseau de neurones avec un ensemble de couples (features, labels). Le but est de commencer avec un réseau initialisé aléatoirement, puis de lui donner en entrée des features dont le labels sont connu et de comparer les labels donnés par le réseaux aux labels attendus.\\
-En fonction du taux d'erreur, il sera possible de corriger les poids des connexions du réseau pour minimiser ce taux.\\
+En fonction du taux d'erreur, il sera possible de corriger les poids des connexions du réseau pour minimiser ce taux.\cite{wikisupervised}\\
 
 Les avantages principaux de cette technique d'apprentissage sont la rapidité d'entrainement et la justesse atteignable étant donné que le fonctionnement ne dépend pas d'heuristiques.\\
 
-Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sur qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu). 
+Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sur qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu).
 
 \subsection{Apprentissage non supervisé}
 
-L'apprentissage non supervisé est une méthode d'apprentissage où l'entrainement se fait avec un semble de features dont le label n'est pas connu. Une utilisation de cette technique est le partitionnement de données où le réseau va apprendre à regrouper des features similaires dans la même catégorie.\\
+L'apprentissage non supervisé est une méthode d'apprentissage où l'entrainement se fait avec un semble de features dont le label n'est pas connu. Une utilisation de cette technique est le partitionnement de données où le réseau va apprendre à regrouper des features similaires dans la même catégorie.\cite{wikiunsupervised}\\
 
 Cette méthode peut être comparée à la manière dont un enfant apprends à reconnaître son environnement, si il voit 50 voitures il va pouvoir les associer comme étant des object similaires, sans pour autant qu'on ai eu besoin de lui expliqué ce qu'est un voiture.
 
+\subsection{Apprentissage par renforcement}
+
+L'apprentissage par renforcement intervient lorsque qu'on veut optimiser les décisions prise par un agent intelligent en fonction de son environnement, il est possible que l'agent soit controlé par un réseau de neurones. Dans ce cas les décisions seront les labels et les informations sur son environnement seront les features. Le concept de l'apprentissage par renforcement est de récompenser ou de pénaliser les choix fait par l'agent afin qu'au fur et à mesure des expériences il optimise son comportement.\cite{wikirl}
+
 \subsection{Neuroevolution}
 
-La neuroévolution en est une technique d'entrainement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée.\\
-
-L'avantage de cette méthode est qu'elle ne nécessite aucuns exemples et laisse le champ libre au réseau pour trouver une manière d'optimiser son comportement.\\
+La neuroévolution en est une technique d'entrainement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée. A la différence de l'apprentissage par renforcement, ce ne sont pas les actions individuelles qui vont être jugée mais l'efficacité totale du réseau. Nous ne cherchons donc pas à développer un comportement particulier mais juste à entre plus optimal, peut importe la manière.\cite{wikineuroevolution}\\
 
 \subsection{Fonctions d'activation}
 
@@ -160,17 +220,6 @@ La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
 	\caption{Fonction step}
 \end{center}
 \end{figure}
-
-\subsection{Types de réseau}
-\subsubsection{Feed-Forward}
-\subsubsection{Long Short Term Memory}
-\subsubsection{Convolutional Neural Networks}
-
-
-
-\newpage
-\section{Agent Intelligent}
-
 
 \newpage
 \section{Algorithmes évolutionnistes}
