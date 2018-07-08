@@ -382,9 +382,76 @@ La population initiale doit être aussi simple que possible, cependant il n'y a 
 
 Ce choix à été fait pour conserver un équilibre entre une population simple (pas de couche intermédiaire) mais qui soit rapidement capable de s'ajuster car les connexions sont déjà disponibles, on ne pert donc pas de générations uniquement pour créer les connexions.
 
+\subsection{Historique des innovations}
+
+Une innovation est l'apparition dans le génome d'une nouvelle connexion. Un points central de l'algorithme est de suivre l'émergence de ces innovations afin d'étiqueter les innovations semblables par un même numéro. Ainsi si nous avons deux réseau ayant la même topologie qui, l'un après l'autres font apparaitre une nouvelle connexion entre les mêmes noeuds, leurs deux connexions auront le même numéro d'innovation.\\
+	
+Afin de faire ce lien il faut d'abort faire une recherche pour savoir si cette connexion à déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation sous le format suivant (numéro d'innovation, neurone d'entrée, neurone de sortie, innovations déjà présentes dans le génome).\\
+
 \subsection{Spéciation}
 
-Une particularité de NEAT est la séparation des organismes en espèces, l'objectif de cette séparation est de classer les individus ayant suffisamment de traits communs pour pouvoir faire un crossover sans que l'enfant soit perde trop d'information pour être efficace. C'est le problème des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
+Une particularité de NEAT est la séparation des organismes en espèces, l'objectif de cette séparation est de protéger les nouvelles topologies pour qu'elles ai le temps de se développer, et pénaliser les espèce ne s'améliorant pas avec le temps.\\ 
+
+Pour effectuer cette spéciation, il faut comparer les similarités entre les génomes, plus particulièrement il faut aligner les gènes homologues (ayant le même numéro d'innovation) et compter les gènes dit \textit{disjoints} où \textit{excess}.\\
+Un gène est dit disjoint si il n'apparait que dans un des deux génomes comparés mais que son numéro d'innovation est plus petit que le plus grand numéro d'innovation de l'autre génome. Un gène est dit excess si il n'apparait que dans un des deux génomes comparés mais que son numéro d'innovation est plus grand que le plus grand numéro d'innovation de l'autre génome. Les gènes qui ne sont ni disjoints ni excess sont dit \textit{matching}.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{disjointexcess.png}
+	\caption{Comparaison de deux génomes dans NEAT.\cite{neatpaper}}
+\end{center}
+\end{figure}
+
+La dernière étape avant de pouvoir calculer la distance entre deux génomes est de calculer la moyenne des écarts entre les poids de chaque connexion.
+La formule calculant la disparité entre deux génomes est la suivante:
+
+\begin{equation}
+	\delta = \frac{c_1 * E}{N} + \frac{c_2 * D}{N} + c_3 * \overline{W}
+\label{eq:delta}
+\end{equation}
+
+Où\\
+$c_1$ est le coefficient d'excess\\
+$E$ est le nombre de gènes excess\\
+$c_2$ est le coefficient de disjoints\\
+$D$ est le nombre de gènes excess\\
+$N$ est le nombre total de gènes, peut être assigné à 1 si le réseau est petit (moins de 20 connexions)\\
+$c_3$ est le coefficient de l'écart des poids\\
+$\overline{W}$ est la moyenne des écarts des poids\\
+
+Les coefficients peuvent être modifiés pour changer la sensibilité de la classification aux différents paramètres. Une fois la valeur de $\delta$ calculée, elle est comparée avec un seuil $\delta_t$, si la valeur est plus grande, les génomes ne font pas partie de la même espèce, sinon ils font partie de la même espèce.\\
+
+Afin de préserver l'innovation et d'éviter qu'une espèce domine rapidement la totalité de la population, un mécanisme de \textit{fitness sharing} est mis en place. Pour ce faire le fitness de chaque organisme d'une espèce est divisé par le nombre d'organisme dans cette espèce. Ainsi, les petites espèce qui émergent d'une innovation topologique seront protégées de l'extinction pendant quelques génération afin de laisser le temps aux organismes de s'ajuster.\\
+
+Plus formellement le fitness ajusté de l'organisme $i$ $f^\prime_i$ est défini comme:
+
+\begin{equation}
+	f^\prime_i = \frac{f_i}{\sum^n_{j=1} sh(\delta(i,j))}
+\end{equation}
+Où\\
+$f_i$ est le fitness non ajusté de l'organisme i\\
+$n$ est le nombre d'organismes\\
+$sh$ est la fonction de sharing, celle si renvoie 0 quand son paramètre est inférieur à $\delta_t$ et 1 sinon\\
+$\delta$ est la fonction comparant les génomes vue dans l'équation \ref{eq:delta}\\
+
+\subsection{Sélection}
+
+Dans NEAT, la sélection intervient au moment de la création d'une nouvelle génération, cette sélection va d'abort être effectuée sur les espèce, en effet les organismes faisant partie de la moitié la moins performante de chaque espèce vont être supprimés.\\
+Ensuite les espèce dont le meilleur organisme ne s'est pas amélioré depuis 15 générations sont supprimées.\\
+Pour finir chaque espèce $i$ se voit attribuée un nombre d'enfants $n_i$ calculé selon la formule suivante:
+\begin{equation}
+	n_i = \left\lfloor\frac{\overline{sf_i}}{pop * \sum^m_{j=1} \overline{sf_j}}\right\rfloor
+\end{equation}
+Où\\
+$\overline{sf_i}$ est la moyenne des fitness des organismes de l'espèce i\\
+$m$ est le nombre d'espèces\\
+$pop$ est le nombre total d'organismes\\
+
+Si le nombre d'enfant d'une espèce est inférieur à un, l'espèce disparait. Sinon l'espèce va produire n enfants dans la génération suivante en utilisant le principe de la sélection proportionnelle au fitness. En effet lors de la création d'un enfant il y a 25\% de chance que l'enfant soit une copie d'un parent sélectionné et 75\% de chance que l'enfant soit le fruit d'un crossover entre deux parents sélectionnés (il subira dans les deux cas une potentielle mutation).
+
+\subsection{Crossover}
+
+Le crossover dans NEAT est fait pour palier au problème des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
 
 \begin{figure}[H]
 \begin{center}
@@ -393,17 +460,66 @@ Une particularité de NEAT est la séparation des organismes en espèces, l'obje
 \end{center}
 \end{figure}
 
-Afin de pouvoir effectuer cette spéciation, il faut d'abort traquer l'apparition d'innovations dans les gènes. Pour ce faire nous allons grader un historique des innovations qui se remplit lorsqu'une connexion est ajoutée à un réseau.\\
-Ainsi lorsqu'une connexion est ajoutée au réseau, une recherche est effectuée pour savoir si cette connexion à déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation ce numéro ainsi que les neurones de départ et d'arrivée de la nouvelle connexion et tout les numéros d'innovations déjà présents dans le genome.
+Pour palier à ce problème, il faut que seul les éléments qui divergent entre deux génomes soit échanger et que les éléments similaires soit conservés.\\
 
-\subsection{Sélection}
+Le crossover dans NEAT se fait en alignant tout les gènes homologues (ayant le même numéro d'innovation), pour chaque gène alignés il faut choisir aléatoirement de prendre celui du parent 1 ou du parent 2. Pour les gènes disjoint ou excess, seul ceux du parent ayant le fitness le plus élevé sont conservés.
 
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.5]{crossoverneat.png}
+	\caption{Crossover dans NEAT}
+\end{center}
+\end{figure}
 
-\subsection{Crossover}
 \subsection{Mutation}
+
+Les mutations dans NEAT peuvent être de trois types différents.
+
+\subsubsection{Mutation de poids}
+
+Une mutation de poids à 80\% de chance de se produire, si c'est le cas, tout les poids du réseau vont subir une mutation. Il y a 10\% de chance que le poids change totalement et 90\% de chance que le poids varie très légèrement.
+
+\subsubsection{Mutation de connexion}
+
+Une mutation de connexion consiste en l'ajout d'une connexion entre deux neurones n'étant pas déjà connectés et ne faisant pas partie de la même couche. Ce type de mutation à 5\% de chance de se produire.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{addlink.png}
+	\caption{Ajout d'une connexion}
+\end{center}
+\end{figure}
+
+\subsubsection{Mutation de neurone}
+
+Une mutation de neurone va ajouter un neurone dans le réseau, pour ce faire il faut choisir une connexion qui va être désactivée afin de la remplacer par deux connexions qui passent par le neurone ajouté. Cette mutation à 3\% de chance de se produire.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{addnode.png}
+	\caption{Ajout d'un neurone}
+\end{center}
+\end{figure}
+
 \subsection{Elitisme}
 
+L'élitisme intervient dans l'algorithme car chaque espèce ayant au moins un enfant à créer va d'abort copier son champion de la génération passée sans lui faire subir de mutation vers la génération suivante.
+
+\subsection{Déroulement de l'algorithme}
+
+L'organigramme de l'algorithme NEAT se présente comme suit, il n'est pas possible de représenter en détaille toutes les opérations faites, ce diagramme montre uniquement une vue globale de l'algorithme.
+\afterpage{%
+\begin{figure}[H]
+\centering
+\vspace*{-3cm}
+\thispagestyle{empty}
+\includegraphics[scale=0.6]{neatflow.png}
+\caption{Organigramme de l'algorithme NEAT}
+\end{figure}
+\clearpage
+}
 \newpage
+
 \section{Architecture Réseau}
 
 Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tous les clients.\\

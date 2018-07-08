@@ -1,21 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{neurons}
-Fernandes.
-\newblock Exosquelette et bionique, le système nerveux, 2013.
-\newblock [Online; accessed 30-June-2018].
-
-\bibitem{wikifps}
-Wikipedia contributors.
-\newblock Fitness proportionate selection --- {W}ikipedia{,} the free
-  encyclopedia, 2018.
-\newblock [Online; accessed 4-July-2018].
-
-\bibitem{neatpaper}
-Kenneth Stanley and Risto Miikkulainen.
-\newblock Evolving neural networks through augmenting topologies.
-\newblock {\em The MIT Press}, 2002.
-
 \bibitem{wikialphagolee}
 Wikipedia contributors.
 \newblock Alphago versus lee sedol --- {W}ikipedia{,} the free encyclopedia,
@@ -76,6 +60,11 @@ Stephen Williams and Pankaj Sah.
 \newblock Brain functions, 2018.
 \newblock [Online; accessed 21-April-2018].
 
+\bibitem{neurons}
+Fernandes.
+\newblock Exosquelette et bionique, le système nerveux, 2013.
+\newblock [Online; accessed 30-June-2018].
+
 \bibitem{wikiperceptron}
 Wikipedia contributors.
 \newblock Perceptron --- {W}ikipedia{,} the free encyclopedia, 2018.
@@ -107,6 +96,12 @@ Wikipedia contributors.
 \newblock Phenome --- {W}ikipedia{,} the free encyclopedia, 2018.
 \newblock [Online; accessed 4-July-2018].
 
+\bibitem{wikifps}
+Wikipedia contributors.
+\newblock Fitness proportionate selection --- {W}ikipedia{,} the free
+  encyclopedia, 2018.
+\newblock [Online; accessed 4-July-2018].
+
 \bibitem{wikicrossover}
 Wikipedia contributors.
 \newblock Chromosomal crossover --- {W}ikipedia{,} the free encyclopedia, 2018.
@@ -126,5 +121,10 @@ Wikipedia contributors.
 \newblock Neuroevolution of augmenting topologies --- {W}ikipedia{,} the free
   encyclopedia, 2018.
 \newblock [Online; accessed 30-June-2018].
+
+\bibitem{neatpaper}
+Kenneth Stanley and Risto Miikkulainen.
+\newblock Evolving neural networks through augmenting topologies.
+\newblock {\em The MIT Press}, 2002.
 
 \end{thebibliography}

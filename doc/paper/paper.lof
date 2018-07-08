@@ -15,6 +15,11 @@
 \contentsline {figure}{\numberline {14}{\ignorespaces Organigramme de l'algorithme naïf}}{22}{figure.14}
 \contentsline {figure}{\numberline {15}{\ignorespaces Passage du génome au phénome dans NEAT}}{23}{figure.15}
 \contentsline {figure}{\numberline {16}{\ignorespaces Exemple de population initiale dans NEAT}}{24}{figure.16}
-\contentsline {figure}{\numberline {17}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{25}{figure.17}
-\contentsline {figure}{\numberline {18}{\ignorespaces Architecture réseau}}{26}{figure.18}
-\contentsline {figure}{\numberline {19}{\ignorespaces Architecture des modules du serveur}}{29}{figure.19}
+\contentsline {figure}{\numberline {17}{\ignorespaces Comparaison de deux génomes dans NEAT.\cite {neatpaper}}}{25}{figure.17}
+\contentsline {figure}{\numberline {18}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite {neatpaper}}}{27}{figure.18}
+\contentsline {figure}{\numberline {19}{\ignorespaces Crossover dans NEAT}}{28}{figure.19}
+\contentsline {figure}{\numberline {20}{\ignorespaces Ajout d'une connexion}}{29}{figure.20}
+\contentsline {figure}{\numberline {21}{\ignorespaces Ajout d'un neurone}}{30}{figure.21}
+\contentsline {figure}{\numberline {22}{\ignorespaces Organigramme de l'algorithme naïf}}{31}{figure.22}
+\contentsline {figure}{\numberline {23}{\ignorespaces Architecture réseau}}{32}{figure.23}
+\contentsline {figure}{\numberline {24}{\ignorespaces Architecture des modules du serveur}}{35}{figure.24}
