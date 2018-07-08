@@ -15,15 +15,42 @@
 \usepackage{amsmath}
 \usepackage{float}
 
-\title{Réseau de Neuroévolution Appliqué au Jeu Vidéo}
+\newcommand*{\printdate}{%
+   \ifcase \month\or Janvier\or Février\or Mars\or Avril\or Mai\or Juin\or Juillet\or Août\or Septembre\or Octobre\or Novembre\or Décembre\fi \space \number\year}
+
+\title{Algorithmes génétiques pour l'intelligence artificielle}
 \author{Thomas Ibanez}
 \makeindex
 
 
 \begin{document}
 
-\maketitle
-\newpage
+\begin{titlepage}
+	\vspace*{-3cm}
+		\includegraphics[width=.3\linewidth]{hepia.png}
+		\hfill
+		\includegraphics[width=.3\linewidth]{hes.png}\par
+	\vspace{1cm}
+	\centering
+	{\scshape\huge Algorithmes génétiques pour l'intelligence artificielle \par}
+	\vspace{1cm}
+	\includegraphics[scale=0.4]{agent_environment.jpg}\par
+	\vspace{3cm}
+	{\Large\scshape Thèse de bachelor présentée par\par}
+	\vspace{0.5cm}
+	{\bfseries\Large M. Thomas Ibanez\par}
+	\vspace{1cm}
+	{\scshape\Large Pour l'obtention du titre Bachelor of Science HES-SO en\par}
+	\vspace{0.5cm}
+	{\bfseries\Large Ingénierie des technologies de l'information avec orientation en Logiciels et Systèmes complexes\par}
+	\vfill
+	Professeur HES responsable\par
+	\bfseries{Orestis Malaspinas\par}
+
+	\vfill
+
+	{\large\ \printdate \par}
+\end{titlepage}
 
 \includepdf[pages=1, offset=2cm 0]{enonce}
 
@@ -39,6 +66,7 @@
 \section*{Acronymes}
 IA
 NEAT
+TLV
 
 
 \newpage
@@ -522,37 +550,14 @@ L'organigramme de l'algorithme NEAT se présente comme suit, il n'est pas possib
 
 \section{Architecture Réseau}
 
-Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tous les clients.\\
+Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tout les clients.\\
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.4]{archnet.png}
+	\includegraphics[scale=0.5]{archnet.png}
 	\caption{Architecture réseau}
 \end{center}
 \end{figure}
-
-\subsection{Protocole}
-
-Le protocole à été établi à l'aide du langage protobuf qui permet d'avoir une définition claire ne dépendant pas des langages dans lesquels le protocole est ensuite implémenté.
-
-Voici le fichier qui défini le protocole:
-\inputminted[breaklines,breaksymbol=, frame=single,label=Protocole, stepnumber=1,tabsize=2]{protobuf}{mg.proto}
-
-Le protocole définit donc 6 types de messages:
-\begin{itemize}
-\item MG\_JOIN, Envoyé par le client, c'est une demande à rejoindre le groupe de calcul. En paramètres sont donnés le nom du client et si il veut rejoindre en tant que specateur ou non (fonctionnalité expliquée dans la partie client).
-
-\item MG\_JOIN\_RESPONSE, Envoyé par le serveur, confirme ou infirme l'ajout au groupe du client. Il n'existe pour l'instant aucune raison pour le rejet d'un client.
-
-\item MG\_COMPUTE\_REQUEST, Envoyé par le serveur, demande au client de calculer le fitness d'un génome donné sur un jeu donné.
-
-\item MG\_COMPUTE\_RESPONSE, Envoyé par le client, indique au serveur si oui ou non le client est en mesure d'effectuer la simulation.
-
-\item MG\_COMPUTE\_RESULT, Envoyé par le client, donne le fitness obtenu par le génome donné dans le message MG\_COMPUTE\_REQUEST sur le jeu donné dans ce même message et le temps (ms) pris par le client pour effectuer la simulation.
-
-\item MG\_END, Envoyé par n'importe quel entité, indique un désir de terminer la connexion.
-
-\end{itemize}
 
 \subsection{Serveur}
 
@@ -570,9 +575,39 @@ L'architecture se présente ainsi:
 
 Le client va devoir effectuer la simulation demandée par le serveur, avec le bon réseau de neurones
 
+
 \subsubsection{Réseaux de neurones}
 \subsubsection{Simulateur}
 \subsubsection{Tests}
+
+\subsection{Protocole}
+
+Le protocole à été établi à l'aide du langage protobuf (Protocol Buffers). Ce dernier a été développé par Google, il permet d'avoir une définition claire ne dépendant pas des langages dans lesquels le protocole est ensuite implémenté.\\
+
+Le compilateur protoc permet d'obtenir un ficher de gestion en Java pour le coté client et un en JavaScript (node) pour le coté serveur. Ainsi nous avons une interface pour permettre la communication entre les deux technologies.\\
+
+Avant d'être envoyés sur le réseau, les messages doivent d'abort être sérialisés dans un format TLV (type, longueur, valeur). Le type sera l'identifiant du type du message (un byte), la longueur sera la longueur du message généré par protobuf (quatre bytes) et la valeur sera le message encodé par protobuf.\cite{protobuf}\\
+
+Voici le fichier qui défini le protocole dans le syntaxe proto2:
+\inputminted[breaklines,breaksymbol=, frame=single,label=Protocole, stepnumber=1,tabsize=2]{protobuf}{mg.proto}
+
+Le protocole définit donc 6 types de messages:
+\begin{itemize}
+\item MG\_JOIN, Envoyé par le client, c'est une demande à rejoindre le groupe de calcul. En paramètres sont donnés le nom du client et si il veut rejoindre en tant que spectateur ou non.
+
+\item MG\_JOIN\_RESPONSE, Envoyé par le serveur, confirme ou infirme l'ajout au groupe du client. Il n'existe pour l'instant aucune raison pour le rejet d'un client.
+
+\item MG\_COMPUTE\_REQUEST, Envoyé par le serveur, demande au client de calculer le fitness d'un génome donné sur un jeu donné.
+
+\item MG\_COMPUTE\_RESPONSE, Envoyé par le client, indique au serveur si oui ou non le client est en mesure d'effectuer la simulation.
+
+\item MG\_COMPUTE\_RESULT, Envoyé par le client, donne le fitness obtenu par le génome donné dans le message MG\_COMPUTE\_REQUEST sur le jeu donné dans ce même message et le temps (ms) pris par le client pour effectuer la simulation.
+
+\item MG\_END, Envoyé par n'importe quel entité, indique un désir de terminer la connexion.
+
+\end{itemize}
+
+Voici un exemple de communication entre le serveur et un client:
 
 \newpage
 \section{Interface de Controle}
