@@ -118,10 +118,14 @@ app.get('/status', (req, res) => {
         "workers": pool.workers,
         "games": games,
         "currentGame": pool.currentGame,
+        "currentTopo": topoID,
+        "currentType": pool.currentType,
         "currentGeneration": pool.cycles,
         "remainingCycles": isFinite(pool.targetCycles) ? pool.targetCycles - pool.cycles : "Infinity",
         "avgFitnesses": pool.avgFitnesses.slice(pool.avgFitnesses.length < 50 ? 0 : pool.avgFitnesses.length - 50, pool.avgFitnesses.length),
-        "bestFitnesses": pool.bestFitnesses.slice(pool.bestFitnesses.length < 50 ? 0 : pool.bestFitnesses.length - 50, pool.bestFitnesses.length)
+        "bestFitnesses": pool.bestFitnesses.slice(pool.bestFitnesses.length < 50 ? 0 : pool.bestFitnesses.length - 50, pool.bestFitnesses.length),
+        "topologies": topos,
+        "saves": saved
     });
 });
 
