@@ -66,30 +66,32 @@
 \section*{Acronymes}
 IA
 NEAT
+MLP
 TLV
+API
 
 
 \newpage
 \section{Introduction}
 
-Ces dernières années l'apprentissage automatique (Machine Learning) à pris une place très importante dans le monde de l'informatique et nous avons pu assister au prouesses accomplies par des intelligences artificielles tels que la victoire d'AlphaGo face à Lee Sedol au jeu de Go en 2016.\cite{wikialphagolee} Cet événement n'est pas sans rappeler la défaite de Kasparov contre Deep Blue en 1997 qui avait défrayé le chronique.\cite{kasparov}\\
-Mais comment en sommes nous arrivés là, et quels sont les techniques qui se cachent derrière ces impressionnant résultats ?\\
-Il y a plusieurs manière de faire du machine learning ; une des plus populaire, celle qui est utilisée pour ce travail, est le réseau de neurones artificiels. Cette technologie existe depuis bien longtemps, mais ce sont les récent progrès en terme de puissance de calcul qui ont amorcé sa montée comme technologie phare du domaine.\cite{nnpower}\\
+Ces dernières années, l'apprentissage automatique (Machine Learning) a pris une place très importante dans le monde de l'informatique et nous avons pu assister aux prouesses accomplies par des intelligences artificielles tels que la victoire d'AlphaGo face à Lee Sedol au jeu de Go en 2016\cite{wikialphagolee}. Cet événement n'est pas sans rappeler la défaite de Kasparov contre Deep Blue en 1997 qui avait défrayé le chronique\cite{kasparov}.\\
+Mais comment en sommes nous arrivés là, et quels sont les techniques qui se cachent derrière ces impressionnants résultats ?\\
+Il y a plusieurs manières de faire du machine learning ; une des plus populaire, celle qui est utilisée pour ce travail, est le réseau de neurones artificiels. Cette technologie existe depuis bien longtemps, mais ce sont les récents progrès en terme de puissance de calcul qui ont amorcé sa montée comme technologie phare du domaine\cite{nnpower}.\\
 
-La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique consiste à comparer la sorties du réseau à la sortie attendu pour une entrée donnée afin de corriger les poids du réseau.\cite{backprop} L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soit adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombres d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique consiste à comparer les sorties du réseau à aux sorties attendues pour une entrée donnée afin de corriger les poids du réseau\cite{backprop}. L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soient adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombre d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple, il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
 
-Cependant générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles technique ne nécessitant pas d'exemples.\\
+Cependant, générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles techniques ne nécessitant pas d'exemples.\\
 
-Une de ces techniques, qui a été utilisée pour l'apprentissage d'AlphaGo\cite{alphago}, est le l'apprentissage par renforcement (Reinforcement learning). Cette méthode consiste à juger les décisions prises par un agent autonome en lui donnant une recompense positive ou négative afin que l'agent, au fur et à mesure des expériences trouve une stratégie optimale.\cite{wikirl} Cette façon de faire peut être comparé au comportement d'un enfant qui apprends à faire du vélo. Quand il tombe il va avoir mal, c'est une récompense négative. Il va donc corriger son comportement de façon à ne plus tomber. A l'inverse, quand il arrive a aller loin il va être fier et donc favoriser ce comportement, c'est une récompense positive.\\
+Une de ces techniques, qui a été utilisée pour l'apprentissage d'AlphaGo\cite{alphago}, est l'apprentissage par renforcement (Reinforcement learning). Cette méthode consiste à juger les décisions prises par un agent autonome en lui donnant une récompense positive ou négative afin que l'agent, au fur et à mesure des expériences trouve une stratégie optimale\cite{wikirl}. Cette façon de faire peut être comparée au comportement d'un enfant qui apprend à faire du vélo. Quand il tombe il va avoir mal, c'est une récompense négative. Il va donc corriger son comportement de façon à ne plus tomber. A l'inverse, quand il arrive à aller loin, il va être fier et donc favoriser ce comportement, c'est une récompense positive.\\
 
-Cependant il existe une méthode encore plus généraliste pour l'apprentissage: La neuroévolution. Cette méthode se base sur les algorithmes évolutionniste dont le fonctionnement est inspiré de la sélection naturelle qui a guidé l'évolution de la vie sur terre. En effet à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité effectuer une tâche donnée, ce que nous appelons le \textit{fitness} de l'organisme. Nous allons sélectionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante qui sera à son tour évaluée et on recommence ce processus autant de fois que nécessaire.\cite{wikineuroevolution}\\
+Cependant il existe une méthode encore plus généraliste pour l'apprentissage: la neuroévolution. Cette méthode se base sur les algorithmes évolutionnistes dont le fonctionnement est inspiré de la sélection naturelle qui a guidé l'évolution de la vie sur terre. En effet, à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité à effectuer une tâche donnée, ce que nous appelons le \textit{fitness} de l'organisme, nous allons sélectionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante qui sera à son tour évaluée et nous recommencerons ce processus autant de fois que nécessaire\cite{wikineuroevolution}.\\
 
-Le but de ce travail de bachelor est d'étudier et de comparer le comportement deux algorithmes de neuroévolution en analysant la faculté de chacun à apprendre à jouer à des jeux vidéo. Cette technique à été choisie car elle permet un développement plus libre de l'IA en ne jugeant que le résultat et non pas les actions qui y mène.
+Le but de ce travail de bachelor est d'étudier et de comparer le comportement de deux algorithmes de neuroévolution en analysant la faculté de chacun à apprendre à jouer à des jeux vidéo. Cette technique à été choisie car elle permet un développement plus libre de l'IA en ne jugeant que le résultat et non pas les actions qui y mènent.
 \newpage
 
 \section{Agent Intelligent}
 
-Un agent intelligent est une entité autonome qui observe son environnement grâce à des capteurs et qui peut agir sur l'état de son environnement grâce à des effecteurs. Cette entité doit avoir un objectif, elle peut également apprendre où utiliser ses connaissances pour atteindre son but.\cite{wikiia}\\
+Un agent intelligent est une entité autonome qui observe son environnement grâce à des capteurs et qui peut agir sur l'état de son environnement grâce à des effecteurs. Cette entité doit avoir un objectif (gagner une partie de Go par exemple), elle peut également apprendre ou utiliser ses connaissances pour atteindre son but\cite{wikiia}.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -100,12 +102,12 @@ Un agent intelligent est une entité autonome qui observe son environnement grâ
 
 \subsection{Mesure de la performance}
 
-La mesure de la performance est un critère qui va définir l'efficacité d'un agent, ce critère dépend évidement de la tâche demandée à l'agent. Cette mesure est analogue à la mesure de la valeur sélective (fitness) d'un organisme en biologie. Ainsi si le tâche demandée à l'agent est de séparer les M\&M's bleu des M\&M's rouges, sa performance peut être mesurée par son taux d'erreur et sa rapidité.
+La mesure de la performance est un critère qui va définir l'efficacité d'un agent, ce critère dépend évidement de la tâche demandée à l'agent. Cette mesure est analogue à la mesure de la valeur sélective (fitness) d'un organisme en biologie. Ainsi, si le tâche demandée à l'agent est de séparer les M\&M's bleus des M\&M's rouges, sa performance peut être mesurée par son taux d'erreur et sa rapidité.
 
 \subsection{Rationalité}
 
 La rationalité est le fait d'être raisonnable, sensible et d'avoir un bon sens du jugement.\\
-Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue.\cite{tutoptai}
+Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue\cite{tutoptai}.
 
 \subsection{Environnement}
 
@@ -113,33 +115,33 @@ L'environnement peut être de différentes natures en fonction du problème pour
 
 \subsubsection{Discret / Continu}
 
-Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple le jeu de Go est un environnement discret car on peut lister tout les états possibles du plateau. En revanche un simulateur de conduite est continu, on ne peut pas lister toutes les positions possible de la voiture.\cite{tutoptai}
+Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple, le jeu de Go est un environnement discret car on peut lister tout les états possibles du plateau. En revanche, un simulateur de conduite est continu, on ne peut pas lister toutes les positions possibles de la voiture\cite{tutoptai}.
 
 \subsubsection{Observable / Partiellement Observable}
 
-L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement.\cite{tutoptai}
+L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement\cite{tutoptai}.
 
 \subsubsection{Statique / Dynamique}
 
-Si l'environnement ne change pas tant qu'un agent n'agit pas, il est dit statique. Sinon il est dynamique. Un exemple d'environnement statique est le jeu du monopoly, tant qu'un joueur n'agit pas l'état du jeu ne change pas. Au contraire dans les flippers, la balles va continuer à bouger même si le joueur ne fait rien.\cite{tutoptai}
+Si l'environnement ne change pas tant qu'un agent n'agit pas il est dit statique, sinon il est dynamique. Un exemple d'environnement statique est le jeu du monopoly, tant qu'un joueur n'agit pas l'état du jeu ne change pas. Au contraire dans les flippers, la balle va continuer à bouger même si le joueur ne fait rien\cite{tutoptai}.
 
 \subsubsection{Simple agent / Multi-agents}
 
-Lorsque l'environnement n'est influencé que par un seul agent il est dit simple agent, c'est la cas du jeu space invaders qui se joue seul. Si l'environnement est influencé par plusieurs agents il est dit multi-agents, la planète terre est donc un environnement multi-agents.\cite{tutoptai}
+Lorsque l'environnement n'est influencé que par un seul agent il est dit simple agent, c'est la cas du jeu space invaders qui se joue seul. Si l'environnement est influencé par plusieurs agents il est dit multi-agents, la planète terre est donc un environnement multi-agents\cite{tutoptai}.
 
 \subsubsection{Déterministe / Non-déterministe}
 
-L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe.\cite{tutoptai}
+L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe\cite{tutoptai}.
 
 \subsubsection{Épisodique / Non-épisodique}
 
-Un environnement épisodique est divisé en épisodes, un épisode est une série d'observation qui mène à une et une seule action, une fois l'action effectuée l'épisode est terminé. Ainsi les actions et décisions passée de l'agent (les épisodes passés) n'ont aucune influence sur l'état actuel de l'environnement.\\
-Un exemple d'environnement épisodique est un agent qui regarde des images pour les classer, une fois le choix fait celui-ci n'aura pas d'influence sur les images suivantes. Au contraire dans un jeu comme le jeu d'échecs, chaque coup dépends du coup précédent, c'est donc un environnement non-épisodique.\cite{tutoptai}
+Un environnement épisodique est divisé en épisodes, un épisode est une série d'observation qui mène à une et une seule action, une fois l'action effectuée, l'épisode est terminé. Ainsi les actions et décisions passée de l'agent (les épisodes passées) n'ont aucune influence sur l'état actuel de l'environnement.\\
+Un exemple d'environnement épisodique est un agent qui regarde des images pour les classer, une fois le choix fait celui-ci n'aura pas d'influence sur les images suivantes. Au contraire dans un jeu comme le jeu d'échecs, chaque coup dépend du coup précédent, c'est donc un environnement non-épisodique\cite{tutoptai}.
 
 \newpage
 \section{Réseau de Neurones Artificiels}
 
-Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensemble de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information.\cite{wikiann} En effet les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez fort envoyer une impulsion le long de leur axone vers les neurones suivant qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable).\cite{neuronswork}
+Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensemble de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information\cite{wikiann}. En effet, les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez forts envoyer une impulsion le long de leur axone vers les neurones suivants qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable)\cite{neuronswork}.
 
 \begin{figure}[H]
 \begin{center}
@@ -148,11 +150,11 @@ Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau hum
 \end{center}
 \end{figure}
 
-Les perceptrons quant à eux vont imiter (de manière simplifiée) ce comportement, chaque perceptron va prendre le signal envoyée par chacun de ses voisins de la couche précédente, puis multiplier cette valeur par le poids le connexion et finalement faire le somme de toutes les valeurs pondérées et passer cette somme dans une fonction (dites fonction d'activation) qui va placer cette somme dans un interval (entre 0 et 1 par exemple) et renvoyer le résultat de cette fonction à tous ses voisins de la couche suivante qui vont faire de même.\cite{wikiperceptron}
+Les perceptrons quant à eux vont imiter (de manière simplifiée) ce comportement, chaque perceptron va prendre le signal envoyé par chacun de ses voisins de la couche précédente, puis multiplier cette valeur par le poids de la connexion et finalement faire la somme de toutes les valeurs pondérées. Cette somme est ensuite passée dans une fonction (dites fonction d'activation) qui va la placer dans un intervalle (entre 0 et 1 par exemple) et renvoyer le résultat à tous ses voisins de la couche suivante qui vont faire de même\cite{wikiperceptron}.
 
 D'un point de vue mathématique le comportement d'un perceptron peut être écrit comme:
 \begin{equation}
-o = f(\sum_{i=0}^{n} S_i * W_i)
+o = f(\sum_{i=0}^{n} S_i \cdot W_i)
 \label{eq:percep}
 \end{equation}
 Où\\
@@ -169,9 +171,11 @@ $W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche pr
 \end{center}
 \end{figure}
 
-Les neurones de la première couche vont recevoir leurs valeur depuis l'extérieur. Ces entrées (aussi appelées \textit{features}) dépendent du problème pour lequel le réseau est employé. Ainsi si nous cherchons à prédire le note d'un examen en fonction du temps de révision et de nombre d'heures de sommeil, les entrées du réseau seront le temps de révision et le nombres d'heures de sommeil.\\
- Chaque neurones de la couche suivante calculera sa valeur par propagation du signal de la couche précédente afin d'arriver jusqu'à la dernière couche de neurones qui déterminera la prédiction du réseau de neurones. Cette prédiction est également appelée \textit{label}. Dans le cas de notre exemple, le label du réseau sera la note prévue.\\
+Les neurones de la première couche vont recevoir leur valeur depuis l'extérieur. Ces entrées (aussi appelées \textit{features}) dépendent du problème pour lequel le réseau est employé. Ainsi si nous cherchons à prédire la note d'un examen en fonction du temps de révision et du nombre d'heures de sommeil, les entrées du réseau seront le temps de révision et le nombre d'heures de sommeil.\\
+ Chaque neurone de la couche suivante calculera sa valeur par propagation du signal de la couche précédente afin d'arriver jusqu'à la dernière couche de neurones qui déterminera la prédiction du réseau de neurones. Cette prédiction est également appelée \textit{label}. Dans le cas de notre exemple, le label du réseau sera la note prévue.\\
  Avant de pouvoir utiliser notre réseau pour faire des prédictions, il faut l'entrainer, c'est à dire ajuster les paramètres (poids, topologie) afin que les labels soient le plus correct possible pour des features données.\\
+ 
+ Les réseau de neurones possèdent également une entrée particulière, dont la valeur sera toujours le maximum selon l'interval de fonctionnement, cette entrée est appelée le biais (bias en anglais). Dans les figures suivantes je ne représenterai pas le biais pour alléger la lecture.
  
 \begin{figure}[H]
 \begin{center}
@@ -184,30 +188,30 @@ Les neurones de la première couche vont recevoir leurs valeur depuis l'extérie
 
 \subsection{Apprentissage supervisé}
 
-L'apprentissage supervisé est une manière d'entrainer un réseau de neurones avec un ensemble de couples (features, labels). Le but est de commencer avec un réseau initialisé aléatoirement, puis de lui donner en entrée des features dont le labels sont connu et de comparer les labels donnés par le réseaux aux labels attendus.\\
-En fonction du taux d'erreur, il sera possible de corriger les poids des connexions du réseau pour minimiser ce taux.\cite{wikisupervised}\\
+L'apprentissage supervisé est une manière d'entrainer un réseau de neurones avec un ensemble de couples (features, labels). Le but est de commencer avec un réseau initialisé aléatoirement, puis de lui donner en entrée des features dont les labels sont connus et de comparer les labels donnés par le réseau aux labels attendus.\\
+En fonction du taux d'erreur, il sera possible de corriger les poids des connexions du réseau pour minimiser ce taux\cite{wikisupervised}.\\
 
-Les avantages principaux de cette technique d'apprentissage sont la rapidité d'entrainement et la justesse atteignable étant donné que le fonctionnement ne dépend pas d'heuristiques.\\
+Les avantages principaux de cette technique d'apprentissage sont la rapidité d'entraînement et la justesse atteignable étant donné que le fonctionnement ne dépend pas d'heuristiques.\\
 
-Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sur qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu).
+Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sûr qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu). Le problème du sur-apprentissage (overfitting) intervient également, la conséquence du sur-apprentissage est que le réseau va analyser de manière trop exacte les données de son ensemble d'exemples et va ensuite faire des erreurs sur des nouvelles données.
 
 \subsection{Apprentissage non supervisé}
 
-L'apprentissage non supervisé est une méthode d'apprentissage où l'entrainement se fait avec un semble de features dont le label n'est pas connu. Une utilisation de cette technique est le partitionnement de données où le réseau va apprendre à regrouper des features similaires dans la même catégorie.\cite{wikiunsupervised}\\
+L'apprentissage non supervisé est une méthode d'apprentissage où l'entraînement se fait avec un semble de features dont le label n'est pas connu. Une utilisation de cette technique est le partitionnement de données où le réseau va apprendre à regrouper des features similaires dans la même catégorie\cite{wikiunsupervised}.\\
 
-Cette méthode peut être comparée à la manière dont un enfant apprends à reconnaître son environnement, si il voit 50 voitures il va pouvoir les associer comme étant des object similaires, sans pour autant qu'on ai eu besoin de lui expliqué ce qu'est un voiture.
+Cette méthode peut être comparée à la manière dont un enfant apprend à reconnaître son environnement. Si il voit 50 voitures, il va pouvoir les associer comme étant des objets similaires, sans pour autant qu'on ait eu besoin de lui expliquer ce qu'est un voiture.
 
 \subsection{Apprentissage par renforcement}
 
-L'apprentissage par renforcement intervient lorsque qu'on veut optimiser les décisions prise par un agent intelligent en fonction de son environnement, il est possible que l'agent soit controlé par un réseau de neurones. Dans ce cas les décisions seront les labels et les informations sur son environnement seront les features. Le concept de l'apprentissage par renforcement est de récompenser ou de pénaliser les choix fait par l'agent afin qu'au fur et à mesure des expériences il optimise son comportement.\cite{wikirl}
+L'apprentissage par renforcement intervient lorsqu'on veut optimiser les décisions prises par un agent intelligent en fonction de son environnement. Il est possible que l'agent soit controlé par un réseau de neurones, dans ce cas, les décisions seront les labels et les informations sur son environnement seront les features. Le concept de l'apprentissage par renforcement est de récompenser ou de pénaliser les choix fait par l'agent afin qu'au fur et à mesure des expériences il optimise son comportement\cite{wikirl}.
 
-\subsection{Neuroevolution}
+\subsection{Neuroévolution}
 
-La neuroévolution en est une technique d'entrainement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée. A la différence de l'apprentissage par renforcement, ce ne sont pas les actions individuelles qui vont être jugée mais l'efficacité totale du réseau. Nous ne cherchons donc pas à développer un comportement particulier mais juste à entre plus optimal, peut importe la manière.\cite{wikineuroevolution}\\
+La neuroévolution est une technique d'entraînement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée. A la différence de l'apprentissage par renforcement, ce ne sont pas les actions individuelles qui vont être jugées mais l'efficacité totale du réseau. Nous ne cherchons donc pas à développer un comportement particulier mais juste à être plus optimal, peut importe la manière\cite{wikineuroevolution}.\\
 
 \subsection{Fonctions d'activation}
 
-Les fonction d'activations sont des fonctions qui ont pour tâche de limiter la valeur des neurones dans un interval donné. Afin de pouvoir appliquer la rétropropagation du gradient il faut également que la fonction soit dérivable.
+Les fonctions d'activation sont des fonctions qui ont pour tâche de limiter la valeur des neurones dans un intervalle donné. Afin de pouvoir appliquer la rétropropagation du gradient il faut également que la fonction soit dérivable.
 Voici quelques exemples de fonctions utilisées couramment:\\
 
 La sigmoid $\sigma : \mathbb{R} \rightarrow ]0, 1[$
@@ -253,23 +257,23 @@ La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
 \newpage
 \section{Algorithmes évolutionnistes}
 
-Un algorithme évolutionniste est un algorithme d'optimisation métaheuristique qui cherche, par un processus inspiré de la sélection naturelle, une solution optimale à un problème. Ces algorithmes utilisent des iterations stochastiques pour arriver à maximiser une fonction évaluant leurs performances, dite fonction de fitness.\cite{wikiea}\\
+Un algorithme évolutionniste est un algorithme d'optimisation métaheuristique qui cherche, par un processus inspiré de la sélection naturelle, une solution optimale à un problème. Ces algorithmes utilisent des iterations stochastiques pour arriver à maximiser une fonction évaluant leurs performances, dite fonction de fitness\cite{wikiea}.\\
 
 \subsection{Génome \& Phénome}
 
-Le génome est l'ensemble du matériel génétique d'un individu, celui-ci contient toutes les informations nécessaire à la création de l'individu.\cite{wikigenome} Chez les humain le génome est organisé en 23 paires de chromosomes. A partir de ces chromosomes, qui sont uniques à chaque organismes, on peut créer le phénome.\\
-Le phénome est l'ensemble de tout les traits observables chez un individu (p.ex La couleur des yeux, de la peau, des cheveux etc...).\cite{wikiphenome}\\
+Le génome est l'ensemble du matériel génétique d'un individu, celui-ci contient toutes les informations nécessaires à la création de l'individu\cite{wikigenome}. Chez les humains le génome est organisé en 23 paires de chromosomes. A partir de ces chromosomes, qui sont uniques à chaque organisme, on peut créer le phénome.\\
+Le phénome est l'ensemble de tout les traits observables chez un individu (p.ex la couleur des yeux, de la peau, des cheveux, etc...)\cite{wikiphenome}.\\
 
-Dans le cadre de la neuroévolution le génome est un encodage permettant la création du phénome qui est le réseau de neurones.
+Dans le cadre de la neuroévolution, le génome est un encodage permettant la création du phénome qui est le réseau de neurones.
 
 \subsection{Population initiale}
 
-La base d'un algorithme évolutionniste est la population initiale, celle-ci doit être générée aléatoirement afin de représenter un vaste spectre de possibilités. 
-Nous ne retrouverons dans cette population aléatoire aucuns individu capable d'accomplir parfaitement la tâche demandée, mais certains aurons des comportements qui les aiderons a d'obtenir un fitness plus élevé que leurs voisins, ceux-ci vont donc passer leurs caractéristiques à la génération suivante.
+La base d'un algorithme évolutionniste est la population initiale. Celle-ci doit être générée aléatoirement afin de représenter un vaste spectre de possibilités. 
+Nous ne retrouverons dans cette population aléatoire aucun individu capable d'accomplir parfaitement la tâche demandée, mais certains auront des comportements qui les aideront à obtenir un fitness plus élevé que leurs voisins. C'est donc ceux-ci vont donc passer leurs caractéristiques à la génération suivante par le processus de sélection naturelle.
 
 \subsection{Sélection}
 
-La sélection est un concept essentiel dans l'utilisation d'algorithmes évolutionnistes. L'objectif est de choisir, en prenant en compte le fitness afin que les individus performant soit plus souvent sélectionnés pour être parents. Ainsi, les caractéristiques qui les rendent plus performant seront plus largement passés vers la génération suivante alors que les caractéristiques des individus plus faibles disparaîtront rapidement.\cite{wikifps}
+La sélection est un concept essentiel dans l'utilisation d'algorithmes évolutionnistes. L'objectif est de privilégier, en tenant compte du fitness, les individus les plus performants afin qu'ils soient plus souvent sélectionnés pour être parents. Ainsi, les caractéristiques qui les rendent plus performants seront plus largement passés à la génération suivante alors que les caractéristiques des individus plus faibles disparaîtront rapidement\cite{wikifps}.
 
 \begin{figure}[H]
 \begin{center}
@@ -280,28 +284,27 @@ La sélection est un concept essentiel dans l'utilisation d'algorithmes évoluti
 
 \subsection{Crossover}
 
-Un crossover (où enjambement en français) est une opération génétique qui croise les gènes de deux parents afin de créer le gène de l'enfant, ce dernier va donc hériter de certaines caractéristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peau, yeux, cheveux) des parents chez les enfants.\cite{wikicrossover}\\
+Un crossover (ou enjambement en français) est une opération génétique qui consiste à croiser les gènes de deux parents afin de créer le gène de l'enfant. Ce dernier va donc hériter de certaines caractéristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peau, yeux, cheveux) des parents chez les enfants\cite{wikicrossover}.\\
 
 \subsection{Mutation}
 
-Les mutations sont des événements aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront bénéfiques (p.ex La capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex Malformation des membres).\cite{wikimutation}\\
+Les mutations sont des événements aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront bénéfiques (p.ex la capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex malformation des membres)\cite{wikimutation}.\\
 
 \subsection{Elitisme}
 
-L'Elitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié.\cite{elitism}\\
+L'élitisme est un concept qui va permettre la survie des meilleurs individus d'une génération vers la génération suivante sans que leur code génétique soit modifié\cite{elitism}.\\
 La raison pour laquelle ce concept est mis en place est que les solutions optimales trouvées ne doivent pas être perdues à cause de mutations désavantageuses.
-
 
 \newpage
 \section{Evolution du perceptron multicouche - Algorithme Naïf}
 
-Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en place pour faire évoluer les perceptrons multicouche à topologie fixe. Celui-ci va donc uniquement faire varier les poids des connexion dans le réseau pour optimiser son comportement. L'algorithme à été créé en s'inspirant des concepts d'algorithmes évolutionnistes décrit précédemment.
+Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en place pour faire évoluer les perceptrons multicouches à topologie fixe. Celui-ci va donc uniquement faire varier les poids des connexions dans le réseau pour optimiser son comportement. L'algorithme a été créé en s'inspirant des concepts d'algorithmes évolutionnistes décrits précédemment.
 
 \subsection{Génome \& Phénome}
 
-Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donne que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
+Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donné que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
 
-Le phénome dans le cas de cet algorithme sera une réseau de neurones à topologie fixe et entièrement connecté (Chaque neurones d'une couche donnée est connecté a chaque neurones de la couche suivante).
+Le phénome dans le cas de cet algorithme sera un réseau de neurones à topologie fixe et entièrement connecté (Chaque neurone d'une couche donnée est connecté a chaque neurone de la couche suivante).
 
 \begin{figure}[H]
 \begin{center}
@@ -312,7 +315,7 @@ Le phénome dans le cas de cet algorithme sera une réseau de neurones à topolo
 
 \subsection{Population initiale}
 
-La population initiale est un ensemble de perceptrons multicouche dont la topologie est la même, les poids entre les couches sont assignés aléatoirement à une valeur entre -1 et +1 afin de représenter un spectre de possibilités aussi large que possible.
+La population initiale est un ensemble de perceptrons multicouche dont la topologie est la même. Les poids entre les couches sont assignés aléatoirement à une valeur entre -1 et +1 afin de représenter un spectre de possibilités aussi large que possible.
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{gen0mlp.png} 
@@ -384,7 +387,7 @@ L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fon
 \section{NEAT}
 
 L'autre algorithme de neuroévolution mis en place est le NEAT, créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
-Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmi les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentale en partant de structures simples afin d'obtenir des résultats minimaux.\cite{wikineat}
+Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmi les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentale en partant de structures simples afin d'obtenir des résultats minimaux\cite{wikineat}.
 
 \subsection{Génome \& Phénome}
 
@@ -426,7 +429,7 @@ Un gène est dit disjoint si il n'apparait que dans un des deux génomes compar�
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.4]{disjointexcess.png}
-	\caption{Comparaison de deux génomes dans NEAT.\cite{neatpaper}}
+	\caption{Comparaison de deux génomes dans NEAT\cite{neatpaper}}
 \end{center}
 \end{figure}
 
@@ -550,7 +553,7 @@ L'organigramme de l'algorithme NEAT se présente comme suit, il n'est pas possib
 
 \section{Architecture Réseau}
 
-Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur classique où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tout les clients.\\
+Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tout les clients.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -561,7 +564,7 @@ Afin d'optimiser la vitesse de calcul, un système distribué à été mis en pl
 
 \subsection{Serveur}
 
-Comme écrit ci-dessus, le serveur à la lourde tâche de gérer tous les génomes et leurs fitness afin de mettre en oeuvre les algorithmes évolutionniste qui vont permettre l'évolution. En plus de cela il va également devoir servir les pages web servant à la gestion et à la surveillance du processus évolutif.\\
+Comme écrit ci-dessus, le serveur à la lourde tâche de gérer tous les génomes et leurs fitness afin de mettre en oeuvre les algorithmes évolutionniste qui vont permettre l'évolution. En plus de cela il va également devoir servir les pages web servant à la gestion et à la surveillance du processus évolutif et répondre au requêtes sur l'API.\\
 Afin de pouvoir effectuer toutes ces tâches, le serveur est constitué de modules node.js qui vont chacun gérer une partie de ce qui est lui est demandé.\\
 L'architecture se présente ainsi:
 \begin{figure}[H]
@@ -571,10 +574,44 @@ L'architecture se présente ainsi:
 \end{center}
 \end{figure}
 
+Le module server.js contient le point d'entrée du serveur, ainsi que les callbacks en cas de requêtes web / API.\\
+
+Le module mgnetwork.js gère les communications web entre le serveur et les clients.\\
+
+Le module pool.js gère la tâche en cours et s'occupe de la distribution des génomes aux clients.\\
+
+Le module client.js donne une abstraction d'un client.\\
+
+Le module genetic.js donne une interface générique pour les algorithmes génétiques, les fonctions disponibles sont:
+
+\begin{itemize}
+	\item \texttt{createRandomPopulation} qui va générer une population initiale selon l'algorithme passé en paramètres.
+	\item \texttt{metadataFromTopology} qui va générer une chaine de caractères représentant les hyperparamètres d'un réseau.
+	\item \texttt{genomeString} qui va convertir un génome dans une représentation sous la forme d'une chaine de caractères.
+	\item \texttt{createNextGeneration} qui va utiliser le bon algorithme évolutionniste pour créer la génération suivante.
+\end{itemize}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=Genetic functions, stepnumber=1,tabsize=2]{javascript}{genetic.js}
+
+Le module neat.js gère la totalité de l'algorithme NEAT.\\
+
+Le module mlp.js gère la totalité de l'algorithme naïf.\\
+
 \subsection{Client}
 
-Le client va devoir effectuer la simulation demandée par le serveur, avec le bon réseau de neurones
+Le client va devoir effectuer la simulation demandée par le serveur avec le bon réseau de neurones afin d'obtenir le fitness de ce réseau. Pour ce faire il a fallu définir un format pour l'envoi d'un génome par le serveur qui puisse être transformé en réseau de neurones par le client.\\
+Ce format est constitué de deux éléments, la métadonnée du réseau qui est une chaine de caractères représentant le topologie du réseau. Ainsi que le génome qui va donner les informations sur le connexions, les poids etc...\\
 
+La métadonnée est encodée dans un format simple: "\#entrées,\#couche cachées,\#neurones couche 1,\#neurones couche 2,...,\#sorties". Par exemple soit un réseau à topologie fixe avec 8 entrées, 2 couches cachées, la première avec 6 neurones, la deuxième avec 4 neurones et enfin 4 sorties. La métadonnée sera "8,2,6,4,4".\\
+
+L'encodage du génome dépends du type de réseau, pour les réseaux à topologie fixe, il s'agit simplement de la liste des poids à appliquer sur le réseau. Dans le cas d'un réseau de l'algorithme NEAT l'encodage est plus complexe: "\#connexions,\#neurones,id du biais,\#couches,entrée de la connexion 0,sortie de la connexion 0,poids de la connexion 0,...,neurone 0, couche du neurone 0,...".
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.5]{neatgenomecode.png}
+	\caption{Encodage du réseau NEAT}
+\end{center}
+\end{figure}
 
 \subsubsection{Réseaux de neurones}
 \subsubsection{Simulateur}
@@ -586,7 +623,7 @@ Le protocole à été établi à l'aide du langage protobuf (Protocol Buffers). 
 
 Le compilateur protoc permet d'obtenir un ficher de gestion en Java pour le coté client et un en JavaScript (node) pour le coté serveur. Ainsi nous avons une interface pour permettre la communication entre les deux technologies.\\
 
-Avant d'être envoyés sur le réseau, les messages doivent d'abort être sérialisés dans un format TLV (type, longueur, valeur). Le type sera l'identifiant du type du message (un byte), la longueur sera la longueur du message généré par protobuf (quatre bytes) et la valeur sera le message encodé par protobuf.\cite{protobuf}\\
+Avant d'être envoyés sur le réseau, les messages doivent d'abort être sérialisés dans un format TLV (type, longueur, valeur). Le type sera l'identifiant du type du message (un byte), la longueur sera la longueur du message généré par protobuf (quatre bytes) et la valeur sera le message encodé par protobuf\cite{protobuf}.\\
 
 Voici le fichier qui défini le protocole dans le syntaxe proto2:
 \inputminted[breaklines,breaksymbol=, frame=single,label=Protocole, stepnumber=1,tabsize=2]{protobuf}{mg.proto}
@@ -594,20 +631,21 @@ Voici le fichier qui défini le protocole dans le syntaxe proto2:
 Le protocole définit donc 6 types de messages:
 \begin{itemize}
 \item MG\_JOIN, Envoyé par le client, c'est une demande à rejoindre le groupe de calcul. En paramètres sont donnés le nom du client et si il veut rejoindre en tant que spectateur ou non.
-
 \item MG\_JOIN\_RESPONSE, Envoyé par le serveur, confirme ou infirme l'ajout au groupe du client. Il n'existe pour l'instant aucune raison pour le rejet d'un client.
-
 \item MG\_COMPUTE\_REQUEST, Envoyé par le serveur, demande au client de calculer le fitness d'un génome donné sur un jeu donné.
-
 \item MG\_COMPUTE\_RESPONSE, Envoyé par le client, indique au serveur si oui ou non le client est en mesure d'effectuer la simulation.
-
 \item MG\_COMPUTE\_RESULT, Envoyé par le client, donne le fitness obtenu par le génome donné dans le message MG\_COMPUTE\_REQUEST sur le jeu donné dans ce même message et le temps (ms) pris par le client pour effectuer la simulation.
-
-\item MG\_END, Envoyé par n'importe quel entité, indique un désir de terminer la connexion.
-
+\item MG\_END, Envoyé par n'importe quel entité, indique un désir de terminer la connexion.\\
 \end{itemize}
 
 Voici un exemple de communication entre le serveur et un client:
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.5]{sequence.png} 
+	\caption{Communication Client-Serveur}
+\end{center}
+\end{figure}
+
 
 \newpage
 \section{Interface de Controle}

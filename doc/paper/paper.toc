@@ -14,7 +14,7 @@
 \contentsline {subsection}{\numberline {3.1}Apprentissage supervisé}{11}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Apprentissage non supervisé}{11}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Apprentissage par renforcement}{12}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Neuroevolution}{12}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.4}Neuroévolution}{12}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Fonctions d'activation}{12}{subsection.3.5}
 \contentsline {section}{\numberline {4}Algorithmes évolutionnistes}{15}{section.4}
 \contentsline {subsection}{\numberline {4.1}Génome \& Phénome}{15}{subsection.4.1}
@@ -46,22 +46,22 @@
 \contentsline {subsection}{\numberline {6.9}Déroulement de l'algorithme}{29}{subsection.6.9}
 \contentsline {section}{\numberline {7}Architecture Réseau}{31}{section.7}
 \contentsline {subsection}{\numberline {7.1}Serveur}{31}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Client}{32}{subsection.7.2}
-\contentsline {subsubsection}{\numberline {7.2.1}Réseaux de neurones}{32}{subsubsection.7.2.1}
-\contentsline {subsubsection}{\numberline {7.2.2}Simulateur}{32}{subsubsection.7.2.2}
-\contentsline {subsubsection}{\numberline {7.2.3}Tests}{32}{subsubsection.7.2.3}
-\contentsline {subsection}{\numberline {7.3}Protocole}{32}{subsection.7.3}
-\contentsline {section}{\numberline {8}Interface de Controle}{35}{section.8}
-\contentsline {subsection}{\numberline {8.1}Mode}{35}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Tâche}{35}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}Ouvriers}{35}{subsection.8.3}
-\contentsline {subsection}{\numberline {8.4}Graphs}{35}{subsection.8.4}
-\contentsline {section}{\numberline {9}Base de donnés}{36}{section.9}
-\contentsline {section}{\numberline {10}API}{37}{section.10}
-\contentsline {section}{\numberline {11}Jeux}{38}{section.11}
-\contentsline {subsection}{\numberline {11.1}Asteroid}{38}{subsection.11.1}
-\contentsline {subsubsection}{\numberline {11.1.1}Principe}{38}{subsubsection.11.1.1}
-\contentsline {subsubsection}{\numberline {11.1.2}Entrées}{38}{subsubsection.11.1.2}
-\contentsline {subsubsection}{\numberline {11.1.3}Sorties}{38}{subsubsection.11.1.3}
-\contentsline {subsubsection}{\numberline {11.1.4}Résultats}{38}{subsubsection.11.1.4}
-\contentsline {section}{\numberline {12}Conclusion}{39}{section.12}
+\contentsline {subsection}{\numberline {7.2}Client}{34}{subsection.7.2}
+\contentsline {subsubsection}{\numberline {7.2.1}Réseaux de neurones}{35}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.2}Simulateur}{35}{subsubsection.7.2.2}
+\contentsline {subsubsection}{\numberline {7.2.3}Tests}{35}{subsubsection.7.2.3}
+\contentsline {subsection}{\numberline {7.3}Protocole}{35}{subsection.7.3}
+\contentsline {section}{\numberline {8}Interface de Controle}{38}{section.8}
+\contentsline {subsection}{\numberline {8.1}Mode}{38}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Tâche}{38}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Ouvriers}{38}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Graphs}{38}{subsection.8.4}
+\contentsline {section}{\numberline {9}Base de donnés}{39}{section.9}
+\contentsline {section}{\numberline {10}API}{40}{section.10}
+\contentsline {section}{\numberline {11}Jeux}{41}{section.11}
+\contentsline {subsection}{\numberline {11.1}Asteroid}{41}{subsection.11.1}
+\contentsline {subsubsection}{\numberline {11.1.1}Principe}{41}{subsubsection.11.1.1}
+\contentsline {subsubsection}{\numberline {11.1.2}Entrées}{41}{subsubsection.11.1.2}
+\contentsline {subsubsection}{\numberline {11.1.3}Sorties}{41}{subsubsection.11.1.3}
+\contentsline {subsubsection}{\numberline {11.1.4}Résultats}{41}{subsubsection.11.1.4}
+\contentsline {section}{\numberline {12}Conclusion}{42}{section.12}
