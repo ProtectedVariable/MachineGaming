@@ -4,45 +4,45 @@ The top-level auxiliary file: /Users/Thomas/Documents/MachineGaming/doc/paper/pa
 The style file: unsrt.bst
 Database file #1: mg.bib
 Warning--empty year in nnpower
-You've used 25 entries,
+You've used 24 entries,
             1791 wiz_defined-function locations,
-            523 strings with 5832 characters,
-and the built_in function-call counts, 3247 in all, are:
-= -- 250
-> -- 116
+            519 strings with 5793 characters,
+and the built_in function-call counts, 3129 in all, are:
+= -- 242
+> -- 112
 < -- 0
-+ -- 54
-- -- 29
-* -- 44
-:= -- 510
-add.period$ -- 72
-call.type$ -- 25
-change.case$ -- 25
++ -- 52
+- -- 28
+* -- 43
+:= -- 493
+add.period$ -- 70
+call.type$ -- 24
+change.case$ -- 24
 chr.to.int$ -- 0
-cite$ -- 26
-duplicate$ -- 137
-empty$ -- 435
-format.name$ -- 29
-if$ -- 751
+cite$ -- 25
+duplicate$ -- 132
+empty$ -- 417
+format.name$ -- 28
+if$ -- 723
 int.to.chr$ -- 0
-int.to.str$ -- 25
+int.to.str$ -- 24
 missing$ -- 4
-newline$ -- 125
-num.names$ -- 25
-pop$ -- 158
+newline$ -- 121
+num.names$ -- 24
+pop$ -- 151
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 84
+skip$ -- 80
 stack$ -- 0
 substring$ -- 0
-swap$ -- 25
+swap$ -- 24
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 25
-width$ -- 27
-write$ -- 244
+while$ -- 24
+width$ -- 26
+write$ -- 236
 (There was 1 warning)

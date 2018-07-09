@@ -78,7 +78,7 @@ Ces dernières années, l'apprentissage automatique (Machine Learning) a pris un
 Mais comment en sommes nous arrivés là, et quels sont les techniques qui se cachent derrière ces impressionnants résultats ?\\
 Il y a plusieurs manières de faire du machine learning ; une des plus populaire, celle qui est utilisée pour ce travail, est le réseau de neurones artificiels. Cette technologie existe depuis bien longtemps, mais ce sont les récents progrès en terme de puissance de calcul qui ont amorcé sa montée comme technologie phare du domaine\cite{nnpower}.\\
 
-La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique consiste à comparer les sorties du réseau à aux sorties attendues pour une entrée donnée afin de corriger les poids du réseau\cite{backprop}. L'avantage de cette technique est qu'elle va converger très rapidement vers le résultat attendu (à condition que les hyperparamètres du réseau soient adaptés au problème). Le désavantage est qu'il faut avoir à sa disposition un grand nombre d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple, il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique consiste à comparer les résultats obtenus aux résultats attendus afin de corriger le réseau de neurones petit à petit jusqu'à atteindre le résultat désiré. Le désavantage est qu'il faut avoir à sa disposition un grand nombre d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple, il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
 
 Cependant, générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles techniques ne nécessitant pas d'exemples.\\
 
@@ -193,7 +193,7 @@ En fonction du taux d'erreur, il sera possible de corriger les poids des connexi
 
 Les avantages principaux de cette technique d'apprentissage sont la rapidité d'entraînement et la justesse atteignable étant donné que le fonctionnement ne dépend pas d'heuristiques.\\
 
-Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sûr qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu). Le problème du sur-apprentissage (overfitting) intervient également, la conséquence du sur-apprentissage est que le réseau va analyser de manière trop exacte les données de son ensemble d'exemples et va ensuite faire des erreurs sur des nouvelles données.
+Les désavantages sont le temps de génération de la base d'exemples et le fait qu'il faille connaitre le label attendu pour chaque feature (nous savons à coup sûr qu'une image de chien doit être classifiée comme "chien" mais nous ne savons pas le coup idéal à jouer selon l'état d'un plateau de jeu). Le problème du sur-apprentissage (overfitting) intervient également, la conséquence du sur-apprentissage est que le réseau va analyser de manière trop exacte les données de son ensemble d'exemples en faisant des lien de causalité qui n'ont pas lieu d'être et va ensuite faire des erreurs lorsqu'il devra classer des nouvelles données.
 
 \subsection{Apprentissage non supervisé}
 
@@ -207,7 +207,7 @@ L'apprentissage par renforcement intervient lorsqu'on veut optimiser les décisi
 
 \subsection{Neuroévolution}
 
-La neuroévolution est une technique d'entraînement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée. A la différence de l'apprentissage par renforcement, ce ne sont pas les actions individuelles qui vont être jugées mais l'efficacité totale du réseau. Nous ne cherchons donc pas à développer un comportement particulier mais juste à être plus optimal, peut importe la manière\cite{wikineuroevolution}.\\
+La neuroévolution est une technique d'entraînement dont le but est d'utiliser les principes des algorithmes évolutionnistes afin d'optimiser un réseau de neurones pour effectuer la tâche désirée. A la différence de l'apprentissage par renforcement, ce ne sont pas les actions individuelles qui vont être jugées mais l'efficacité totale du réseau. Nous ne cherchons donc pas à développer un comportement particulier mais juste à être plus optimal, le choix de la stratégie pour atteindre son but est laissée au réseau de neurones\cite{wikineuroevolution}.\\
 
 \subsection{Fonctions d'activation}
 
@@ -259,12 +259,14 @@ La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
 
 Un algorithme évolutionniste est un algorithme d'optimisation métaheuristique qui cherche, par un processus inspiré de la sélection naturelle, une solution optimale à un problème. Ces algorithmes utilisent des iterations stochastiques pour arriver à maximiser une fonction évaluant leurs performances, dite fonction de fitness\cite{wikiea}.\\
 
+Les sections suivantes expliquent de manière générale les différents points clef de ces algorithmes.
+
 \subsection{Génome \& Phénome}
 
 Le génome est l'ensemble du matériel génétique d'un individu, celui-ci contient toutes les informations nécessaires à la création de l'individu\cite{wikigenome}. Chez les humains le génome est organisé en 23 paires de chromosomes. A partir de ces chromosomes, qui sont uniques à chaque organisme, on peut créer le phénome.\\
 Le phénome est l'ensemble de tout les traits observables chez un individu (p.ex la couleur des yeux, de la peau, des cheveux, etc...)\cite{wikiphenome}.\\
 
-Dans le cadre de la neuroévolution, le génome est un encodage permettant la création du phénome qui est le réseau de neurones.
+Dans le cadre de la neuroévolution, le génome est un encodage refermant les différents paramètres du réseau de neurones tels que les poids des connexion et le topologie du réseau. En décodant le génome il est donc possible de construire le phénome, un réseau de neurones dans notre cas.
 
 \subsection{Population initiale}
 
@@ -278,17 +280,23 @@ La sélection est un concept essentiel dans l'utilisation d'algorithmes évoluti
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{fps.png} 
-	\caption{Exemple de sélection proportionnelle au fitness\cite{wikifps}}
+	\caption{Exemple de sélection proportionnelle au fitness, soit r une variable aléatoire, il y a plus de chance que celle-ci sélectionne un organisme plus performant (A, B) qu'un organisme faible (F, G)\cite{wikifps}}
 \end{center}
 \end{figure}
+
+Les organismes sélectionnés vont donc pouvoir mélanger leurs gènes pour créer des enfant héritants des caractéristiques qui ont rendu leurs parents performants. Ce mélange est fait par l'opération de crossover.
 
 \subsection{Crossover}
 
 Un crossover (ou enjambement en français) est une opération génétique qui consiste à croiser les gènes de deux parents afin de créer le gène de l'enfant. Ce dernier va donc hériter de certaines caractéristiques de l'un où l'autre parent. Un exemple visible de cette opération chez les humains est que l'on reconnait des traits (couleur de peau, yeux, cheveux) des parents chez les enfants\cite{wikicrossover}.\\
 
+Le crossover va donc permettre un mélange de gènes forts dans le but de créer des enfant meilleurs que leurs parents, cependant le crossover ne va pas permettre l'apparition d'innovations ou de comportements nouveaux. C'est pour cette raison que cette opération va de paire avec la mutation.
+
 \subsection{Mutation}
 
 Les mutations sont des événements aléatoires qui vont altérer le génome de façon à créer une innovation, qui va par exemple se traduire par un comportement différent du génome. Dans certains cas les mutations seront bénéfiques (p.ex la capacité à respirer hors de l'eau), dans d'autre la mutation causera un comportement désavantageux (p.ex malformation des membres)\cite{wikimutation}.\\
+
+L'utilisation de mutations dans les algorithmes génétiques va permettre l'apparitions de nouveaux comportements qui peuvent être avantageux pour l'obtention d'une solution optimale. Cependant les mutations pouvant aussi être désavantageuses, il est important de conserver les meilleurs solutions de chaque itération grâce au principe d'élitisme.
 
 \subsection{Elitisme}
 
@@ -304,7 +312,9 @@ Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en
 
 Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donné que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
 
-Le phénome dans le cas de cet algorithme sera un réseau de neurones à topologie fixe et entièrement connecté (Chaque neurone d'une couche donnée est connecté a chaque neurone de la couche suivante).
+Le phénome dans le cas de cet algorithme sera un réseau de neurones à topologie fixe et entièrement connecté (Chaque neurone d'une couche donnée est connecté a chaque neurone de la couche suivante).\\
+
+Le réseau de neurones utilise la fonction d'activation Sigmoid avec $\beta = 3$.
 
 \begin{figure}[H]
 \begin{center}
@@ -333,8 +343,8 @@ Le génome résultant de cette sélection subira ensuite une potentielle mutatio
 Le crossover fonctionne d'après un principe très simple:\\
 \begin{itemize}
 \item Choisir un point de croisement
-\item Assigner chez l'enfant tout les gènes qui précèdent ce point depuis le premier parent
-\item Assigner chez l'enfant tout les gènes qui suivent ce point depuis le second parent
+\item Assigner à l'enfant tous les gènes qui précèdent ce point depuis le premier parent
+\item Assigner à l'enfant tous les gènes qui suivent ce point depuis le second parent
 \end{itemize}
 
 \begin{figure}[H]
@@ -344,12 +354,12 @@ Le crossover fonctionne d'après un principe très simple:\\
 \end{center}
 \end{figure}
 
-Ainsi, les traits permettant une meilleure survie vont rapidement se répandre dans la population car les individus ayant obtenu un meilleur fitness serons plus souvent sélectionnés pour faire une crossover avec un autre individu.
+Ainsi, les traits permettant une meilleure survie vont rapidement se répandre dans la population car les individus ayant obtenu un meilleur fitness seront plus souvent sélectionnés pour faire une crossover avec un autre individu.
 
 \subsection{Mutation}
 
 Dans le cas de cet algorithme, étant donné que la topologie est fixe, la mutation sera simplement une variation aléatoire d'un poids dans le réseau de neurones. Ainsi chaque enfant de chaque génération aura 10\% de chance que l'un de ses gènes subisse une mutation.\\
-Le poids subira donc une variation d'une valeur aléatoire choisie entre +0.5 et -0.5 cependant le poids sera ensuite fixée dans l'interval $[-1, 1]$.
+Le poids subira donc une variation d'une valeur aléatoire choisie entre +0.5 et -0.5 cependant le poids sera ensuite fixée dans l'intervalle $[-1, 1]$.
 
 \begin{figure}[H]
 \begin{center}
@@ -371,7 +381,8 @@ Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu
 
 \subsection{Déroulement de l'algorithme}
 
-L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$.
+L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$. L'algorithme va donc répéter tant que la solution n'est pas optimale les étapes décrites ci-dessus pour générer des populations s'améliorant à chaque itération.
+
 \afterpage{%
 \begin{figure}[H]
 \centering
@@ -391,7 +402,7 @@ Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolut
 
 \subsection{Génome \& Phénome}
 
-Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tout les neurones et toutes les connexions. Etant donné que le réseau n'est pas forcément entièrement connecté, et que les connexions peuvent "sauter" des couches, le génome est constitué de deux listes, une qui représente tout les neurones du réseau et une qui représente toutes les connexions du réseau. 
+Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tous les neurones et toutes les connexions. Etant donné que le réseau n'est pas forcément entièrement connecté, et que les connexions peuvent "sauter" des couches, le génome est constitué de deux listes, une qui représente tout les neurones du réseau et une qui représente toutes les connexions du réseau. 
 
 \begin{figure}[H]
 \begin{center}
@@ -402,7 +413,7 @@ Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter
 
 \subsection{Population initiale}
 
-La population initiale doit être aussi simple que possible, cependant il n'y a pas de règles dictant la manière dont elle doit être faite. Pour cet algorithme, la population initiale est donc un ensemble de perceptron multicouche avec seulement une couche d'entrée et une couche de sortie dans lequel chaque entrée est reliée à chaque sorties.
+La population initiale doit être aussi simple que possible, cependant il n'y a pas de règles dictant la manière dont elle doit être faite. Pour cet algorithme, la population initiale est donc un ensemble de perceptrons multicouche avec seulement une couche d'entrée et une couche de sortie dans lequel chaque entrée est reliée à chaque sortie.
 
 \begin{figure}[H]
 \begin{center}
@@ -411,20 +422,20 @@ La population initiale doit être aussi simple que possible, cependant il n'y a 
 \end{center}
 \end{figure}
 
-Ce choix à été fait pour conserver un équilibre entre une population simple (pas de couche intermédiaire) mais qui soit rapidement capable de s'ajuster car les connexions sont déjà disponibles, on ne pert donc pas de générations uniquement pour créer les connexions.
+Ce choix a été fait pour conserver un équilibre entre une population simple (pas de couche intermédiaire) mais qui est rapidement capable de s'ajuster car les connexions sont déjà disponibles. On ne perd donc pas de générations uniquement pour créer les connexions.
 
 \subsection{Historique des innovations}
 
-Une innovation est l'apparition dans le génome d'une nouvelle connexion. Un points central de l'algorithme est de suivre l'émergence de ces innovations afin d'étiqueter les innovations semblables par un même numéro. Ainsi si nous avons deux réseau ayant la même topologie qui, l'un après l'autres font apparaitre une nouvelle connexion entre les mêmes noeuds, leurs deux connexions auront le même numéro d'innovation.\\
+Une innovation est l'apparition dans le génome d'une nouvelle connexion. Un point central de l'algorithme est de suivre l'émergence de ces innovations afin d'étiqueter les innovations semblables par un même numéro. Ainsi, si nous avons deux réseaux ayant la même topologie qui, l'un après l'autre font apparaitre une nouvelle connexion entre les mêmes neurones, leurs deux connexions auront le même numéro d'innovation.\\
 	
-Afin de faire ce lien il faut d'abort faire une recherche pour savoir si cette connexion à déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation sous le format suivant (numéro d'innovation, neurone d'entrée, neurone de sortie, innovations déjà présentes dans le génome).\\
+Afin de faire ce lien, il faut d'abord faire une recherche pour savoir si cette connexion a déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation sous le format suivant (numéro d'innovation, neurone d'entrée, neurone de sortie, innovations déjà présentes dans le génome).\\
 
 \subsection{Spéciation}
 
-Une particularité de NEAT est la séparation des organismes en espèces, l'objectif de cette séparation est de protéger les nouvelles topologies pour qu'elles ai le temps de se développer, et pénaliser les espèce ne s'améliorant pas avec le temps.\\ 
+Une particularité de NEAT est la séparation des organismes en espèces. L'objectif de cette séparation est de protéger les nouvelles topologies pour qu'elles ait le temps de se développer et de pénaliser les espèce ne s'améliorant pas avec le temps.\\ 
 
 Pour effectuer cette spéciation, il faut comparer les similarités entre les génomes, plus particulièrement il faut aligner les gènes homologues (ayant le même numéro d'innovation) et compter les gènes dit \textit{disjoints} où \textit{excess}.\\
-Un gène est dit disjoint si il n'apparait que dans un des deux génomes comparés mais que son numéro d'innovation est plus petit que le plus grand numéro d'innovation de l'autre génome. Un gène est dit excess si il n'apparait que dans un des deux génomes comparés mais que son numéro d'innovation est plus grand que le plus grand numéro d'innovation de l'autre génome. Les gènes qui ne sont ni disjoints ni excess sont dit \textit{matching}.
+Un gène est dit disjoint s'il n'apparait que dans un des deux génomes comparés mais que son numéro d'innovation est plus petit que le plus grand numéro d'innovation de l'autre génome. Un gène est dit excess s'il n'apparait que dans un des deux génomes comparés mais que son numéro d'innovation est plus grand que le plus grand numéro d'innovation de l'autre génome. Les gènes qui ne sont ni disjoints ni excess sont dit \textit{matching}.
 
 \begin{figure}[H]
 \begin{center}
@@ -452,7 +463,7 @@ $\overline{W}$ est la moyenne des écarts des poids\\
 
 Les coefficients peuvent être modifiés pour changer la sensibilité de la classification aux différents paramètres. Une fois la valeur de $\delta$ calculée, elle est comparée avec un seuil $\delta_t$, si la valeur est plus grande, les génomes ne font pas partie de la même espèce, sinon ils font partie de la même espèce.\\
 
-Afin de préserver l'innovation et d'éviter qu'une espèce domine rapidement la totalité de la population, un mécanisme de \textit{fitness sharing} est mis en place. Pour ce faire le fitness de chaque organisme d'une espèce est divisé par le nombre d'organisme dans cette espèce. Ainsi, les petites espèce qui émergent d'une innovation topologique seront protégées de l'extinction pendant quelques génération afin de laisser le temps aux organismes de s'ajuster.\\
+Afin de préserver l'innovation et d'éviter qu'une espèce ne domine rapidement la totalité de la population, un mécanisme de \textit{fitness sharing} est mis en place. Pour ce faire, le fitness de chaque organisme d'une espèce est divisé par le nombre d'organismes dans cette espèce. Ainsi, les petites espèces qui émergent d'une innovation topologique seront protégées de l'extinction pendant quelques génération afin de laisser le temps aux organismes de s'ajuster.\\
 
 Plus formellement le fitness ajusté de l'organisme $i$ $f^\prime_i$ est défini comme:
 
@@ -467,9 +478,9 @@ $\delta$ est la fonction comparant les génomes vue dans l'équation \ref{eq:del
 
 \subsection{Sélection}
 
-Dans NEAT, la sélection intervient au moment de la création d'une nouvelle génération, cette sélection va d'abort être effectuée sur les espèce, en effet les organismes faisant partie de la moitié la moins performante de chaque espèce vont être supprimés.\\
-Ensuite les espèce dont le meilleur organisme ne s'est pas amélioré depuis 15 générations sont supprimées.\\
-Pour finir chaque espèce $i$ se voit attribuée un nombre d'enfants $n_i$ calculé selon la formule suivante:
+Dans NEAT, la sélection intervient au moment de la création d'une nouvelle génération. Cette sélection va d'abord être effectuée sur les espèce, en effet les organismes faisant partie de la moitié la moins performante de chaque espèce vont être supprimés.\\
+Ensuite les espèces dont le meilleur organisme ne s'est pas amélioré depuis 15 générations sont supprimées.\\
+Pour finir chaque espèce $i$ se voit attribuer un nombre d'enfants $n_i$ calculé selon la formule suivante:
 \begin{equation}
 	n_i = \left\lfloor\frac{\overline{sf_i}}{pop * \sum^m_{j=1} \overline{sf_j}}\right\rfloor
 \end{equation}
@@ -478,22 +489,22 @@ $\overline{sf_i}$ est la moyenne des fitness des organismes de l'espèce i\\
 $m$ est le nombre d'espèces\\
 $pop$ est le nombre total d'organismes\\
 
-Si le nombre d'enfant d'une espèce est inférieur à un, l'espèce disparait. Sinon l'espèce va produire n enfants dans la génération suivante en utilisant le principe de la sélection proportionnelle au fitness. En effet lors de la création d'un enfant il y a 25\% de chance que l'enfant soit une copie d'un parent sélectionné et 75\% de chance que l'enfant soit le fruit d'un crossover entre deux parents sélectionnés (il subira dans les deux cas une potentielle mutation).
+Si le nombre d'enfants d'une espèce est inférieur à un, l'espèce disparait. Sinon l'espèce va produire n enfants dans la génération suivante en utilisant le principe de la sélection proportionnelle au fitness. En effet lors de la création d'un enfant il y a 25\% de chance que l'enfant soit une copie d'un parent sélectionné et 75\% de chance que l'enfant soit le fruit d'un crossover entre deux parents sélectionnés (il subira dans les deux cas une potentielle mutation).
 
 \subsection{Crossover}
 
-Le crossover dans NEAT est fait pour palier au problème des conventions concurrentes (competing conventions). En effet il possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseau nous perdions une partie de l'information qui les rends efficace.
+Le crossover dans NEAT est fait pour palier au problème des conventions concurrentes (competing conventions). En effet il est possible que deux réseaux produisent le même résultat mais de manière différente, le risque est que lorsque nous croisons les deux réseaux nous perdions une partie de l'information qui les rend efficaces.
 
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.7]{competingconventions.png}
-	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants en n'aurons que 2/3 de l'information \cite{neatpaper}}
+	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants n'auront que 2/3 de l'information \cite{neatpaper}}
 \end{center}
 \end{figure}
 
-Pour palier à ce problème, il faut que seul les éléments qui divergent entre deux génomes soit échanger et que les éléments similaires soit conservés.\\
+Pour palier à ce problème, il faut que seuls les éléments qui divergent entre deux génomes soient échangés et que les éléments similaires soient conservés.\\
 
-Le crossover dans NEAT se fait en alignant tout les gènes homologues (ayant le même numéro d'innovation), pour chaque gène alignés il faut choisir aléatoirement de prendre celui du parent 1 ou du parent 2. Pour les gènes disjoint ou excess, seul ceux du parent ayant le fitness le plus élevé sont conservés.
+Le crossover dans NEAT se fait en alignant tous les gènes homologues (ayant le même numéro d'innovation). Pour chaque gène aligné il faut choisir aléatoirement de prendre celui du parent 1 ou du parent 2. Pour les gènes disjoint ou excess, seuls ceux du parent ayant le fitness le plus élevé sont conservés.
 
 \begin{figure}[H]
 \begin{center}
@@ -534,7 +545,7 @@ Une mutation de neurone va ajouter un neurone dans le réseau, pour ce faire il 
 
 \subsection{Elitisme}
 
-L'élitisme intervient dans l'algorithme car chaque espèce ayant au moins un enfant à créer va d'abort copier son champion de la génération passée sans lui faire subir de mutation vers la génération suivante.
+L'élitisme intervient dans l'algorithme car chaque espèce ayant au moins un enfant à créer va d'abord copier son champion de la génération passée sans lui faire subir de mutation vers la génération suivante.
 
 \subsection{Déroulement de l'algorithme}
 
@@ -614,8 +625,38 @@ L'encodage du génome dépends du type de réseau, pour les réseaux à topologi
 \end{figure}
 
 \subsubsection{Réseaux de neurones}
+
+Les réseau de neurones sont utilisés de manière transparente via une class abstraite laissant paraitre un constructeur minimaliste et deux fonction, une pour propager un signal dans le réseau de neurones, l'autre pour afficher le réseau de neurones.
+
+ \inputminted[breaklines,breaksymbol=, frame=single,label=Neural network, stepnumber=1,tabsize=2]{java}{nn.java}
+ 
+Cette classe est ensuite héritée par deux autres classes, une pour le réseau à topologie fixe et l'autre pour le réseau NEAT. La classe \texttt{GenomeCodec} se charge du décodage des génomes et de la création des réseau de neurones via la fonction \texttt{toNeuralNetwork}.
+
+ \inputminted[breaklines,breaksymbol=, frame=single,label=Genome Codec, stepnumber=1,tabsize=2]{java}{codec.java}
+
+Les fonctions d'activations sont représentées par l'interface \texttt{ActivationFunction}. Les fonctions step, sigmoid et tanh sont implémentés dans la classe \texttt{ActivationFunctions}.
+
+ \inputminted[breaklines,breaksymbol=, frame=single,label=Activation Functions, stepnumber=1,tabsize=2]{java}{activation.java}
+ 
+ Etant donné que les types des fonctions et leurs paramètres sont compatibles avec la définition de l'interface, l'accès à ces fonctions peut être fait par référence (p.ex \texttt{ActivationFunctions::Sigmoid}). 
+
+
 \subsubsection{Simulateur}
+
+Le simulateur va permettre au réseau de neurones de jouer au jeu demandé et calculer son fitness pendant la partie de jeu.\\
+
+Les simulateurs sont représentés par une interface, ainsi chaque jeu pouvant être simulé devra implémenter l'interface et notamment la fonction \texttt{simulate} qui va effectuer la totalité de la simulation puis renvoyer le fitness obtenu par le génome testé.
+\inputminted[breaklines,breaksymbol=, frame=single,label=Simulator, stepnumber=1,tabsize=2]{java}{simulator.java}
+
+La simulation peut également être affichée en temps réel pour avoir une visualisation du comportement de l'organisme testé. Cette visualisation est notamment lancée lorsque le client est mode spectateur
+
+\subsubsection{Ouvrier / Spectateur}
+
+Le client possède deux modes de fonctionnement, le mode ouvrier dans lequel il va recevoir des génomes et les évaluer dans un simulateur avant de renvoyer le fitness obtenu au serveur, et le mode spectateur. Dans ce mode le client va recevoir de la part du serveur le meilleur génome de chaque génération évaluée afin que le client affiche le résultat obtenu. En mode spectateur le client n'est donc pas chargé de faire de calculs de fitness, il est uniquement utile pour observer l'évolution.
+
 \subsubsection{Tests}
+
+Afin de s'assurer du bon fonctionnement des réseaux de neurones, un package de test a été crée, ce dernier contient deux fichier qui vont tester les deux types de réseau de neurones sur leur capacité à effectuer un ou exclusif (XOR) avec les bons paramètres.
 
 \subsection{Protocole}
 
@@ -649,6 +690,9 @@ Voici un exemple de communication entre le serveur et un client:
 
 \newpage
 \section{Interface de Controle}
+
+Une interface web servie par le serveur permet de contrôler la tâche à effectuer.
+
 \subsection{Mode}
 \subsection{Tâche}
 \subsection{Ouvriers}
