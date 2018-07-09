@@ -69,6 +69,7 @@ NEAT
 MLP
 TLV
 API
+JSON
 
 
 \newpage
@@ -654,6 +655,14 @@ La simulation peut également être affichée en temps réel pour avoir une visu
 
 Le client possède deux modes de fonctionnement, le mode ouvrier dans lequel il va recevoir des génomes et les évaluer dans un simulateur avant de renvoyer le fitness obtenu au serveur, et le mode spectateur. Dans ce mode le client va recevoir de la part du serveur le meilleur génome de chaque génération évaluée afin que le client affiche le résultat obtenu. En mode spectateur le client n'est donc pas chargé de faire de calculs de fitness, il est uniquement utile pour observer l'évolution.
 
+\subsubsection{Lancement}
+
+Le programme reçois ses paramètres depuis les arguments de la ligne de commande. Le format de la commande de lancement est le suivant: \texttt{java -jar client.jar <server\_ip> <nb\_threads> <client\_name>}. Pour lancer le client en mode spectateur, il suffit de rajouter l'option \texttt{-s} en fin de ligne. Le fait de configurer le programme en ligne de commande permet de déployer de manière assez simple via ssh.  
+
+\subsubsection{Multithreading}
+
+Le client est un programme multithreadé, en effet nous pouvons choisir au lancement de lancer autant de client en simultané que nous le désirons. Aux yeux du serveur chaque thread est un client à part, ils vont donc tous recevoir différents génomes qu'ils testeront de manière séparée avant de renvoyer indépendamment les résultat au serveur. Le choix du nombre de threads se fait au lancement du programme.
+
 \subsubsection{Tests}
 
 Afin de s'assurer du bon fonctionnement des réseaux de neurones, un package de test a été crée, ce dernier contient deux fichier qui vont tester les deux types de réseau de neurones sur leur capacité à effectuer un ou exclusif (XOR) avec les bons paramètres.
@@ -691,18 +700,161 @@ Voici un exemple de communication entre le serveur et un client:
 \newpage
 \section{Interface de Controle}
 
-Une interface web servie par le serveur permet de contrôler la tâche à effectuer.
+Une interface web servie par le serveur permet de contrôler la tâche à effectuer. Le serveur utilise le language de templating pug (anciennement jade) pour générer la page de contrôle. L'accès à cette page se fait en faisant une requête à l'adresse du serveur sur le port 8080.\\
 
 \subsection{Mode}
+
+La première partie de la page de contrôle concerne le mode de fonctionnement du serveur. Le formulaire permet de choisir sur quel jeu  nous voulons entraîner les réseaux de neurones (seul le jeu Asteroid est disponible pour le moment), le type d'algorithme à employer (NEAT ou MLP) et la topologie du réseau à entraîner.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{unlockedmode.png} 
+	\caption{Formulaire de choix de mode}
+\end{center}
+\end{figure}
+
+Une fois le mode de fonctionnement choisi, nous pouvons verrouiller ce choix en appuyant sur "Lock". 
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{lockedmode.png} 
+	\caption{Formulaire de choix de mode verrouillé}
+\end{center}
+\end{figure}
+
+Le bouton "Save Population", cliquable uniquement en mode verrouillé sert à sauvegarder l'état d'une population afin de reprendre le travail plus tard. La population se voit assigner un numéro unique, basé sur l'epoch UNIX.\\
+
+Le bouton "Load Population", cliquable uniquement en mode déverrouillé sert à charger une sauvegarde d'une ancienne tâche. Pour ce faire une fenêtre modale s'affiche et il faut choisir le numéro de l'ancienne sauvegarde (les numéros sont triés par ordre chronologiques).\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{loadpop.png} 
+	\caption{Fenêtre de choix pour le chargement d'une population}
+\end{center}
+\end{figure}
+
+Le bouton "Regen Initial Population", cliquable uniquement en mode verrouillé permet de recréer une population aléatoire, anéantissant donc tout les progrès effectués. 
+
 \subsection{Tâche}
+
+La gestion de la tâche se fait via la série de boutons suivante:
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{taskmgr.png} 
+	\caption{Boutons de gestion de la tâche}
+\end{center}
+\end{figure}
+
+Le bouton "Do 1 Gen" va lancer une génération d'évolution, le bouton "Do 100 Gen" va lancer 100 générations d'évolution, le bouton "Do Infinite Gen" va lancer une infinité de génération d'évolutions.\\
+
+Le bouton "Pause" va attendre la fin de la génération en cours puis interrompre la tâche en cours. Il est impossible de déverrouiller le mode de fonctionnement ou de lancer une nouvelle tâche tant qu'une tâche est en cours d'execution il faut donc soit attende la fin de la tâche ou la mettre en pause.
+
 \subsection{Ouvriers}
-\subsection{Graphs}
+
+La suite de la page affiche des cartes représentant les ouvriers, sur cette carte s'affiche le nom donné au client, son identifiant (numéro unique) et son état actuel (Waiting si le client est en attente de recevoir des ordres, Computing si le client est en train d'effectuer une simulation).
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.4]{workers.png} 
+	\caption{Affichage des ouvriers sur l'interface de controle}
+\end{center}
+\end{figure}
+
+
+\subsection{Graphiques}
+
+La dernière partie de l'interface de contrôle présente deux graphiques, le premier montre l'évolution du fitness moyen par génération, le second montre le meilleur fitness de chaque génération. Ces deux graphiques se rafraichissent automatiquement et montrent uniquement les 50 dernières générations afin de ne pas saturer l'image.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.3]{avgfitgraph.png}
+	\caption{Graphique des fitness moyens}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.3]{maxfitgraph.png}
+	\caption{Graphique des meilleurs fitness}
+\end{center}
+\end{figure}
+
 
 \newpage
 \section{Base de donnés}
 
+Pour permettre la sauvegarde et le chargement des évolutions précédentes, une base de données MongoDB a été mise en place.\\
+
+MongoDB est une technologie de base de données NoSQL orientée document permettant le stockage sans schéma prédéfini de volumes important d'informations\cite{wikimongo}.\\
+
+L'accès à la base de données ce fait uniquement par le serveur, celui-ci utilise le module node.js Mongoose pour effectuer les requêtes vers la base de données.\\
+
+Le stockage des informations se fait sous le format suivant:
+\begin{verbatim}
+    batchId: Number,
+    genNumber: Number,
+    topoID: Number,
+    avgFitnesses: [Number],
+    bestFitnesses: [Number],
+    genomes: [String],
+    species: [{
+        bestFitness: Number,
+        best: String,
+        staleness: Number,
+        averageFitness: Number
+    }],
+    innovationHistory: [{
+        from: Number,
+        to: Number,
+        innovationNumber: Number,
+        innovationNumbers: [Number]
+    }]	
+\end{verbatim}
+
+Dans le cas de l'algorithme naïf, les champs \texttt{species} et \texttt{innovationHistory} seront vide. Cependant il est essentiel de les sauvegarder dans le cadre de NEAT car sans eux l'évolution serai corrompue si elle est reprise après une sauvegarde. 
+
 \newpage
 \section{API}
+
+Afin de permettre une implémentation personnalisée de l'interface de contrôle, le serveur met à disposition une API. Ainsi par le biais de quelques requêtes il est possible d'obtenir toutes les informations sur l'évolution et de contrôler la tâche à effectuer.\\
+
+\subsection{GET /status}
+
+Une requête \texttt{get} sur la route \texttt{/status} permet d'obtenir les informations sur le serveur.\\
+
+Le retour de la requête sera au format JSON, la structure est la suivante:
+\inputminted[breaklines,breaksymbol=, frame=single,label=Status, stepnumber=1,tabsize=2]{javascript}{status.js}
+
+\subsection{GET /saves}
+
+Une requête \texttt{get} sur la route \texttt{/saves} permet d'obtenir les toutes les sauvegardes disponnibles dans la base de données. Les sauvegarde sont au format défini dans le section 9.\\
+
+\subsection{POST /work}
+Une requête \texttt{post} sur la route \texttt{/work} permet de définir le mode de fonctionnement du serveur.\\
+
+Si le paramètre \texttt{lock} est défini, la requête est une demande de verrouiller ou de déverrouiller le mode de fonctionnement.\\
+
+Dans le cas du verrouillage, il faut spécifier l'identifiant du jeu à verrouiller dans le paramètre \texttt{tgame} (la liste des jeu est accessible dans /status), le type de réseau à utiliser (0 = MLP et 1 = NEAT, ces valeurs sont définies dans le protocole) dans le paramètre \texttt{tnet} et l'identifiant de la topologie dans le paramètre \texttt{ttopo} (la liste des topologies est également accessible dans /status).\\
+
+Dans le cas du déverrouillage aucuns paramètre n'est nécessaire.\\
+
+Si le paramètre \texttt{save} est défini, la requête est une demande de sauvegarder l'état de l'évolution. Aucuns autres paramètres n'est nécessaire.\\
+
+Si le paramètre \texttt{load} est défini, la requête est une demande de charger une ancienne évolution. Dans ce cas le paramètre \texttt{lbatch} doit être défini comme l'identifiant de la sauvegarde à charger (la liste des sauvegardes est accessible dans /saves).\\
+
+Si le paramètre \texttt{regen} est défini, la requête est une demande de recréation de la population initiale.
+
+\subsection{POST /task}
+
+Une requête \texttt{post} sur la route \texttt{/task} permet de définir la tâche à effectuer.\\
+
+Si le paramètre \texttt{pause} est défini, la requête est une demande de mise en pause de la tâche en cours.\\
+
+Si le paramètre \texttt{onegen} est défini, la requête est une demande d'évolution sur une génération.\\
+
+Si le paramètre \texttt{hungen} est défini, la requête est une demande d'évolution sur 100 générations.\\
+
+Si le paramètre \texttt{infgen} est défini, la requête est une demande d'évolution sur une infinité de générations.\\
 
 \newpage
 \section{Jeux}
