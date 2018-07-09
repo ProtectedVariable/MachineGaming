@@ -14,6 +14,13 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{float}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\leftmark}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Ibanez Thomas}
 
 \newcommand*{\printdate}{%
    \ifcase \month\or Janvier\or Février\or Mars\or Avril\or Mai\or Juin\or Juillet\or Août\or Septembre\or Octobre\or Novembre\or Décembre\fi \space \number\year}
@@ -54,6 +61,19 @@
 
 \includepdf[pages=1, offset=2cm 0]{enonce}
 
+\includepdf[pages=1, offset=2cm 0]{resume}
+
+\section*{Remerciements}
+
+\newpage
+\section*{Acronymes}
+IA
+NEAT
+MLP
+TLV
+API
+JSON
+\newpage
 \tableofcontents
 
 \newpage
@@ -62,17 +82,6 @@
 
 \newpage
 
-\section*{Remerciements}
-\section*{Acronymes}
-IA
-NEAT
-MLP
-TLV
-API
-JSON
-
-
-\newpage
 \section{Introduction}
 
 Ces dernières années, l'apprentissage automatique (Machine Learning) a pris une place très importante dans le monde de l'informatique et nous avons pu assister aux prouesses accomplies par des intelligences artificielles tels que la victoire d'AlphaGo face à Lee Sedol au jeu de Go en 2016\cite{wikialphagolee}. Cet événement n'est pas sans rappeler la défaite de Kasparov contre Deep Blue en 1997 qui avait défrayé le chronique\cite{kasparov}.\\

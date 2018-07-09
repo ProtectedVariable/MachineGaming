@@ -1,74 +1,74 @@
 \select@language {french}
-\contentsline {section}{\numberline {1}Introduction}{6}{section.1}
-\contentsline {section}{\numberline {2}Agent Intelligent}{7}{section.2}
-\contentsline {subsection}{\numberline {2.1}Mesure de la performance}{7}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Rationalité}{7}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Environnement}{7}{subsection.2.3}
-\contentsline {subsubsection}{\numberline {2.3.1}Discret / Continu}{7}{subsubsection.2.3.1}
-\contentsline {subsubsection}{\numberline {2.3.2}Observable / Partiellement Observable}{8}{subsubsection.2.3.2}
-\contentsline {subsubsection}{\numberline {2.3.3}Statique / Dynamique}{8}{subsubsection.2.3.3}
-\contentsline {subsubsection}{\numberline {2.3.4}Simple agent / Multi-agents}{8}{subsubsection.2.3.4}
-\contentsline {subsubsection}{\numberline {2.3.5}Déterministe / Non-déterministe}{8}{subsubsection.2.3.5}
-\contentsline {subsubsection}{\numberline {2.3.6}Épisodique / Non-épisodique}{8}{subsubsection.2.3.6}
-\contentsline {section}{\numberline {3}Réseau de Neurones Artificiels}{9}{section.3}
-\contentsline {subsection}{\numberline {3.1}Apprentissage supervisé}{11}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Apprentissage non supervisé}{12}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Apprentissage par renforcement}{12}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Neuroévolution}{12}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Fonctions d'activation}{12}{subsection.3.5}
-\contentsline {section}{\numberline {4}Algorithmes évolutionnistes}{15}{section.4}
-\contentsline {subsection}{\numberline {4.1}Génome \& Phénome}{15}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Population initiale}{15}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Sélection}{15}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Crossover}{16}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Mutation}{16}{subsection.4.5}
-\contentsline {subsection}{\numberline {4.6}Elitisme}{16}{subsection.4.6}
-\contentsline {section}{\numberline {5}Evolution du perceptron multicouche - Algorithme Naïf}{17}{section.5}
-\contentsline {subsection}{\numberline {5.1}Génome \& Phénome}{17}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Population initiale}{18}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Sélection}{18}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Crossover}{18}{subsection.5.4}
-\contentsline {subsection}{\numberline {5.5}Mutation}{19}{subsection.5.5}
-\contentsline {subsection}{\numberline {5.6}Elitisme}{20}{subsection.5.6}
-\contentsline {subsection}{\numberline {5.7}Déroulement de l'algorithme}{20}{subsection.5.7}
-\contentsline {section}{\numberline {6}NEAT}{22}{section.6}
-\contentsline {subsection}{\numberline {6.1}Génome \& Phénome}{22}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Population initiale}{23}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Historique des innovations}{23}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Spéciation}{23}{subsection.6.4}
-\contentsline {subsection}{\numberline {6.5}Sélection}{25}{subsection.6.5}
-\contentsline {subsection}{\numberline {6.6}Crossover}{26}{subsection.6.6}
-\contentsline {subsection}{\numberline {6.7}Mutation}{27}{subsection.6.7}
-\contentsline {subsubsection}{\numberline {6.7.1}Mutation de poids}{27}{subsubsection.6.7.1}
-\contentsline {subsubsection}{\numberline {6.7.2}Mutation de connexion}{28}{subsubsection.6.7.2}
-\contentsline {subsubsection}{\numberline {6.7.3}Mutation de neurone}{28}{subsubsection.6.7.3}
-\contentsline {subsection}{\numberline {6.8}Elitisme}{29}{subsection.6.8}
-\contentsline {subsection}{\numberline {6.9}Déroulement de l'algorithme}{29}{subsection.6.9}
-\contentsline {section}{\numberline {7}Architecture Réseau}{31}{section.7}
-\contentsline {subsection}{\numberline {7.1}Serveur}{31}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Client}{34}{subsection.7.2}
-\contentsline {subsubsection}{\numberline {7.2.1}Réseaux de neurones}{35}{subsubsection.7.2.1}
-\contentsline {subsubsection}{\numberline {7.2.2}Simulateur}{36}{subsubsection.7.2.2}
-\contentsline {subsubsection}{\numberline {7.2.3}Ouvrier / Spectateur}{37}{subsubsection.7.2.3}
-\contentsline {subsubsection}{\numberline {7.2.4}Lancement}{37}{subsubsection.7.2.4}
-\contentsline {subsubsection}{\numberline {7.2.5}Multithreading}{37}{subsubsection.7.2.5}
-\contentsline {subsubsection}{\numberline {7.2.6}Tests}{37}{subsubsection.7.2.6}
-\contentsline {subsection}{\numberline {7.3}Protocole}{37}{subsection.7.3}
-\contentsline {section}{\numberline {8}Interface de Controle}{41}{section.8}
-\contentsline {subsection}{\numberline {8.1}Mode}{41}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Tâche}{42}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}Ouvriers}{43}{subsection.8.3}
-\contentsline {subsection}{\numberline {8.4}Graphiques}{43}{subsection.8.4}
-\contentsline {section}{\numberline {9}Base de donnés}{45}{section.9}
-\contentsline {section}{\numberline {10}API}{46}{section.10}
-\contentsline {subsection}{\numberline {10.1}GET /status}{46}{subsection.10.1}
-\contentsline {subsection}{\numberline {10.2}GET /saves}{47}{subsection.10.2}
-\contentsline {subsection}{\numberline {10.3}POST /work}{47}{subsection.10.3}
-\contentsline {subsection}{\numberline {10.4}POST /task}{48}{subsection.10.4}
-\contentsline {section}{\numberline {11}Jeux}{49}{section.11}
-\contentsline {subsection}{\numberline {11.1}Asteroid}{49}{subsection.11.1}
-\contentsline {subsubsection}{\numberline {11.1.1}Principe}{49}{subsubsection.11.1.1}
-\contentsline {subsubsection}{\numberline {11.1.2}Entrées}{49}{subsubsection.11.1.2}
-\contentsline {subsubsection}{\numberline {11.1.3}Sorties}{49}{subsubsection.11.1.3}
-\contentsline {subsubsection}{\numberline {11.1.4}Résultats}{49}{subsubsection.11.1.4}
-\contentsline {section}{\numberline {12}Conclusion}{50}{section.12}
+\contentsline {section}{\numberline {1}Introduction}{8}{section.1}
+\contentsline {section}{\numberline {2}Agent Intelligent}{9}{section.2}
+\contentsline {subsection}{\numberline {2.1}Mesure de la performance}{9}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Rationalité}{9}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Environnement}{9}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Discret / Continu}{9}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Observable / Partiellement Observable}{10}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}Statique / Dynamique}{10}{subsubsection.2.3.3}
+\contentsline {subsubsection}{\numberline {2.3.4}Simple agent / Multi-agents}{10}{subsubsection.2.3.4}
+\contentsline {subsubsection}{\numberline {2.3.5}Déterministe / Non-déterministe}{10}{subsubsection.2.3.5}
+\contentsline {subsubsection}{\numberline {2.3.6}Épisodique / Non-épisodique}{10}{subsubsection.2.3.6}
+\contentsline {section}{\numberline {3}Réseau de Neurones Artificiels}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Apprentissage supervisé}{13}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Apprentissage non supervisé}{14}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Apprentissage par renforcement}{14}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Neuroévolution}{14}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Fonctions d'activation}{14}{subsection.3.5}
+\contentsline {section}{\numberline {4}Algorithmes évolutionnistes}{17}{section.4}
+\contentsline {subsection}{\numberline {4.1}Génome \& Phénome}{17}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Population initiale}{17}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Sélection}{17}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Crossover}{18}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Mutation}{18}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Elitisme}{18}{subsection.4.6}
+\contentsline {section}{\numberline {5}Evolution du perceptron multicouche - Algorithme Naïf}{19}{section.5}
+\contentsline {subsection}{\numberline {5.1}Génome \& Phénome}{19}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Population initiale}{20}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Sélection}{20}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Crossover}{20}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.5}Mutation}{21}{subsection.5.5}
+\contentsline {subsection}{\numberline {5.6}Elitisme}{22}{subsection.5.6}
+\contentsline {subsection}{\numberline {5.7}Déroulement de l'algorithme}{22}{subsection.5.7}
+\contentsline {section}{\numberline {6}NEAT}{24}{section.6}
+\contentsline {subsection}{\numberline {6.1}Génome \& Phénome}{24}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Population initiale}{25}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Historique des innovations}{25}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Spéciation}{25}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}Sélection}{27}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}Crossover}{28}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.7}Mutation}{29}{subsection.6.7}
+\contentsline {subsubsection}{\numberline {6.7.1}Mutation de poids}{29}{subsubsection.6.7.1}
+\contentsline {subsubsection}{\numberline {6.7.2}Mutation de connexion}{30}{subsubsection.6.7.2}
+\contentsline {subsubsection}{\numberline {6.7.3}Mutation de neurone}{30}{subsubsection.6.7.3}
+\contentsline {subsection}{\numberline {6.8}Elitisme}{31}{subsection.6.8}
+\contentsline {subsection}{\numberline {6.9}Déroulement de l'algorithme}{31}{subsection.6.9}
+\contentsline {section}{\numberline {7}Architecture Réseau}{33}{section.7}
+\contentsline {subsection}{\numberline {7.1}Serveur}{33}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Client}{36}{subsection.7.2}
+\contentsline {subsubsection}{\numberline {7.2.1}Réseaux de neurones}{37}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.2}Simulateur}{38}{subsubsection.7.2.2}
+\contentsline {subsubsection}{\numberline {7.2.3}Ouvrier / Spectateur}{39}{subsubsection.7.2.3}
+\contentsline {subsubsection}{\numberline {7.2.4}Lancement}{39}{subsubsection.7.2.4}
+\contentsline {subsubsection}{\numberline {7.2.5}Multithreading}{39}{subsubsection.7.2.5}
+\contentsline {subsubsection}{\numberline {7.2.6}Tests}{39}{subsubsection.7.2.6}
+\contentsline {subsection}{\numberline {7.3}Protocole}{39}{subsection.7.3}
+\contentsline {section}{\numberline {8}Interface de Controle}{43}{section.8}
+\contentsline {subsection}{\numberline {8.1}Mode}{43}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Tâche}{44}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Ouvriers}{45}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Graphiques}{45}{subsection.8.4}
+\contentsline {section}{\numberline {9}Base de donnés}{47}{section.9}
+\contentsline {section}{\numberline {10}API}{48}{section.10}
+\contentsline {subsection}{\numberline {10.1}GET /status}{48}{subsection.10.1}
+\contentsline {subsection}{\numberline {10.2}GET /saves}{49}{subsection.10.2}
+\contentsline {subsection}{\numberline {10.3}POST /work}{49}{subsection.10.3}
+\contentsline {subsection}{\numberline {10.4}POST /task}{50}{subsection.10.4}
+\contentsline {section}{\numberline {11}Jeux}{51}{section.11}
+\contentsline {subsection}{\numberline {11.1}Asteroid}{51}{subsection.11.1}
+\contentsline {subsubsection}{\numberline {11.1.1}Principe}{51}{subsubsection.11.1.1}
+\contentsline {subsubsection}{\numberline {11.1.2}Entrées}{51}{subsubsection.11.1.2}
+\contentsline {subsubsection}{\numberline {11.1.3}Sorties}{51}{subsubsection.11.1.3}
+\contentsline {subsubsection}{\numberline {11.1.4}Résultats}{51}{subsubsection.11.1.4}
+\contentsline {section}{\numberline {12}Conclusion}{52}{section.12}

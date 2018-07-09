@@ -29,7 +29,7 @@ public class AsteroidSimulator implements Simulator {
 	public void paint(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		nn.display(g, WIDTH, 0, 320, HEIGHT);
+		nn.display(g, WIDTH, 0, 300, HEIGHT);
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
