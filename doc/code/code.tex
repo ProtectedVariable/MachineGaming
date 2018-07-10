@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\setlength{\parindent}{0cm}
+\addtolength{\hoffset}{-2cm}
+\addtolength{\textwidth}{4cm}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{minted}
+\usepackage{pdflscape}
+\usepackage{pdfpages}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\leftmark}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Ibanez Thomas}
+
+\newcommand*{\printdate}{%
+   \ifcase \month\or Janvier\or Février\or Mars\or Avril\or Mai\or Juin\or Juillet\or Août\or Septembre\or Octobre\or Novembre\or Décembre\fi \space \number\year}
+
+\title{Algorithmes génétiques pour l'intelligence artificielle - Annexe 1 - Code source}
+\author{Thomas Ibanez}
+\makeindex
+
+
+\begin{document}
+
+\begin{titlepage}
+	\vspace*{-3cm}
+		\includegraphics[width=.3\linewidth]{hepia.png}
+		\hfill
+		\includegraphics[width=.3\linewidth]{hes.png}\par
+	\vspace{1cm}
+	\centering
+	{\scshape\huge Algorithmes génétiques pour l'intelligence artificielle - Annexe 1 - Code source \par}
+	\vspace{1cm}
+	\includegraphics[scale=0.4]{logo.png}\par
+	\vspace{1.5cm}
+	{\Large\scshape Thèse de bachelor présentée par\par}
+	\vspace{0.5cm}
+	{\bfseries\Large M. Thomas Ibanez\par}
+	\vspace{0.8cm}
+	{\scshape\Large Pour l'obtention du titre Bachelor of Science HES-SO en\par}
+	\vspace{0.5cm}
+	{\bfseries\Large Ingénierie des technologies de l'information avec orientation en Logiciels et Systèmes complexes\par}
+	\vfill
+	Professeur HES responsable\par
+	\bfseries{Orestis Malaspinas\par}
+
+	\vfill
+
+	{\large\ Septembre 2018 \par}
+\end{titlepage}
+
+\tableofcontents
+
+\newpage
+\section{Serveur}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=server.js, stepnumber=1,tabsize=2]{javascript}{server.js}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=pool.js, stepnumber=1,tabsize=2]{javascript}{pool.js}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=genetic.js, stepnumber=1,tabsize=2]{javascript}{genetic.js}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=client.js, stepnumber=1,tabsize=2]{javascript}{client.js}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=mgnetwork.js, stepnumber=1,tabsize=2]{javascript}{mgnetwork.js}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=mlp.js, stepnumber=1,tabsize=2]{javascript}{mlp.js}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=neat.js, stepnumber=1,tabsize=2]{javascript}{neat.js}
+
+\newpage
+\section{Client}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=Client.java, stepnumber=1,tabsize=2]{java}{Client.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=GenomeCodec.java, stepnumber=1,tabsize=2]{java}{GenomeCodec.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=Network.java, stepnumber=1,tabsize=2]{java}{Network.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=ActivationFunction.java, stepnumber=1,tabsize=2]{java}{ActivationFunction.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=ActivationFunctions.java, stepnumber=1,tabsize=2]{java}{ActivationFunctions.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=MultilayerPerceptron.java, stepnumber=1,tabsize=2]{java}{MultilayerPerceptron.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=NEATNetwork.java, stepnumber=1,tabsize=2]{java}{NEATNetwork.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=NeuralNetwork.java, stepnumber=1,tabsize=2]{java}{NeuralNetwork.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=AsteroidSimulator.java, stepnumber=1,tabsize=2]{java}{AsteroidSimulator.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=Display.java, stepnumber=1,tabsize=2]{java}{Display.java}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=Simulator.java, stepnumber=1,tabsize=2]{java}{Simulator.java}
+
+\newpage
+\section{Protocole}
+
+\inputminted[breaklines,breaksymbol=, frame=single,label=mg.proto, stepnumber=1,tabsize=2]{protobuf}{mg.proto}
+
+
+\end{document}
