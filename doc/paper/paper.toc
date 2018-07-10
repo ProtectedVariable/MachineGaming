@@ -77,3 +77,4 @@
 \contentsline {subsubsection}{\numberline {11.1.4}Fitness}{56}{subsubsection.11.1.4}
 \contentsline {subsubsection}{\numberline {11.1.5}Résultats}{56}{subsubsection.11.1.5}
 \contentsline {section}{\numberline {12}Conclusion}{60}{section.12}
+\contentsline {subsection}{\numberline {12.1}Suite du projet}{60}{subsection.12.1}

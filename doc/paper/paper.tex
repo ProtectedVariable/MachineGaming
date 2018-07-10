@@ -41,12 +41,12 @@
 	\centering
 	{\scshape\huge Algorithmes génétiques pour l'intelligence artificielle \par}
 	\vspace{1cm}
-	\includegraphics[scale=0.4]{agent_environment.jpg}\par
-	\vspace{3cm}
+	\includegraphics[scale=0.4]{logo.png}\par
+	\vspace{1.5cm}
 	{\Large\scshape Thèse de bachelor présentée par\par}
 	\vspace{0.5cm}
 	{\bfseries\Large M. Thomas Ibanez\par}
-	\vspace{1cm}
+	\vspace{0.8cm}
 	{\scshape\Large Pour l'obtention du titre Bachelor of Science HES-SO en\par}
 	\vspace{0.5cm}
 	{\bfseries\Large Ingénierie des technologies de l'information avec orientation en Logiciels et Systèmes complexes\par}
@@ -65,14 +65,26 @@
 
 \section*{Remerciements}
 
+Je tiens à remercier M. Orestis Malaspinas qui m'a aidé et encadré pendant toute la durée de ce projet.\\
+
+Merci aux professeurs de l'hepia et à mes camarades de classe avec qui j'ai passé trois années extrêmement enrichissantes.\\
+
+Je remercie également les membres de ma familles ainsi que mes amis qui m'ont aidé et soutenu durant le réalisation de ce travail.\\
+
+Finalement, merci à M. Natanaël Nufer avec qui j'ai pu échanger sur le domaine de l'intelligence artificielle tout au long de la réalisation de ce projet.
 \newpage
 \section*{Acronymes}
-IA
-NEAT
-MLP
-TLV
-API
-JSON
+\begin{itemize}
+	\item \textbf{IA} = Intelligence artificielle.
+	\item \textbf{NEAT} = Neuroevolution of Augmenting Topologies.
+	\item \textbf{MLP} = Multilayer Perceptron (Perceptron Multicouches).
+	\item \textbf{TLV} = Type, Longeur, Valeur.
+	\item \textbf{API} = Application Programming Interface.
+	\item \textbf{JSON} = JavaScript Object Notation
+	\item \textbf{CNN} = Convolutional Neural Network
+	\item \textbf{RNN} = Recurrent Neural Network
+\end{itemize}
+
 \newpage
 \tableofcontents
 
@@ -88,7 +100,7 @@ Ces dernières années, l'apprentissage automatique (Machine Learning) a pris un
 Mais comment en sommes nous arrivés là, et quels sont les techniques qui se cachent derrière ces impressionnants résultats ?\\
 Il y a plusieurs manières de faire du machine learning ; une des plus populaire, celle qui est utilisée pour ce travail, est le réseau de neurones artificiels. Cette technologie existe depuis bien longtemps, mais ce sont les récents progrès en terme de puissance de calcul qui ont amorcé sa montée comme technologie phare du domaine\cite{nnpower}.\\
 
-La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique consiste à comparer les résultats obtenus aux résultats attendus afin de corriger le réseau de neurones petit à petit jusqu'à atteindre le résultat désiré. Le désavantage est qu'il faut avoir à sa disposition un grand nombre d'entrées dont on connait la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple, il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
+La méthode classique pour entrainer des réseaux de neurones est la rétropropagation du gradient (backpropagation). Cette technique consiste à comparer les résultats obtenus aux résultats attendus afin de corriger le réseau de neurones petit à petit jusqu'à atteindre le résultat désiré. Le désavantage est qu'il faut avoir à sa disposition un grand nombre d'entrées dont nous connaissons la nature afin de pouvoir les comparer aux résultats du réseau. Par exemple, il existe une base de données de chiffres écrit à la main avec leur valeur réelle sur \url{http://yann.lecun.com/exdb/mnist/} (70'000 entrées).\\
 
 Cependant, générer une telle base de données est un travail énorme, ainsi ces dernières années nous avons assisté à l'émergence de nouvelles techniques ne nécessitant pas d'exemples.\\
 
@@ -141,7 +153,7 @@ L'environnement peut être de différentes natures en fonction du problème pour
 
 \subsubsection{Discret / Continu}
 
-Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple, le jeu de Go est un environnement discret car on peut lister tout les états possibles du plateau. En revanche, un simulateur de conduite est continu, on ne peut pas lister toutes les positions possibles de la voiture\cite{tutoptai}.
+Si les états possibles de l'environnement sont dénombrables et clairement définis, l'environnement est dit "discret". Par exemple, le jeu de Go est un environnement discret car nous pouvons lister tout les états possibles du plateau. En revanche, un simulateur de conduite est continu, nous ne pouvons pas lister toutes les positions possibles de la voiture\cite{tutoptai}.
 
 \subsubsection{Observable / Partiellement Observable}
 
@@ -157,7 +169,7 @@ Lorsque l'environnement n'est influencé que par un seul agent il est dit simple
 
 \subsubsection{Déterministe / Non-déterministe}
 
-L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe\cite{tutoptai}. Le jeu d'échecs est déterministe car aucuns événement aléatoire ne vient perturber le plateau, au contraire un jeu comme pac-man est non-déterministe car le chemin pris par les fantômes qui chassent le joueur est en partie déterminé aléatoirement.
+L'environnement est dit déterministe si nous pouvons prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe\cite{tutoptai}. Le jeu d'échecs est déterministe car aucuns événement aléatoire ne vient perturber le plateau, au contraire un jeu comme pac-man est non-déterministe car le chemin pris par les fantômes qui chassent le joueur est en partie déterminé aléatoirement.
 
 \subsubsection{Épisodique / Non-épisodique}
 
@@ -203,7 +215,7 @@ $\vec{W}$ est le vecteur des poids entre le perceptrons et ses voisins de la cou
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.7]{xor.png} 
+	\includegraphics[scale=0.6]{xor.png} 
 	\caption{Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}
 \end{center}
 \end{figure}
@@ -294,7 +306,7 @@ La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
 \newpage
 \section{Algorithmes évolutionnistes}
 
-Ce chapitre parle des algorithmes évolutionnistes, nous allons voir leur fonctionnement général et les concepts essentiels qui permettent leur fonctionnement.
+Ce chapitre parle des algorithmes évolutionnistes, nous allons voir leur fonctionnement général et les concepts essentiels qui permettent ce fonctionnement.
 
 \subsection{Définition}
 
@@ -304,7 +316,7 @@ Les sections suivantes expliquent de manière générale les différents points 
 
 \subsection{Génome \& Phénome}
 
-Le génome est l'ensemble du matériel génétique d'un individu, celui-ci contient toutes les informations nécessaires à la création de l'individu\cite{wikigenome}. Chez les humains le génome est organisé en 23 paires de chromosomes. A partir de ces chromosomes, qui sont uniques à chaque organisme, on peut créer le phénome.\\
+Le génome est l'ensemble du matériel génétique d'un individu, celui-ci contient toutes les informations nécessaires à la création de l'individu\cite{wikigenome}. Chez les humains le génome est organisé en 23 paires de chromosomes. A partir de ces chromosomes, qui sont uniques à chaque organisme, nous pouvons créer le phénome.\\
 Le phénome est l'ensemble de tout les traits observables chez un individu (p.ex la couleur des yeux, de la peau, des cheveux, etc...)\cite{wikiphenome}.\\
 
 Dans le cadre de la neuroévolution, le génome est un encodage refermant les différents paramètres du réseau de neurones tels que les poids des connexion et le topologie du réseau. En décodant le génome il est donc possible de construire le phénome, un réseau de neurones dans notre cas.
@@ -351,7 +363,7 @@ Cette section détaille le fonctionnement de l'algorithme évolutionniste mis en
 
 \subsection{Génome \& Phénome}
 
-Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donné que la topologie du réseau est fixe, on peut le reproduire à l'identique en assignant les bons poids.\\
+Pour cet algorithme le génome est simplement la liste des poids constituant le réseau de neurones. Ainsi, étant donné que la topologie du réseau est fixe, nous pouvons le reproduire à l'identique en assignant les bons poids.\\
 
 Le phénome dans le cas de cet algorithme sera un réseau de neurones à topologie fixe et entièrement connecté (Chaque neurone d'une couche donnée est connecté a chaque neurone de la couche suivante).\\
 
@@ -422,7 +434,7 @@ Pour cet algorithme, seul le champion de la génération (organisme ayant obtenu
 
 \subsection{Déroulement de l'algorithme}
 
-L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$. L'algorithme va donc répéter tant que la solution n'est pas optimale les étapes décrites ci-dessus pour générer des populations s'améliorant à chaque itération.
+L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$. L'algorithme va donc répéter tant que la solution n'est pas optimale les étapes décrites ci-dessus pour générer des populations s'améliorant à chaque itération. Nous remarquons notamment la présence de l'élitisme ("Copy best organism to the next generation"), du principe de sélection (fonction select(...)) des crossovers (fonction crossover(p1, p2)) et des mutations (fonction mutate). 
 
 \afterpage{%
 \begin{figure}[H]
@@ -463,7 +475,7 @@ La population initiale doit être aussi simple que possible, cependant il n'y a 
 \end{center}
 \end{figure}
 
-Ce choix a été fait pour conserver un équilibre entre une population simple (pas de couche intermédiaire) mais qui est rapidement capable de s'ajuster car les connexions sont déjà disponibles. On ne perd donc pas de générations uniquement pour créer les connexions.
+Ce choix a été fait pour conserver un équilibre entre une population simple (pas de couche intermédiaire) mais qui est rapidement capable de s'ajuster car les connexions sont déjà disponibles. Nous ne perdons donc pas de générations uniquement pour créer les connexions.
 
 \subsection{Historique des innovations}
 
@@ -471,7 +483,7 @@ Une innovation est l'apparition dans le génome d'une nouvelle connexion. Un poi
 
 Il est essentiel de faire cet étiquetage pour pouvoir ensuite reconnaitre les similarités entre les génomes notamment pour le classement en espèces et les crossover.\\
 	
-Afin de faire ce lien, il faut d'abord faire une recherche pour savoir si cette connexion a déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation sous le format suivant (numéro d'innovation, neurone d'entrée, neurone de sortie, innovations déjà présentes dans le génome).\\
+Afin de faire ce lien, il faut d'abord faire une recherche pour savoir si cette connexion a déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et nous l'ajoutons à l'historique des innovation sous le format suivant (numéro d'innovation, neurone d'entrée, neurone de sortie, innovations déjà présentes dans le génome).\\
 
 \subsection{Spéciation}
 
@@ -595,7 +607,7 @@ L'élitisme intervient dans l'algorithme car chaque espèce ayant au moins un en
 
 \subsection{Déroulement de l'algorithme}
 
-L'organigramme de l'algorithme NEAT se présente comme suit, il n'est pas possible de représenter en détaille toutes les opérations faites, ce diagramme montre uniquement une vue globale de l'algorithme.
+L'organigramme de l'algorithme NEAT se présente comme suit, il n'est pas possible de représenter en détaille toutes les opérations faites, ce diagramme montre uniquement une vue globale de l'algorithme. La fonction random(0, 1) va tirer un nombre aléatoire entre compris dans l'interval $[0, 1[$. Nous retrouvons dans l'organigramme les points vu ci-dessus notamment la spéciation ("Speciate population" et "share fitness"), la sélection ("kill bad organisms", "kill bad species", "Kill stale species" et "select"),  l'élitisme ("copy best organism"), le crossover ("crossover") et la mutation ("mutate").
 \afterpage{%
 \begin{figure}[H]
 \centering
@@ -698,7 +710,7 @@ Le simulateur va permettre au réseau de neurones de jouer au jeu demandé et ca
 Les simulateurs sont représentés par une interface, ainsi chaque jeu pouvant être simulé devra implémenter l'interface et notamment la fonction \texttt{simulate} qui va effectuer la totalité de la simulation puis renvoyer le fitness obtenu par le génome testé.
 \inputminted[breaklines,breaksymbol=, frame=single,label=Simulator, stepnumber=1,tabsize=2]{java}{simulator.java}
 
-La simulation peut également être affichée en temps réel pour avoir une visualisation du comportement de l'organisme testé. Cette visualisation est notamment lancée lorsque le client est mode spectateur
+La simulation peut également être affichée en temps réel pour avoir une visualisation du comportement de l'organisme testé. Cette visualisation est notamment affichée lorsque le client est mode spectateur
 
 \subsubsection{Ouvrier / Spectateur}
 
@@ -706,11 +718,11 @@ Le client possède deux modes de fonctionnement, le mode ouvrier dans lequel il 
 
 \subsubsection{Lancement}
 
-Le programme reçois ses paramètres depuis les arguments de la ligne de commande. Le format de la commande de lancement est le suivant: \texttt{java -jar client.jar <server\_ip> <nb\_threads> <client\_name>}. Pour lancer le client en mode spectateur, il suffit de rajouter l'option \texttt{-s} en fin de ligne. Le fait de configurer le programme en ligne de commande permet de déployer de manière assez simple via ssh.  
+Le programme reçois ses paramètres depuis les arguments de la ligne de commande. Le format de la commande de lancement est le suivant: \texttt{java -jar client.jar <server\_ip> <nb\_threads> <client\_name>}. Pour démarrer le client en mode spectateur, il suffit de rajouter l'option \texttt{-s} en fin de ligne. Le fait de configurer le programme en ligne de commande permet de déployer de manière assez simple via ssh.  
 
 \subsubsection{Multithreading}
 
-Le client est un programme multithreadé, en effet nous pouvons choisir au lancement de lancer autant de client en simultané que nous le désirons. Aux yeux du serveur chaque thread est un client à part, ils vont donc tous recevoir différents génomes qu'ils testeront de manière séparée avant de renvoyer indépendamment les résultat au serveur. Le choix du nombre de threads se fait au lancement du programme.
+Le client est un programme multithreadé, en effet nous pouvons choisir au lancement de démarrer autant de client en simultané que nous le désirons. Aux yeux du serveur chaque thread est un client à part, ils vont donc tous recevoir différents génomes qu'ils testeront de manière séparée avant de renvoyer indépendamment les résultat au serveur. Le choix du nombre de threads se fait au lancement du programme.
 
 \subsubsection{Tests}
 
@@ -796,9 +808,9 @@ La gestion de la tâche se fait via la série de boutons suivante:
 \end{center}
 \end{figure}
 
-Le bouton "Do 1 Gen" va lancer une génération d'évolution, le bouton "Do 100 Gen" va lancer 100 générations d'évolution, le bouton "Do Infinite Gen" va lancer une infinité de génération d'évolutions.\\
+Le bouton "Do 1 Gen" va démarrer une génération d'évolution, le bouton "Do 100 Gen" va démarrer 100 générations d'évolution, le bouton "Do Infinite Gen" va démarrer une infinité de génération d'évolutions.\\
 
-Le bouton "Pause" va attendre la fin de la génération en cours puis interrompre la tâche en cours. Il est impossible de déverrouiller le mode de fonctionnement ou de lancer une nouvelle tâche tant qu'une tâche est en cours d'execution il faut donc soit attende la fin de la tâche ou la mettre en pause.
+Le bouton "Pause" va attendre la fin de la génération en cours puis interrompre la tâche en cours. Il est impossible de déverrouiller le mode de fonctionnement ou de démarrer une nouvelle tâche tant qu'une tâche est en cours d'execution il faut donc soit attende la fin de la tâche ou la mettre en pause.
 
 \subsection{Ouvriers}
 
@@ -939,7 +951,7 @@ La position et la direction des astéroïdes est aléatoire. Si un objet sort pa
 
 \subsubsection{Entrées}
 
-Afin de pouvoir faire jouer un agent intelligent à ce jeu il a fallu créer des capteurs qui lui permette de comprendre son environnement.\\
+Afin de pouvoir faire jouer un agent intelligent à ce jeu il a fallu créer des capteurs qui lui permettent de comprendre son environnement.\\
 
 L'information qui semble la plus importante pour l'apprentissage de ce jeu est la présence d'astéroïdes autour du vaisseau. Nous allons donc vérifier dans huit directions (Nord, Nord est, Est, Sud est, Sud, Sud ouest, Ouest, Nord ouest) quel astéroïde est le plus proche et donner l'inverse de cette distance (il s'agit donc d'une valeur entre 0 et 1, 1 étant un danger imminant) à notre réseau de neurones afin d'obtenir l'action à effectuer.\\
 
@@ -999,13 +1011,13 @@ Pour le NEAT l'apprentissage de l'esquive se fait bien plus tôt. En effet autou
 \end{center}
 \end{figure}
 
-Cependant apprendre l'esquive simple ne suffit pas car il est possible que le réseau fonce dans un astéroïde en essayant d'en esquiver un autre. La technique est donc perfectionnée et au bout d'une centaine de générations ($\sim$5 minutes) ils sont capable d'attendre des scores très impressionnants.\\
+Cependant apprendre l'esquive simple ne suffit pas car il est possible que le réseau fonce dans un astéroïde en essayant d'en esquiver un autre. La technique est donc perfectionnée petit à petit et au bout d'une centaine de générations ($\sim$5 minutes) ils sont capable d'attendre des scores très impressionnants.\\
 
-Un phénomène intéressant est que peut importe l'algorithme utilisé, le comportement qui va se répandre le plus vite est toujours le même: tourner sur soit même. En effet ce comportement semble dominer à chaque fois. Une raison qui peut expliquer ce phénomène est que l'esquive au départ est une réaction à la présence d'un astéroïde vers le capteur situé à l'arrière du vaisseau. Ainsi tourner sur soit même va permettre de vérifier la présence d'astéroïdes dans toutes les directions et donc d'avancer si il y a un danger. Par la suite l'esquive est perfectionnée mais ce trait reste car il en est à l'origine. Une autre explication possible est le fait de compenser l'inertie, en effet lorsqu'un vaisseau fini d'accélérer (pour esquiver par exemple) il conserve une inertie qui peut s'avérer potentiellement mortelle si un astéroïde se trouve droit devant, pour compenser le vaisseau doit donc se tourner pour accélérer légèrement dans l'autre sens et s'arrêter.\\
+Un phénomène intéressant est que peu importe l'algorithme utilisé, le comportement qui va se répandre le plus vite est toujours le même: tourner sur soit même. En effet ce comportement semble dominer à chaque fois. Une raison qui peut expliquer ce phénomène est que l'esquive au départ est une réaction à la présence d'un astéroïde vers le capteur situé à l'arrière du vaisseau. Ainsi tourner sur soit même va permettre de vérifier la présence d'astéroïdes dans toutes les directions et donc d'avancer si il y a un danger. Par la suite l'esquive est perfectionnée mais ce trait reste car il en est à l'origine. Une autre explication possible est le fait de compenser l'inertie, en effet lorsqu'un vaisseau fini d'accélérer (pour esquiver par exemple) il conserve une inertie qui peut s'avérer potentiellement mortelle si un astéroïde se trouve droit devant, pour compenser le vaisseau doit donc se tourner pour accélérer légèrement dans l'autre sens et s'arrêter.\\
 
 Après 100 générations l'algorithme naïf obtient un fitness moyen d'environ 300'000, ce score correspond à des agents capables de détruire les quatre premiers astéroïdes et leurs enfants mais qui n'arrivent pas a réagir à l'apparition des cinq suivants. Cette barre des 300'000 est passée par NEAT après seulement 20 générations.\\
 
-Après 100 générations NEAT arrive à un fitness d'environ 1'600'000, ce qui correspond à un agent capable détruire les quatre premiers astéroïdes, puis les cinq suivant, mais qui tombe face à la masse de sous-astéroïdes quand il commence à détruire les six d'après. Il est cependant peut probable qu'un agent puisse s'améliorer au delà de cette limite, en effet la précision qu'il faudrait pour manoeuvrer à travers autant d'objet n'est pas atteignable avec ce simulateur. Cette limite des 1'600'000 n'est d'ailleurs pas franchie même si système tourne pendant un jour entier.\\
+Après 100 générations NEAT arrive à un fitness d'environ 1'600'000, ce qui correspond à un agent capable détruire les quatre premiers astéroïdes, puis les cinq suivant, mais qui tombe face à la masse de sous-astéroïdes quand il commence à détruire les six d'après. Il est cependant peu probable qu'un agent puisse s'améliorer au delà de cette limite, en effet la précision qu'il faudrait pour manoeuvrer à travers autant d'objet n'est pas atteignable avec ce simulateur. Cette limite des 1'600'000 n'est d'ailleurs pas franchie même si système tourne pendant un jour entier.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -1016,6 +1028,18 @@ Après 100 générations NEAT arrive à un fitness d'environ 1'600'000, ce qui c
 
 \newpage
 \section{Conclusion}
+
+La réalisation de ce travail durant trois mois fût une expérience extrêmement enrichissante, sur le plan personnel car gérer son temps, ses capacités de travail et sa motivation pendant un longue période était un défi mais également sur le plan technique car il a fallu faire beaucoup de recherche en amont pour avoir les bases nécessaires à la réalisation du projet et de tous ces aspect allant de l'implémentation d'un protocole réseau, la création d'un jeu vidéo, la gestion d'algorithmes évolutionnistes et de réseaux de neurones.\\
+
+Le travail réalisé me rend fier et je suis toujours étonné par la rapidité de l'évolution de ces simples organismes artificiels progressant à vue d'oeil et développant des stratégies tellement différentes de celles qu'un humain utiliserai.\\
+
+Entreprendre ce projet m'a permis d'explorer ce monde si vaste et passionnant qu'est celui de l'intelligence artificielle et bien que je n'ai fait qu'en écorcher la surface cela ne m'a que plus motivé à poursuivre d'autres projet dans le domaine.\\
+
+\subsection{Suite du projet}
+
+Ce système de neuroévolution ayant été développé de manière très généraliste, il peut facilement accueillir de nouvelles fonctionnalités. Il serait par exemple très intéressant de tester les algorithmes implémentés sur d'autres jeux, peut-être plus complexe afin de tester les limites qu'on pourrait atteindre.\\
+
+Une autre possibilité serai d'implémenter d'autres types de réseaux de neurones tels que les CNN (réseau neuronal convolutif) ou les RNN (réseau neuronal récurrent) et de constater les différences que nous obtenons en terme de capacité d'apprentissage.
 
 \newpage
 \bibliographystyle{unsrt}
