@@ -1,3 +1,8 @@
+/**
+ * This files contains the program's entry point
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client;
 
 import me.pv.mg.client.genetic.GenomeCodec;

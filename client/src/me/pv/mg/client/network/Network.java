@@ -1,3 +1,8 @@
+/**
+ * This files contains the network related code
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.network;
 
 import java.io.DataInputStream;

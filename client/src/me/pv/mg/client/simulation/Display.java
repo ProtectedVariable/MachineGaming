@@ -1,3 +1,8 @@
+/**
+ * This files contains a jframe class to display game progress
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.simulation;
 
 import java.awt.BorderLayout;

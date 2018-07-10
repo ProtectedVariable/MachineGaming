@@ -1,3 +1,8 @@
+/**
+ * This files contains asteroids' simulator code
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.simulation;
 
 import java.awt.Color;

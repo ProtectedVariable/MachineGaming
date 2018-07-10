@@ -1,3 +1,8 @@
+/**
+ * This files contains some activations functions ready to be used
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.nn;
 
 public final class ActivationFunctions {

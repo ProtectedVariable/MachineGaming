@@ -1,3 +1,8 @@
+/**
+ * This files contains the fully connected multilayer perceptron code
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.nn;
 
 import java.awt.Color;

@@ -1,3 +1,8 @@
+/**
+ * This files contains the simulator interface
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.simulation;
 
 import java.awt.Graphics2D;

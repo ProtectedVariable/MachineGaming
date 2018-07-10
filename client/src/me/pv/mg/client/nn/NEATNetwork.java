@@ -1,3 +1,8 @@
+/**
+ * This files contains the NEAT network (dynamic topology) code
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.nn;
 
 import java.awt.Color;

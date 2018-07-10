@@ -1,3 +1,8 @@
+/**
+ * This files contains the interface for activation functions
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.nn;
 
 public interface ActivationFunction {

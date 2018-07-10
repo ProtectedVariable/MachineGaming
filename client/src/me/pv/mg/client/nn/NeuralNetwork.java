@@ -1,3 +1,8 @@
+/**
+ * This files contains the abstraction for any neural network
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.nn;
 
 import java.awt.Graphics;

@@ -1,3 +1,8 @@
+/**
+ * This files contains the genomes decoder, it will be used to convert genome strings to neural networks
+ * 
+ * @author Thomas Ibanez
+ */
 package me.pv.mg.client.genetic;
 
 import me.pv.mg.client.nn.ActivationFunctions;
