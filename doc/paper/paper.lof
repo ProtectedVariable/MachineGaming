@@ -1,34 +1,41 @@
 \select@language {french}
-\contentsline {figure}{\numberline {1}{\ignorespaces Illustration d'un agent}}{9}{figure.1}
-\contentsline {figure}{\numberline {2}{\ignorespaces Représentation des neurones dans le cerveau humain \cite {neurons}}}{11}{figure.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}}{12}{figure.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces Réseau de neurones}}{13}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Fonction Sigmoid avec des $\beta $ variables}}{15}{figure.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces Fonction tangente hyperbolique}}{15}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces Fonction step}}{16}{figure.7}
-\contentsline {figure}{\numberline {8}{\ignorespaces Exemple de sélection proportionnelle au fitness, soit r une variable aléatoire, il y a plus de chance que celle-ci sélectionne un organisme plus performant (A, B) qu'un organisme faible (F, G)\cite {wikifps}}}{18}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Passage du génome au phénome}}{19}{figure.9}
-\contentsline {figure}{\numberline {10}{\ignorespaces Exemple de population initiale}}{20}{figure.10}
-\contentsline {figure}{\numberline {11}{\ignorespaces Fonctionnement d'un crossover}}{21}{figure.11}
-\contentsline {figure}{\numberline {12}{\ignorespaces Exemple de mutation dans un génome}}{21}{figure.12}
-\contentsline {figure}{\numberline {13}{\ignorespaces Elitisme d'une génération vers la suivante}}{22}{figure.13}
-\contentsline {figure}{\numberline {14}{\ignorespaces Organigramme de l'algorithme naïf}}{23}{figure.14}
-\contentsline {figure}{\numberline {15}{\ignorespaces Passage du génome au phénome dans NEAT}}{24}{figure.15}
-\contentsline {figure}{\numberline {16}{\ignorespaces Exemple de population initiale dans NEAT}}{25}{figure.16}
-\contentsline {figure}{\numberline {17}{\ignorespaces Comparaison de deux génomes dans NEAT\cite {neatpaper}}}{26}{figure.17}
-\contentsline {figure}{\numberline {18}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants n'auront que 2/3 de l'information \cite {neatpaper}}}{28}{figure.18}
-\contentsline {figure}{\numberline {19}{\ignorespaces Crossover dans NEAT}}{29}{figure.19}
-\contentsline {figure}{\numberline {20}{\ignorespaces Ajout d'une connexion}}{30}{figure.20}
-\contentsline {figure}{\numberline {21}{\ignorespaces Ajout d'un neurone}}{31}{figure.21}
-\contentsline {figure}{\numberline {22}{\ignorespaces Organigramme de l'algorithme NEAT}}{32}{figure.22}
-\contentsline {figure}{\numberline {23}{\ignorespaces Architecture réseau}}{33}{figure.23}
-\contentsline {figure}{\numberline {24}{\ignorespaces Architecture des modules du serveur}}{34}{figure.24}
-\contentsline {figure}{\numberline {25}{\ignorespaces Encodage du réseau NEAT}}{36}{figure.25}
-\contentsline {figure}{\numberline {26}{\ignorespaces Communication Client-Serveur}}{42}{figure.26}
-\contentsline {figure}{\numberline {27}{\ignorespaces Formulaire de choix de mode}}{43}{figure.27}
-\contentsline {figure}{\numberline {28}{\ignorespaces Formulaire de choix de mode verrouillé}}{44}{figure.28}
-\contentsline {figure}{\numberline {29}{\ignorespaces Fenêtre de choix pour le chargement d'une population}}{44}{figure.29}
-\contentsline {figure}{\numberline {30}{\ignorespaces Boutons de gestion de la tâche}}{45}{figure.30}
-\contentsline {figure}{\numberline {31}{\ignorespaces Affichage des ouvriers sur l'interface de controle}}{45}{figure.31}
-\contentsline {figure}{\numberline {32}{\ignorespaces Graphique des fitness moyens}}{46}{figure.32}
-\contentsline {figure}{\numberline {33}{\ignorespaces Graphique des meilleurs fitness}}{46}{figure.33}
+\contentsline {figure}{\numberline {1}{\ignorespaces Illustration d'un agent}}{11}{figure.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Représentation des neurones dans le cerveau humain \cite {neurons}}}{13}{figure.2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Porte logique "ou exclusif" (XOR) simulée par un réseau de neurones}}{14}{figure.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces Réseau de neurones}}{15}{figure.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Fonction Sigmoid avec des $\beta $ variables}}{17}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces Fonction tangente hyperbolique}}{17}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Fonction step}}{18}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces Exemple de sélection proportionnelle au fitness, soit r une variable aléatoire tirée entre 0 et $\phi $, il y a plus de chance que celle-ci sélectionne un organisme plus performant (A, B) qu'un organisme faible (F, G)\cite {wikifps}}}{20}{figure.8}
+\contentsline {figure}{\numberline {9}{\ignorespaces Passage du génome au phénome}}{21}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces Exemple de population initiale}}{22}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Fonctionnement d'un crossover}}{23}{figure.11}
+\contentsline {figure}{\numberline {12}{\ignorespaces Exemple de mutation dans un génome}}{23}{figure.12}
+\contentsline {figure}{\numberline {13}{\ignorespaces Elitisme d'une génération vers la suivante}}{24}{figure.13}
+\contentsline {figure}{\numberline {14}{\ignorespaces Organigramme de l'algorithme naïf}}{25}{figure.14}
+\contentsline {figure}{\numberline {15}{\ignorespaces Passage du génome au phénome dans NEAT}}{26}{figure.15}
+\contentsline {figure}{\numberline {16}{\ignorespaces Exemple de population initiale dans NEAT}}{27}{figure.16}
+\contentsline {figure}{\numberline {17}{\ignorespaces Comparaison de deux génomes dans NEAT\cite {neatpaper}}}{28}{figure.17}
+\contentsline {figure}{\numberline {18}{\ignorespaces Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants n'auront que 2/3 de l'information \cite {neatpaper}}}{30}{figure.18}
+\contentsline {figure}{\numberline {19}{\ignorespaces Crossover dans NEAT}}{31}{figure.19}
+\contentsline {figure}{\numberline {20}{\ignorespaces Ajout d'une connexion}}{32}{figure.20}
+\contentsline {figure}{\numberline {21}{\ignorespaces Ajout d'un neurone}}{33}{figure.21}
+\contentsline {figure}{\numberline {22}{\ignorespaces Organigramme de l'algorithme NEAT}}{34}{figure.22}
+\contentsline {figure}{\numberline {23}{\ignorespaces Architecture réseau}}{35}{figure.23}
+\contentsline {figure}{\numberline {24}{\ignorespaces Architecture des modules du serveur}}{36}{figure.24}
+\contentsline {figure}{\numberline {25}{\ignorespaces Encodage du réseau NEAT}}{38}{figure.25}
+\contentsline {figure}{\numberline {26}{\ignorespaces Communication Client-Serveur}}{44}{figure.26}
+\contentsline {figure}{\numberline {27}{\ignorespaces Formulaire de choix de mode}}{45}{figure.27}
+\contentsline {figure}{\numberline {28}{\ignorespaces Formulaire de choix de mode verrouillé}}{46}{figure.28}
+\contentsline {figure}{\numberline {29}{\ignorespaces Fenêtre de choix pour le chargement d'une population}}{46}{figure.29}
+\contentsline {figure}{\numberline {30}{\ignorespaces Boutons de gestion de la tâche}}{47}{figure.30}
+\contentsline {figure}{\numberline {31}{\ignorespaces Affichage des ouvriers sur l'interface de controle}}{47}{figure.31}
+\contentsline {figure}{\numberline {32}{\ignorespaces Graphique des fitness moyens}}{48}{figure.32}
+\contentsline {figure}{\numberline {33}{\ignorespaces Graphique des meilleurs fitness}}{48}{figure.33}
+\contentsline {figure}{\numberline {34}{\ignorespaces Image du jeu Asteroids}}{53}{figure.34}
+\contentsline {figure}{\numberline {35}{\ignorespaces Subdivision des astéroïdes}}{54}{figure.35}
+\contentsline {figure}{\numberline {36}{\ignorespaces Capteurs de distance}}{55}{figure.36}
+\contentsline {figure}{\numberline {37}{\ignorespaces Affichage du jeu en mode spectateur}}{56}{figure.37}
+\contentsline {figure}{\numberline {38}{\ignorespaces Fitness moyen de l'algorithme naïf, le fitness augmente rapidement autour de la génération 17 dû à l'apprentissage de l'esquive}}{57}{figure.38}
+\contentsline {figure}{\numberline {39}{\ignorespaces Fitness moyen de NEAT, le fitness augmente rapidement autour de la génération 5 dû à l'apprentissage de l'esquive}}{58}{figure.39}
+\contentsline {figure}{\numberline {40}{\ignorespaces Réseau NEAT après 50 générations}}{59}{figure.40}

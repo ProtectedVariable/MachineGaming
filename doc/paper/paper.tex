@@ -96,10 +96,26 @@ Une de ces techniques, qui a été utilisée pour l'apprentissage d'AlphaGo\cite
 
 Cependant il existe une méthode encore plus généraliste pour l'apprentissage: la neuroévolution. Cette méthode se base sur les algorithmes évolutionnistes dont le fonctionnement est inspiré de la sélection naturelle qui a guidé l'évolution de la vie sur terre. En effet, à partir d'un ensemble d'organismes que nous allons évaluer à leur capacité à effectuer une tâche donnée, ce que nous appelons le \textit{fitness} de l'organisme, nous allons sélectionner les meilleurs d'entre eux afin de les faire se "reproduire" pour créer la génération suivante qui sera à son tour évaluée et nous recommencerons ce processus autant de fois que nécessaire\cite{wikineuroevolution}.\\
 
-Le but de ce travail de bachelor est d'étudier et de comparer le comportement de deux algorithmes de neuroévolution en analysant la faculté de chacun à apprendre à jouer à des jeux vidéo. Cette technique à été choisie car elle permet un développement plus libre de l'IA en ne jugeant que le résultat et non pas les actions qui y mènent.
+Le but de ce travail de bachelor est d'étudier et de comparer le comportement de deux algorithmes de neuroévolution en analysant la faculté de chacun à apprendre à jouer à des jeux vidéo. Cette technique à été choisie car elle permet un développement plus libre de l'IA en ne jugeant que le résultat et non pas les actions qui y mènent.\\
+
+Ce travail est structuré comme suit: Dans le chapitre 2, nous parlerons de la notion d'agent intelligent et d'environnement.\\
+Dans le chapitre 3 nous verrons le fonctionnement des réseaux de neurones artificiels et les méthodes permettant de les entraîner.\\
+Dans le chapitre 4 nous verrons ce qu'est un algorithme évolutionniste et les concepts de bases sur lesquels ce type d'algorithme se repose.\\
+Dans le chapitre 5 nous palerons d'un algorithme naïf permettant de faire évoluer un réseau de neurones à topologie fixe, cet algorithme utilise de manière directe les concepts vus dans le chapitre 4.\\
+Dans le chapitre 6 nous verrons l'algorithme NEAT, cet algorithme utilise également les concepts discutés dans le chapitre 4 mais il en ajoute également de nouveaux.\\
+Dans le chapitre 7 nous parlerons l'implémentation du projet et l'architecture réseau qui a été produite.\\
+Dans le chapitre 8 nous verrons le fonctionnement de l'interface de contrôle qui va nous permettre d'utiliser le système pour entraîner des réseaux de neurones à jouer à des jeux-vidéo.\\
+Dans le chapitre 9 nous aurons un aperçu du système de gestion de base de données mis en place pour enregistrer / charger des tâches.\\
+Dans le chapitre 10 nous parlerons de l'API mise en place pour le contrôle du système.\\
+Dans le chapitre 11 nous verrons le jeu implémenté et les résultats obtenu.\\
+Finalement dans le chapitre 12 nous conclurons ce travail et verrons les potentielles suites possibles.
 \newpage
 
 \section{Agent Intelligent}
+
+Dans ce chapitre nous abordons la notion d'agent intelligent et les concepts qui entourent cette notion. Cette notion est essentielle car l'objectif de ce travail est de créer le meilleur agent possible.
+
+\subsection{Définition}
 
 Un agent intelligent est une entité autonome qui observe son environnement grâce à des capteurs et qui peut agir sur l'état de son environnement grâce à des effecteurs. Cette entité doit avoir un objectif (gagner une partie de Go par exemple), elle peut également apprendre ou utiliser ses connaissances pour atteindre son but\cite{wikiia}.\\
 
@@ -117,11 +133,11 @@ La mesure de la performance est un critère qui va définir l'efficacité d'un a
 \subsection{Rationalité}
 
 La rationalité est le fait d'être raisonnable, sensible et d'avoir un bon sens du jugement.\\
-Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue\cite{tutoptai}.
+Un agent rationnel va toujours effectuer la "bonne" action, celle qui va apporter le plus de succès à l'agent par rapport à la séquence perçue\cite{tutoptai}. Le but de tout développement d'agent intelligent est donc de créer un agent rationnel afin qu'il soit aussi performant que possible.
 
 \subsection{Environnement}
 
-L'environnement peut être de différentes natures en fonction du problème pour lequel l'agent est déployé.
+L'environnement peut être de différentes natures en fonction du problème pour lequel l'agent est déployé. Les différents types d'environnement sont expliqués ci-dessous.
 
 \subsubsection{Discret / Continu}
 
@@ -129,7 +145,7 @@ Si les états possibles de l'environnement sont dénombrables et clairement déf
 
 \subsubsection{Observable / Partiellement Observable}
 
-L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement\cite{tutoptai}.
+L'environnement est observable si l'agent peut à tout moment en observer la totalité, sinon l'environnement est partiellement observable. Par exemple le jeu DotA 2 n'est que partiellement observable car du brouillard cache une partie de l'environnement contrairement au jeu de Go où les deux joueurs voient la totalité du plateau de jeu\cite{tutoptai}.
 
 \subsubsection{Statique / Dynamique}
 
@@ -141,7 +157,7 @@ Lorsque l'environnement n'est influencé que par un seul agent il est dit simple
 
 \subsubsection{Déterministe / Non-déterministe}
 
-L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe\cite{tutoptai}.
+L'environnement est dit déterministe si on peut prévoir, à partir d'une observation de l'état actuel de l'environnement, l'état suivant de l'environnement. Autrement dit si l'aléatoire n'intervient pas dans l'évolution de l'environnement alors il est déterministe\cite{tutoptai}. Le jeu d'échecs est déterministe car aucuns événement aléatoire ne vient perturber le plateau, au contraire un jeu comme pac-man est non-déterministe car le chemin pris par les fantômes qui chassent le joueur est en partie déterminé aléatoirement.
 
 \subsubsection{Épisodique / Non-épisodique}
 
@@ -150,6 +166,10 @@ Un exemple d'environnement épisodique est un agent qui regarde des images pour 
 
 \newpage
 \section{Réseau de Neurones Artificiels}
+
+Cette section va expliquer la notion de réseau de neurones artificiels, de leur origine et leur lien avec la biologie jusqu'aux différentes manières de les entraîner. Cette technologie est devenue incontournable dans le domaine de l'intelligence artificielle tant ils ont réalisé de prouesses ces dernières années.
+
+\subsection{Définition}
 
 Un réseau de neurones est un modèle, inspiré du fonctionnement du cerveau humain, qui va consister en un ensemble de neurones artificiels (aussi appelés perceptrons), disposés en couches qui vont communiquer en propageant une information\cite{wikiann}. En effet, les neurones de notre cerveau vont collecter les signaux en provenance de leurs dendrites, puis si les signaux sont assez forts envoyer une impulsion le long de leur axone vers les neurones suivants qui vont faire de même. A noter que les connexions entre deux neurones peuvent être plus ou moins fortes (le signal va donc se propager avec une intensité variable)\cite{neuronswork}.
 
@@ -164,15 +184,22 @@ Les perceptrons quant à eux vont imiter (de manière simplifiée) ce comporteme
 
 D'un point de vue mathématique le comportement d'un perceptron peut être écrit comme:
 \begin{equation}
-o = f(\sum_{i=0}^{n} S_i \cdot W_i)
+o = f(\sum_{i=1}^{n} \vec{S_i} \cdot \vec{W_i})
 \label{eq:percep}
 \end{equation}
+
+Cette opération peut être simplifiée en utilisant le produit scalaire:
+
+\begin{equation}
+o = f(\vec{S} \cdot \vec{W})
+\end{equation}
+
 Où\\
 $o$ est le signal qui va sortir du perceptron\\
 $f$ est la fonction d'activation\\
 $n$ est le nombre de voisins de la couche précédente\\
-$S$ est le vecteur des signaux des voisins la couche précédente\\
-$W$ est le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
+$\vec{S}$ est le vecteur des signaux des voisins la couche précédente\\
+$\vec{W}$ est le vecteur des poids entre le perceptrons et ses voisins de la couche précédente
 
 \begin{figure}[H]
 \begin{center}
@@ -267,6 +294,10 @@ La fonction step $step : \mathbb{R} \rightarrow [0, 1]$
 \newpage
 \section{Algorithmes évolutionnistes}
 
+Ce chapitre parle des algorithmes évolutionnistes, nous allons voir leur fonctionnement général et les concepts essentiels qui permettent leur fonctionnement.
+
+\subsection{Définition}
+
 Un algorithme évolutionniste est un algorithme d'optimisation métaheuristique qui cherche, par un processus inspiré de la sélection naturelle, une solution optimale à un problème. Ces algorithmes utilisent des iterations stochastiques pour arriver à maximiser une fonction évaluant leurs performances, dite fonction de fitness\cite{wikiea}.\\
 
 Les sections suivantes expliquent de manière générale les différents points clef de ces algorithmes.
@@ -290,7 +321,7 @@ La sélection est un concept essentiel dans l'utilisation d'algorithmes évoluti
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[scale=0.6]{fps.png} 
-	\caption{Exemple de sélection proportionnelle au fitness, soit r une variable aléatoire, il y a plus de chance que celle-ci sélectionne un organisme plus performant (A, B) qu'un organisme faible (F, G)\cite{wikifps}}
+	\caption{Exemple de sélection proportionnelle au fitness, soit r une variable aléatoire tirée entre 0 et $\phi$, il y a plus de chance que celle-ci sélectionne un organisme plus performant (A, B) qu'un organisme faible (F, G)\cite{wikifps}}
 \end{center}
 \end{figure}
 
@@ -407,12 +438,12 @@ L'organigramme ci-dessous décrit le comportement global de l'algorithme. La fon
 
 \section{NEAT}
 
-L'autre algorithme de neuroévolution mis en place est le NEAT, créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
-Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmi les différentes topologies, séparer les organismes en espèces afin de préserver l'innovation et faire évoluer les topologies de manière incrémentale en partant de structures simples afin d'obtenir des résultats minimaux\cite{wikineat}.
+Ce chapitre parle de l'autre algorithme de neuroévolution mis en place, NEAT (Neuroevolution of Augmenting Topologies), créé par Ken Stanley à Université du Texas à Austin. Cet algorithme détaille comment obtenir des réseaux de neurones dont la topologie change au fil des évolutions.\\
+Il apporte trois techniques essentielles à son fonctionnement: suivre l'évolution des gènes avec un historique pour permettre les crossover parmi les différentes topologies, séparer les organismes en espèces afin de préserver les innovations topologiques (évolution de la structure du réseau) et faire évoluer les topologies de manière incrémentale en partant de structures simples afin d'obtenir des résultats minimaux\cite{wikineat}.
 
 \subsection{Génome \& Phénome}
 
-Dans le cas de NEAT, le génome est plus complexe, en effet il doit représenter tous les neurones et toutes les connexions. Etant donné que le réseau n'est pas forcément entièrement connecté, et que les connexions peuvent "sauter" des couches, le génome est constitué de deux listes, une qui représente tout les neurones du réseau et une qui représente toutes les connexions du réseau. 
+Dans le cas de NEAT, le génome est plus complexe que dans le cas du réseau à topologie fixe, en effet il doit représenter tous les neurones et toutes les connexions. Etant donné que le réseau n'est pas forcément entièrement connecté, et que les connexions peuvent "sauter" des couches, le génome est constitué de deux listes, une qui représente tout les neurones du réseau et une qui représente toutes les connexions du réseau. 
 
 \begin{figure}[H]
 \begin{center}
@@ -437,6 +468,8 @@ Ce choix a été fait pour conserver un équilibre entre une population simple (
 \subsection{Historique des innovations}
 
 Une innovation est l'apparition dans le génome d'une nouvelle connexion. Un point central de l'algorithme est de suivre l'émergence de ces innovations afin d'étiqueter les innovations semblables par un même numéro. Ainsi, si nous avons deux réseaux ayant la même topologie qui, l'un après l'autre font apparaitre une nouvelle connexion entre les mêmes neurones, leurs deux connexions auront le même numéro d'innovation.\\
+
+Il est essentiel de faire cet étiquetage pour pouvoir ensuite reconnaitre les similarités entre les génomes notamment pour le classement en espèces et les crossover.\\
 	
 Afin de faire ce lien, il faut d'abord faire une recherche pour savoir si cette connexion a déjà été ajoutée dans un autre réseau. Si oui, la connexion ajoutée prend le numéro d'innovation déjà existant. Sinon un nouveau numéro d'innovation est généré et on ajoute à l'historique des innovation sous le format suivant (numéro d'innovation, neurone d'entrée, neurone de sortie, innovations déjà présentes dans le génome).\\
 
@@ -458,7 +491,7 @@ La dernière étape avant de pouvoir calculer la distance entre deux génomes es
 La formule calculant la disparité entre deux génomes est la suivante:
 
 \begin{equation}
-	\delta = \frac{c_1 * E}{N} + \frac{c_2 * D}{N} + c_3 * \overline{W}
+	\delta = \frac{c_1 \cdot E}{N} + \frac{c_2 \cdot D}{N} + c_3 \cdot \overline{W}
 \label{eq:delta}
 \end{equation}
 
@@ -473,7 +506,7 @@ $\overline{W}$ est la moyenne des écarts des poids\\
 
 Les coefficients peuvent être modifiés pour changer la sensibilité de la classification aux différents paramètres. Une fois la valeur de $\delta$ calculée, elle est comparée avec un seuil $\delta_t$, si la valeur est plus grande, les génomes ne font pas partie de la même espèce, sinon ils font partie de la même espèce.\\
 
-Afin de préserver l'innovation et d'éviter qu'une espèce ne domine rapidement la totalité de la population, un mécanisme de \textit{fitness sharing} est mis en place. Pour ce faire, le fitness de chaque organisme d'une espèce est divisé par le nombre d'organismes dans cette espèce. Ainsi, les petites espèces qui émergent d'une innovation topologique seront protégées de l'extinction pendant quelques génération afin de laisser le temps aux organismes de s'ajuster.\\
+Afin de préserver l'innovation et d'éviter qu'une espèce ne domine rapidement la totalité de la population, ce qui entrainerai une diminution de la variété des solutions et confinerai l'algorithme dans une petite partie de l'espace de recherche, un mécanisme de \textit{fitness sharing} est mis en place. Pour ce faire, le fitness de chaque organisme d'une espèce est divisé par le nombre d'organismes dans cette espèce. Ainsi, les petites espèces qui émergent d'une innovation topologique seront protégées de l'extinction pendant quelques génération afin de laisser le temps aux organismes de s'ajuster.\\
 
 Plus formellement le fitness ajusté de l'organisme $i$ $f^\prime_i$ est défini comme:
 
@@ -492,7 +525,7 @@ Dans NEAT, la sélection intervient au moment de la création d'une nouvelle gé
 Ensuite les espèces dont le meilleur organisme ne s'est pas amélioré depuis 15 générations sont supprimées.\\
 Pour finir chaque espèce $i$ se voit attribuer un nombre d'enfants $n_i$ calculé selon la formule suivante:
 \begin{equation}
-	n_i = \left\lfloor\frac{\overline{sf_i}}{pop * \sum^m_{j=1} \overline{sf_j}}\right\rfloor
+	n_i = \left\lfloor\frac{\overline{sf_i}}{pop \cdot \sum^m_{j=1} \overline{sf_j}}\right\rfloor
 \end{equation}
 Où\\
 $\overline{sf_i}$ est la moyenne des fitness des organismes de l'espèce i\\
@@ -509,8 +542,11 @@ Le crossover dans NEAT est fait pour palier au problème des conventions concurr
 \begin{center}
 	\includegraphics[scale=0.7]{competingconventions.png}
 	\caption{Problème des conventions concurrentes, les deux réseaux atteignent le même résultat mais leurs possibles enfants n'auront que 2/3 de l'information \cite{neatpaper}}
+	\label{fig:competing}
 \end{center}
 \end{figure}
+
+En effet la figure \ref{fig:competing} nous montre deux réseau organisés différemment mais tout deux composés des mêmes éléments (A, B et C). Cependant si nous alignons de manière naïve les deux génome pour les croiser, leurs enfants seront soit [A,B,A] (il manque l'information C) soit [C,B,C] (il manque l'information A). Il est donc très probable que le résultat de ce croisement soit moins efficace que ses parents. 
 
 Pour palier à ce problème, il faut que seuls les éléments qui divergent entre deux génomes soient échangés et que les éléments similaires soient conservés.\\
 
@@ -525,11 +561,11 @@ Le crossover dans NEAT se fait en alignant tous les gènes homologues (ayant le 
 
 \subsection{Mutation}
 
-Les mutations dans NEAT peuvent être de trois types différents.
+Les mutations dans NEAT peuvent être de trois types différents. Les pourcentages de chances que chaque mutation se produisent sont libre, cependant la publication originale de NEAT propose des valeurs qui ont montrés de bon résultats, ce sont ces valeurs qui ont été implémentées.
 
 \subsubsection{Mutation de poids}
 
-Une mutation de poids à 80\% de chance de se produire, si c'est le cas, tout les poids du réseau vont subir une mutation. Il y a 10\% de chance que le poids change totalement et 90\% de chance que le poids varie très légèrement.
+Une mutation de poids à 80\% de chance de se produire, si c'est le cas, tout les poids du réseau vont subir une mutation. Il y a 10\% de chance que le poids change totalement, la nouvelle valeur est donc un nombre aléatoire choisi entre -1 et 1. Les 90\% de chance restant vont faire varier le poids très légèrement, la valeur va donc subir une perturbation située entre $-0.025$ et $+0.025$.
 
 \subsubsection{Mutation de connexion}
 
@@ -574,7 +610,11 @@ L'organigramme de l'algorithme NEAT se présente comme suit, il n'est pas possib
 
 \section{Architecture Réseau}
 
-Afin d'optimiser la vitesse de calcul, un système distribué à été mis en place. Celui-ci repose sur une architecture client-serveur où le client effectue les simulations et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tout les clients.\\
+Cette section détaille le système distribué mis en place pour le projet et l'architecture de ces composants.
+
+\subsection{Motivation}
+
+La mise en place d'un système distribué basé sur une architecture client-serveur a été effectuée afin d'optimiser la vitesse de calcul. Le but est d'exploiter la puissance de calcul de plusieurs machines en parallèle. Les clients effectuent les simulations demandées et le serveur gère les génomes et s'occupe de distribuer de manière équitable le travail entre tout les clients.\\
 
 \begin{figure}[H]
 \begin{center}
@@ -709,7 +749,9 @@ Voici un exemple de communication entre le serveur et un client:
 \newpage
 \section{Interface de Controle}
 
-Une interface web servie par le serveur permet de contrôler la tâche à effectuer. Le serveur utilise le language de templating pug (anciennement jade) pour générer la page de contrôle. L'accès à cette page se fait en faisant une requête à l'adresse du serveur sur le port 8080.\\
+Cette section décrit brièvement le fonctionnement de l'interface permettant de contrôler le fonctionnement du système.\\
+
+Cette interface web servie par le serveur permet de contrôler la tâche à effectuer. Le serveur utilise le language de templating pug (anciennement jade) pour générer la page de contrôle. L'accès à cette page se fait en faisant une requête à l'adresse du serveur sur le port 8080.\\
 
 \subsection{Mode}
 
@@ -788,13 +830,12 @@ La dernière partie de l'interface de contrôle présente deux graphiques, le pr
 \end{center}
 \end{figure}
 
-
 \newpage
-\section{Base de donnés}
+\section{Base de données}
 
-Pour permettre la sauvegarde et le chargement des évolutions précédentes, une base de données MongoDB a été mise en place.\\
+Ce chapitre décrit le système de base de données mis en place pour  permettre la sauvegarde et le chargement des évolutions précédentes.\\
 
-MongoDB est une technologie de base de données NoSQL orientée document permettant le stockage sans schéma prédéfini de volumes important d'informations\cite{wikimongo}.\\
+Le technologie choisie est MongoDB, cette technologie de base de données NoSQL orientée document permet le stockage sans schéma prédéfini de volumes important d'informations\cite{wikimongo}.\\
 
 L'accès à la base de données ce fait uniquement par le serveur, celui-ci utilise le module node.js Mongoose pour effectuer les requêtes vers la base de données.\\
 
@@ -825,7 +866,7 @@ Dans le cas de l'algorithme naïf, les champs \texttt{species} et \texttt{innova
 \newpage
 \section{API}
 
-Afin de permettre une implémentation personnalisée de l'interface de contrôle, le serveur met à disposition une API. Ainsi par le biais de quelques requêtes il est possible d'obtenir toutes les informations sur l'évolution et de contrôler la tâche à effectuer.\\
+Cette section décrit le fonctionnement de l'API mise en place afin de permettre une implémentation personnalisée de l'interface de contrôle. Ainsi par le biais de quelques requêtes il est possible d'obtenir toutes les informations sur l'évolution et de contrôler la tâche à effectuer.\\
 
 \subsection{GET /status}
 
@@ -867,11 +908,111 @@ Si le paramètre \texttt{infgen} est défini, la requête est une demande d'évo
 
 \newpage
 \section{Jeux}
-\subsection{Asteroid}
-\subsubsection{Principe}
+
+Ce chapitre explique le fonctionnement de l'évolution d'agents apprenant à jouer à un jeu vidéo. Le seul jeu implémenté pendant le réalisation de ce projet est le jeu d'arcade Asteroids. Cependant l'architecture du projet permet l'ajout d'autres jeux facilement.
+
+\subsection{Asteroids}
+
+Le jeu Asteroids original à été crée en 1979 par Atari sous la forme d'une borne d'arcades. Le concept du jeu est très simple, le joueur contrôle un vaisseau spatial triangulaire et doit éviter les astéroïdes qui errent sur l'écran.\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.6]{game.png}
+	\caption{Image du jeu Asteroids}
+\end{center}
+\end{figure}
+
+Pour marquer des points, le joueur dois détruire des astéroïdes en tirant dessus. Lorsqu'un astéroïde est détruit il se divise en deux plus petits astéroïdes qui eux aussi peuvent se diviser en deux plus petits astéroïdes. Ces derniers cependant ne peuvent pas se diviser. La figure ci-dessous schématise ce concept.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.3]{asteroids.png}
+	\caption{Subdivision des astéroïdes}
+\end{center}
+\end{figure}
+
+La difficulté réside dans le fait que la multiplication du nombre d'astéroïde va rendre l'esquive de plus en plus difficile. De plus quand le joueur à fini de détruire les quatre premiers astéroïdes et leurs enfants, cinq nouveaux astéroïdes apparaissent aléatoirement, puis six, puis sept, etc...\\
+
+Le vaisseau peut se déplacer vers l'avant, tourner à gauche ou à droite et tirer tout droit. Lorsque le vaisseau va de l'avant, il gagne une inertie qu'il va perdre progressivement lorsque le joueur arrête d'accélérer.
+
+La position et la direction des astéroïdes est aléatoire. Si un objet sort par la gauche de l'écran il réapparait à droite et inversement (même chose pour le haut et le bas). Le joueur voit la totalité du monde à chaque instant du jeu et joue seul. Il s'agit donc d'un environnement continu, observable, dynamique, simple agent, non-déterministe et non-épisodique.\\
+
 \subsubsection{Entrées}
+
+Afin de pouvoir faire jouer un agent intelligent à ce jeu il a fallu créer des capteurs qui lui permette de comprendre son environnement.\\
+
+L'information qui semble la plus importante pour l'apprentissage de ce jeu est la présence d'astéroïdes autour du vaisseau. Nous allons donc vérifier dans huit directions (Nord, Nord est, Est, Sud est, Sud, Sud ouest, Ouest, Nord ouest) quel astéroïde est le plus proche et donner l'inverse de cette distance (il s'agit donc d'une valeur entre 0 et 1, 1 étant un danger imminant) à notre réseau de neurones afin d'obtenir l'action à effectuer.\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.6]{sensors.png}
+	\caption{Capteurs de distance}
+\end{center}
+\end{figure}
+
 \subsubsection{Sorties}
+
+Une fois que le réseau à effectué la propagation avant des entrées, ses sorties sont l'envie d'effectuer chaque action possibles (avancer, tourner à gauche, tourner à droite et tirer). Si la valeur de la sortie est supérieur à 0.8 l'action sera effectuée.
+
+\subsubsection{Affichage}
+
+Si le client est en mode spectateur il va afficher le jeu en temps réel, ainsi que le réseau de neurones prenant les décisions. Sur le réseau, les connexions en vert sont des connexions ayant un poids positif et les connexions en rouge sont des connexions ayant un poids négatif. 
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.35]{spectatormode.png}
+	\caption{Affichage du jeu en mode spectateur}
+\end{center}
+\end{figure}
+
+\subsubsection{Fitness}
+
+La fonction de fitness définie pour ce jeu est la suivante
+
+\begin{equation}
+	f = ticks \cdot 10 \cdot score + score \cdot (\frac{score}{shot})^2	
+\end{equation}
+Où\\
+$ticks$ est le nombres d'instant de jeu passés (temps de surive)\\
+$score$ est le nombre d'astéroïdes touchés\\
+$shot$ est le nombre de coups tirés\\
+
 \subsubsection{Résultats}
+
+Les résultats de l'évolution sont très intéressants, en effet nous obtenons rapidement des réseau ayant appris à esquiver les astéroïdes.\\
+
+Plus exactement l'algorithme naïf met entre 15 et 20 générations en moyenne avant d'arriver à esquiver les astéroïdes. Ce moment très clairement visible sur le graphique du fitness moyen.\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.35]{mlpdodge.png}
+	\caption{Fitness moyen de l'algorithme naïf, le fitness augmente rapidement autour de la génération 17 dû à l'apprentissage de l'esquive}
+\end{center}
+\end{figure}
+
+Pour le NEAT l'apprentissage de l'esquive se fait bien plus tôt. En effet autour de la cinquième génération les agents savent déjà esquiver les astéroïdes bien que ce soit aux alentours de la 10ème génération que la technique est perfectionnée.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.35]{neatdodge.png}
+	\caption{Fitness moyen de NEAT, le fitness augmente rapidement autour de la génération 5 dû à l'apprentissage de l'esquive}
+\end{center}
+\end{figure}
+
+Cependant apprendre l'esquive simple ne suffit pas car il est possible que le réseau fonce dans un astéroïde en essayant d'en esquiver un autre. La technique est donc perfectionnée et au bout d'une centaine de générations ($\sim$5 minutes) ils sont capable d'attendre des scores très impressionnants.\\
+
+Un phénomène intéressant est que peut importe l'algorithme utilisé, le comportement qui va se répandre le plus vite est toujours le même: tourner sur soit même. En effet ce comportement semble dominer à chaque fois. Une raison qui peut expliquer ce phénomène est que l'esquive au départ est une réaction à la présence d'un astéroïde vers le capteur situé à l'arrière du vaisseau. Ainsi tourner sur soit même va permettre de vérifier la présence d'astéroïdes dans toutes les directions et donc d'avancer si il y a un danger. Par la suite l'esquive est perfectionnée mais ce trait reste car il en est à l'origine. Une autre explication possible est le fait de compenser l'inertie, en effet lorsqu'un vaisseau fini d'accélérer (pour esquiver par exemple) il conserve une inertie qui peut s'avérer potentiellement mortelle si un astéroïde se trouve droit devant, pour compenser le vaisseau doit donc se tourner pour accélérer légèrement dans l'autre sens et s'arrêter.\\
+
+Après 100 générations l'algorithme naïf obtient un fitness moyen d'environ 300'000, ce score correspond à des agents capables de détruire les quatre premiers astéroïdes et leurs enfants mais qui n'arrivent pas a réagir à l'apparition des cinq suivants. Cette barre des 300'000 est passée par NEAT après seulement 20 générations.\\
+
+Après 100 générations NEAT arrive à un fitness d'environ 1'600'000, ce qui correspond à un agent capable détruire les quatre premiers astéroïdes, puis les cinq suivant, mais qui tombe face à la masse de sous-astéroïdes quand il commence à détruire les six d'après. Il est cependant peut probable qu'un agent puisse s'améliorer au delà de cette limite, en effet la précision qu'il faudrait pour manoeuvrer à travers autant d'objet n'est pas atteignable avec ce simulateur. Cette limite des 1'600'000 n'est d'ailleurs pas franchie même si système tourne pendant un jour entier.\\
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.45]{neatevolv.png}
+	\caption{Réseau NEAT après 50 générations}
+\end{center}
+\end{figure}
 
 \newpage
 \section{Conclusion}
