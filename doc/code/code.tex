@@ -62,6 +62,25 @@
 \tableofcontents
 
 \newpage
+\section{Installation}
+
+Les outils suivants doivent être présent sur votre machine pour installer les différents composants du projet:
+
+\begin{itemize}
+	\item \textbf{protoc} Compilateur protobuf, téléchargeable depuis \url{https://github.com/google/protobuf/releases}
+	\item \textbf{java} JDK version 1.7+ et JRE 7
+	\item \textbf{make}
+	\item \textbf{node.js} téléchargeable depuis \url{https://nodejs.org/en/}
+\end{itemize}
+
+A partir du dossier racine du projet (clonable depuis \url{https://github.com/ProtectedVariable/MachineGaming.git}), exécutez la commande make qui va se charger de la compilation.\\
+
+Pour démarrer le serveur allez dans le dossier \textbf{server} et entrez la commande \textbf{npm install}, cette commande va démarrer le téléchargement des dépendances nécessaire au fonctionnement du serveur. Une fois l'installation terminée, tapez \textbf{npm start} pour démarrer le serveur.\\
+
+Pour démarrer le client ouvrez le dossier \textbf{client} dans un IDE tel qu'Eclipse et compilez le.
+
+
+\newpage
 \section{Serveur}
 
 \inputminted[breaklines,breaksymbol=, frame=single,label=server.js, stepnumber=1,tabsize=2]{javascript}{server.js}

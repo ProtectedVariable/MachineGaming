@@ -1,4 +1,5 @@
 \select@language {french}
-\contentsline {section}{\numberline {1}Serveur}{2}{section.1}
-\contentsline {section}{\numberline {2}Client}{35}{section.2}
-\contentsline {section}{\numberline {3}Protocole}{62}{section.3}
+\contentsline {section}{\numberline {1}Installation}{2}{section.1}
+\contentsline {section}{\numberline {2}Serveur}{3}{section.2}
+\contentsline {section}{\numberline {3}Client}{36}{section.3}
+\contentsline {section}{\numberline {4}Protocole}{63}{section.4}
